@@ -1,0 +1,3 @@
+-- Realtime sudah aktif secara default di Supabase (semua tabel otomatis masuk publication).
+-- Tidak perlu ALTER PUBLICATION lagi.
+-- Cukup pastikan hook useRealtimeSubscription udah benar, dan Realtime akan jalan.
