@@ -156,7 +156,7 @@ export async function adminTogglePlan(planId: string, isActive: boolean) {
     .eq("id", planId)
 
   if (error) throw new Error(error.message)
-  revalidatePath("/admin/membership")
+  // admin membership page removed
 }
 
 export async function adminCreatePlan(formData: FormData) {
@@ -187,7 +187,7 @@ export async function adminCreatePlan(formData: FormData) {
   })
 
   if (error) throw new Error(error.message)
-  revalidatePath("/admin/membership")
+  // admin membership page removed
 }
 
 export async function adminUpdatePlan(planId: string, formData: FormData) {
@@ -221,7 +221,7 @@ export async function adminUpdatePlan(planId: string, formData: FormData) {
     .eq("id", planId)
 
   if (error) throw new Error(error.message)
-  revalidatePath("/admin/membership")
+  // admin membership page removed
 }
 
 export async function adminDeletePlan(planId: string) {
@@ -239,7 +239,7 @@ export async function adminDeletePlan(planId: string) {
 
   const { error } = await supabase.from("membership_plans").delete().eq("id", planId)
   if (error) throw new Error(error.message)
-  revalidatePath("/admin/membership")
+  // admin membership page removed
 }
 
 export async function getAllSubscriptionsAdmin() {

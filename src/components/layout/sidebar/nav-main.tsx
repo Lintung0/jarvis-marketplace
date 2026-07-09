@@ -30,7 +30,6 @@ import {
   ShoppingBag,
   type LucideIcon,
   ChevronRight,
-  MessageSquare,
 } from "lucide-react";
 import Link from "next/link";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -109,10 +108,6 @@ const adminNav: NavGroup[] = [
       { title: "Categories", href: "/admin/categories", icon: Tag },
       { title: "Coupons", href: "/admin/coupons", icon: Ticket },
       { title: "KB", href: "/admin/kb/articles", icon: BookOpen },
-      { title: "Tickets", href: "/admin/tickets", icon: MessageSquare },
-      { title: "Membership", href: "/admin/membership", icon: Crown },
-      { title: "Ad Spaces", href: "/admin/ads", icon: ImageIcon },
-      { title: "Brands", href: "/admin/brands", icon: Tag },
       { title: "Banners", href: "/admin/banners", icon: ImageIcon },
       { title: "Settings", href: "/admin/settings", icon: Settings },
     ],

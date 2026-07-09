@@ -49,7 +49,7 @@ export async function createAd(data: {
   })
 
   if (error) throw new Error(error.message)
-  revalidatePath("/admin/ads")
+  // admin ads page removed
 }
 
 export async function updateAd(
@@ -81,7 +81,7 @@ export async function updateAd(
     .eq("id", id)
 
   if (error) throw new Error(error.message)
-  revalidatePath("/admin/ads")
+  // admin ads page removed
 }
 
 export async function deleteAd(id: string) {
@@ -101,7 +101,7 @@ export async function deleteAd(id: string) {
   const { error } = await admin.from("ad_spaces").delete().eq("id", id)
 
   if (error) throw new Error(error.message)
-  revalidatePath("/admin/ads")
+  // admin ads page removed
 }
 
 export async function toggleAd(id: string) {
@@ -132,5 +132,5 @@ export async function toggleAd(id: string) {
     .eq("id", id)
 
   if (error) throw new Error(error.message)
-  revalidatePath("/admin/ads")
+  // admin ads page removed
 }

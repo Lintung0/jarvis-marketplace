@@ -37,7 +37,6 @@ export default async function DashboardLayout({ children }: { children: React.Re
   if (pendingApps && pendingApps > 0) badgeCounts["/admin/vendor-applications"] = pendingApps
   if (pendingProducts && pendingProducts > 0) badgeCounts["/moderator/products"] = pendingProducts
   if (pendingProducts && pendingProducts > 0) badgeCounts["/admin/products"] = pendingProducts
-  if (unreadTickets && unreadTickets > 0) badgeCounts["/admin/tickets"] = unreadTickets
   if (pendingPayouts && pendingPayouts > 0) badgeCounts["/admin/payouts"] = pendingPayouts
 
   const cookieStore = await cookies()

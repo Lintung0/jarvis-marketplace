@@ -145,7 +145,7 @@ export async function adminReplyToTicket(ticketId: string, formData: FormData) {
   })
 
   if (error) throw new Error(error.message)
-  revalidatePath("/admin/tickets")
+  revalidatePath("/help-center/tickets")
 }
 
 export async function adminCloseTicket(ticketId: string) {
@@ -163,5 +163,5 @@ export async function adminCloseTicket(ticketId: string) {
     .eq("id", ticketId)
 
   if (error) throw new Error(error.message)
-  revalidatePath("/admin/tickets")
+  revalidatePath("/help-center/tickets")
 }

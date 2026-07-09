@@ -69,7 +69,7 @@ export async function createBrand(data: {
   })
 
   if (error) throw new Error(error.message)
-  revalidatePath("/admin/brands")
+  // admin brands page removed
 }
 
 export async function updateBrand(
@@ -102,7 +102,7 @@ export async function updateBrand(
     .eq("id", id)
 
   if (error) throw new Error(error.message)
-  revalidatePath("/admin/brands")
+  // admin brands page removed
 }
 
 export async function deleteBrand(id: string) {
@@ -122,7 +122,7 @@ export async function deleteBrand(id: string) {
   const { error } = await admin.from("brands").delete().eq("id", id)
 
   if (error) throw new Error(error.message)
-  revalidatePath("/admin/brands")
+  // admin brands page removed
 }
 
 export async function toggleBrand(id: string) {
@@ -153,5 +153,5 @@ export async function toggleBrand(id: string) {
     .eq("id", id)
 
   if (error) throw new Error(error.message)
-  revalidatePath("/admin/brands")
+  // admin brands page removed
 }
