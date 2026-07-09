@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import WishlistButton from "@/components/shared/WishlistButton";
@@ -12,8 +13,10 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const primaryImage =
+  const [imgError, setImgError] = useState(false);
+  const primaryImageUrl =
     product.images?.find((img) => img.is_primary)?.url;
+  const hasPrimaryImage = !!(primaryImageUrl && !imgError);
 
   const discountPercent = product.sale_price
     ? Math.round(((product.price - product.sale_price) / product.price) * 100)
@@ -25,14 +28,12 @@ export default function ProductCard({ product }: ProductCardProps) {
     <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:border-orange-100">
       <Link href={`/products/${product.slug}`}>
         <div className="relative overflow-hidden bg-gray-50" style={{ height: 220 }}>
-          {primaryImage ? (
-            <Image
-              src={primaryImage}
+          {hasPrimaryImage ? (
+            <img
+              src={primaryImageUrl}
               alt={product.title}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
-              sizes="(max-width: 768px) 50vw, 25vw"
-              unoptimized={primaryImage.startsWith("http") && !primaryImage.includes("supabase.co")}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              onError={() => setImgError(true)}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gray-100">

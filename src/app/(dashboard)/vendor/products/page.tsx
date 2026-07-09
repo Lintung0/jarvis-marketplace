@@ -1,8 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { ProductTable } from "@/components/dashboard/VendorProductTable";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Plus, Search, AlertTriangle } from "lucide-react";
+import { Plus, AlertTriangle } from "lucide-react";
 import Link from "next/link";
 import { getVendorSubscription, getProductCountForVendor } from "@/app/actions/membership";
 
@@ -72,24 +71,6 @@ export default async function VendorProductsPage() {
           </div>
         </div>
       )}
-
-      <div className="flex gap-2">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <Input
-            placeholder="Search products..."
-            className="pl-10"
-            defaultValue=""
-          />
-        </div>
-        <select className="border border-gray-300 rounded-lg px-4 py-2 text-sm">
-          <option>All Status</option>
-          <option>Active</option>
-          <option>Pending</option>
-          <option>Hidden</option>
-          <option>Draft</option>
-        </select>
-      </div>
 
       <ProductTable products={productData} />
     </div>
