@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { BadgeCheck } from "lucide-react";
 import type { Profile } from "@/types";
 
 interface Props {
@@ -10,11 +11,11 @@ export default function VendorCard({ vendor }: Props) {
   return (
     <Link
       href={`/vendors/${vendor.username}`}
-      className="group block bg-[#0d0d1a] border border-[#2a2a4a] rounded-2xl p-5 hover:shadow-md transition-shadow"
+      className="group block bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-md hover:border-orange-200 transition-all"
     >
       <div className="flex items-center gap-4">
         {/* Avatar */}
-        <div className="relative w-14 h-14 rounded-full overflow-hidden bg-[#0d0d1a] flex-shrink-0">
+        <div className="relative w-14 h-14 rounded-full overflow-hidden bg-gray-100 flex-shrink-0">
           {vendor.avatar_url ? (
             <Image
               src={vendor.avatar_url}
@@ -33,14 +34,14 @@ export default function VendorCard({ vendor }: Props) {
         {/* Info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5">
-            <p className="font-semibold text-gray-200 truncate">
+            <p className="font-semibold text-gray-900 truncate group-hover:text-orange-500 transition-colors">
               {vendor.full_name ?? vendor.username}
             </p>
             {vendor.is_verified && (
-              <span className="text-indigo-500 text-sm">✓</span>
+              <BadgeCheck className="w-4 h-4 text-blue-500" />
             )}
           </div>
-          <p className="text-xs text-gray-400 truncate">@{vendor.username}</p>
+          <p className="text-xs text-gray-500 truncate">@{vendor.username}</p>
           {vendor.location && (
             <p className="text-xs text-gray-400 mt-0.5">📍 {vendor.location}</p>
           )}
@@ -49,8 +50,8 @@ export default function VendorCard({ vendor }: Props) {
         {/* Product count */}
         {vendor.product_count !== undefined && (
           <div className="text-right flex-shrink-0">
-            <p className="text-lg font-bold text-gray-200">{vendor.product_count}</p>
-            <p className="text-xs text-gray-400">produk</p>
+            <p className="text-lg font-bold text-gray-900">{vendor.product_count}</p>
+            <p className="text-xs text-gray-500">produk</p>
           </div>
         )}
       </div>

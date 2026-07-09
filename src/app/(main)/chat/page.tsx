@@ -15,15 +15,22 @@ export default async function ChatPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
       <div className="flex items-center gap-3 mb-8">
-        <MessageCircle className="w-6 h-6 text-brand" />
-        <h1 className="text-2xl font-bold">Pesan</h1>
+        <div className="w-10 h-10 rounded-full gradient-brand flex items-center justify-center">
+          <MessageCircle className="w-5 h-5 text-white" />
+        </div>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Pesan</h1>
+          <p className="text-sm text-gray-500">{conversations.length} percakapan</p>
+        </div>
       </div>
 
       {conversations.length === 0 ? (
-        <div className="text-center py-20 text-gray-400">
-          <MessageCircle className="w-16 h-16 mx-auto mb-4 opacity-50" />
-          <p className="text-lg">Belum ada percakapan</p>
-          <p className="text-sm mt-1">Mulai chat dengan vendor dari halaman produk</p>
+        <div className="text-center py-20 bg-white rounded-2xl border border-gray-100">
+          <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
+            <MessageCircle className="w-10 h-10 text-gray-300" />
+          </div>
+          <p className="text-lg font-semibold text-gray-900">Belum ada percakapan</p>
+          <p className="text-sm text-gray-500 mt-1">Mulai chat dengan vendor dari halaman produk</p>
         </div>
       ) : (
         <div className="space-y-2">
@@ -44,13 +51,13 @@ function ConversationCard({ conversation }: { conversation: Conversation }) {
   return (
     <Link
       href={`/chat/${otherUser.id}`}
-      className={`flex items-center gap-4 p-4 rounded-2xl border transition-all hover:shadow-sm ${
+      className={`flex items-center gap-4 p-4 rounded-2xl border transition-all hover:shadow-md hover:border-orange-200 ${
         unreadCount > 0
-          ? "bg-orange-50/50 border-orange-200"
+          ? "bg-orange-50 border-orange-200"
           : "bg-white border-gray-100"
       }`}
     >
-      <div className="h-12 w-12 rounded-full gradient-brand flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+      <div className="relative h-12 w-12 rounded-full flex-shrink-0 overflow-hidden bg-gray-100">
         {otherUser.avatar_url ? (
           <img
             src={otherUser.avatar_url}
@@ -58,7 +65,9 @@ function ConversationCard({ conversation }: { conversation: Conversation }) {
             className="h-full w-full rounded-full object-cover"
           />
         ) : (
-          (otherUser.full_name ?? otherUser.username ?? "U").charAt(0).toUpperCase()
+          <div className="h-full w-full flex items-center justify-center gradient-brand text-white font-bold text-lg">
+            {(otherUser.full_name ?? otherUser.username ?? "U").charAt(0).toUpperCase()}
+          </div>
         )}
       </div>
 
@@ -82,8 +91,8 @@ function ConversationCard({ conversation }: { conversation: Conversation }) {
             {lastMessage.content}
           </span>
           {unreadCount > 0 && (
-            <span className="bg-brand text-white text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0">
-              {unreadCount}
+            <span className="bg-orange-500 text-white text-xs font-bold min-w-[20px] h-5 px-1.5 rounded-full flex items-center justify-center flex-shrink-0">
+              {unreadCount > 99 ? "99+" : unreadCount}
             </span>
           )}
         </div>

@@ -32,12 +32,17 @@ export default function ProductCard({ product }: ProductCardProps) {
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-500"
               sizes="(max-width: 768px) 50vw, 25vw"
+              unoptimized={primaryImage.startsWith("http") && !primaryImage.includes("supabase.co")}
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
-                <ShoppingCart className="w-8 h-8 text-gray-400" />
-              </div>
+            <div className="w-full h-full flex items-center justify-center bg-gray-100">
+              <Image
+                src="/placeholder-product.png"
+                alt={product.title}
+                fill
+                className="object-cover opacity-50"
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
             </div>
           )}
           {product.sale_price && (

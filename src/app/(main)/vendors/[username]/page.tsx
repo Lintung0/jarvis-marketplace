@@ -59,8 +59,8 @@ export default async function VendorProfilePage({ params }: PageProps) {
             <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
           </svg>
         </div>
-        <h1 className="text-2xl font-bold text-gray-200 mb-2">Vendor Tidak Tersedia</h1>
-        <p className="text-gray-400">Akun vendor ini telah dinonaktifkan.</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Vendor Tidak Tersedia</h1>
+        <p className="text-gray-500">Akun vendor ini telah dinonaktifkan.</p>
       </div>
     )
   }
@@ -106,19 +106,19 @@ export default async function VendorProfilePage({ params }: PageProps) {
   const followCounts = await getFollowCounts(vendor.id);
 
   return (
-    <div className="bg-[#0a0a15] min-h-screen">
+    <div className="bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Cover + Profile Header */}
-        <div className="bg-[#0d0d1a] rounded-xl shadow-sm overflow-hidden mb-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6">
           {/* Cover Image */}
-          <div className="h-48 bg-gradient-to-r from-orange-400 via-pink-500 to-purple-600" />
+          <div className="h-48 gradient-brand" />
 
           {/* Profile Info */}
           <div className="px-6 pb-6">
             <div className="flex flex-col sm:flex-row items-start gap-6 -mt-16 relative">
               {/* Avatar */}
               <div className="relative">
-                <div className="w-32 h-32 rounded-full border-4 border-white bg-[#0d0d1a] shadow-lg overflow-hidden">
+                <div className="w-32 h-32 rounded-full border-4 border-white bg-white shadow-lg overflow-hidden">
                   {profile.avatar_url ? (
                     <Image
                       src={profile.avatar_url}
@@ -128,7 +128,7 @@ export default async function VendorProfilePage({ params }: PageProps) {
                       sizes="128px"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-400 to-pink-500 text-white text-5xl font-bold">
+                    <div className="w-full h-full flex items-center justify-center gradient-brand text-white text-5xl font-bold">
                       {(profile.full_name ?? profile.username).charAt(0).toUpperCase()}
                     </div>
                   )}
@@ -144,7 +144,7 @@ export default async function VendorProfilePage({ params }: PageProps) {
               <div className="flex-1 pt-6">
                 <div className="flex items-start justify-between flex-wrap gap-4">
                   <div>
-                    <h1 className="text-3xl font-bold text-gray-200 flex items-center gap-3">
+                    <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
                       {profile.full_name ?? profile.username}
                       {currentUser && !isOwnProfile && (
                         <FollowButton vendorId={vendor.id} vendorName={profile.full_name ?? profile.username} />
@@ -153,7 +153,7 @@ export default async function VendorProfilePage({ params }: PageProps) {
                     <p className="text-gray-500 mt-1">@{profile.username}</p>
 
                     {/* Location & Join Date */}
-                    <div className="flex items-center gap-4 mt-3 text-sm text-gray-400">
+                    <div className="flex items-center gap-4 mt-3 text-sm text-gray-500">
                       {profile.location && (
                         <div className="flex items-center gap-1">
                           <MapPin className="w-4 h-4" />
@@ -169,40 +169,40 @@ export default async function VendorProfilePage({ params }: PageProps) {
 
                   {/* Stats Cards */}
                   <div className="flex gap-3">
-                    <div className="bg-orange-50 border border-orange-200 rounded-lg px-6 py-3 text-center">
+                    <div className="bg-orange-50 border border-orange-200 rounded-xl px-6 py-3 text-center">
                       <div className="flex items-center gap-2 text-orange-600 mb-1">
                         <Package className="w-4 h-4" />
                         <span className="text-2xl font-bold">{count ?? 0}</span>
                       </div>
-                      <p className="text-xs text-gray-400 font-medium">Products</p>
+                      <p className="text-xs text-gray-500 font-medium">Products</p>
                     </div>
-                    <div className="bg-purple-50 border border-purple-200 rounded-lg px-6 py-3 text-center">
+                    <div className="bg-purple-50 border border-purple-200 rounded-xl px-6 py-3 text-center">
                       <div className="flex items-center gap-2 text-purple-600 mb-1">
                         <Users className="w-4 h-4" />
                         <span className="text-2xl font-bold">{followCounts.followers}</span>
                       </div>
-                      <p className="text-xs text-gray-400 font-medium">Followers</p>
+                      <p className="text-xs text-gray-500 font-medium">Followers</p>
                     </div>
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg px-6 py-3 text-center">
+                    <div className="bg-blue-50 border border-blue-200 rounded-xl px-6 py-3 text-center">
                       <div className="flex items-center gap-2 text-blue-600 mb-1">
                         <Users className="w-4 h-4" />
                         <span className="text-2xl font-bold">{followCounts.following}</span>
                       </div>
-                      <p className="text-xs text-gray-400 font-medium">Following</p>
+                      <p className="text-xs text-gray-500 font-medium">Following</p>
                     </div>
-                    <div className="bg-amber-50 border border-amber-200 rounded-lg px-6 py-3 text-center">
+                    <div className="bg-amber-50 border border-amber-200 rounded-xl px-6 py-3 text-center">
                       <div className="flex items-center gap-2 text-amber-600 mb-1">
                         <Star className="w-4 h-4 fill-current" />
                         <span className="text-2xl font-bold">{avgRating}</span>
                       </div>
-                      <p className="text-xs text-gray-400 font-medium">Rating</p>
+                      <p className="text-xs text-gray-500 font-medium">Rating</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Bio */}
                 {profile.bio && (
-                  <p className="text-gray-300 mt-4 max-w-3xl leading-relaxed">
+                  <p className="text-gray-600 mt-4 max-w-3xl leading-relaxed">
                     {profile.bio}
                   </p>
                 )}
@@ -224,9 +224,9 @@ export default async function VendorProfilePage({ params }: PageProps) {
         </div>
 
         {/* Products Section */}
-        <div className="bg-[#0d0d1a] rounded-xl shadow-sm p-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-200">
+            <h2 className="text-2xl font-bold text-gray-900">
               Products by {profile.full_name ?? profile.username}
             </h2>
             <span className="text-sm text-gray-500">{count ?? 0} items</span>

@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { sendMessage, markAsRead } from "@/app/actions/messages"
 import type { Message, Profile } from "@/types"
-import { ArrowLeft, Send, Loader2 } from "lucide-react"
+import { ArrowLeft, Send, Loader2, Check, CheckCheck } from "lucide-react"
 
 interface Props {
   currentUserId: string
@@ -75,7 +75,7 @@ export default function ChatClient({ currentUserId, otherUser, initialMessages }
         >
           <ArrowLeft className="w-5 h-5" />
         </Link>
-        <div className="h-10 w-10 rounded-full gradient-brand flex items-center justify-center text-white font-bold flex-shrink-0">
+        <div className="h-10 w-10 rounded-full flex-shrink-0 overflow-hidden bg-gray-100">
           {otherUser.avatar_url ? (
             <img
               src={otherUser.avatar_url}
@@ -83,7 +83,9 @@ export default function ChatClient({ currentUserId, otherUser, initialMessages }
               className="h-full w-full rounded-full object-cover"
             />
           ) : (
-            (otherUser.full_name ?? otherUser.username ?? "U").charAt(0).toUpperCase()
+            <div className="h-full w-full flex items-center justify-center gradient-brand text-white font-bold text-sm">
+              {(otherUser.full_name ?? otherUser.username ?? "U").charAt(0).toUpperCase()}
+            </div>
           )}
         </div>
         <div>
@@ -110,16 +112,23 @@ export default function ChatClient({ currentUserId, otherUser, initialMessages }
                 }`}
               >
                 <p className="whitespace-pre-wrap break-words">{msg.content}</p>
-                <p
-                  className={`text-[10px] mt-1 ${
-                    isMine ? "text-white/70" : "text-gray-400"
-                  }`}
-                >
-                  {new Date(msg.created_at).toLocaleTimeString("id-ID", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </p>
+                <div className={`flex items-center gap-0.5 mt-1 ${isMine ? "justify-end" : ""}`}>
+                  <span
+                    className={`text-[10px] ${
+                      isMine ? "text-white/70" : "text-gray-400"
+                    }`}
+                  >
+                    {new Date(msg.created_at).toLocaleTimeString("id-ID", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </span>
+                  {isMine && (
+                    msg.is_read
+                      ? <CheckCheck className="w-3 h-3 text-white/70" />
+                      : <Check className="w-3 h-3 text-white/70" />
+                  )}
+                </div>
               </div>
             </div>
           )
