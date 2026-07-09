@@ -21,9 +21,9 @@ export function CouponForm() {
       await createCoupon({
         code,
         type,
-        value: parseInt(value),
-        min_order: parseInt(minOrder),
-        max_uses: maxUses ? parseInt(maxUses) : null,
+        value: parseFloat(value),
+        min_order: parseFloat(minOrder),
+        max_uses: maxUses ? parseInt(maxUses, 10) : null,
         expires_at: expiresAt || null,
       })
       setCode("")

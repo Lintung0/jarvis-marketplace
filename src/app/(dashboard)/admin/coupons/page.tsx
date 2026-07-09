@@ -45,8 +45,8 @@ export default async function AdminCouponsPage() {
                       <td className="px-4 py-3">
                         <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${
                           coupon.type === "percentage"
-                            ? "bg-blue-500/10 text-blue-400 border-blue-500/30"
-                            : "bg-purple-500/10 text-purple-400 border-purple-500/30"
+                            ? "bg-blue-100 text-blue-700 border-blue-200"
+                            : "bg-purple-100 text-purple-700 border-purple-200"
                         }`}>
                           {coupon.type === "percentage" ? "%" : "Fixed"}
                         </span>
@@ -64,8 +64,8 @@ export default async function AdminCouponsPage() {
                       <td className="px-4 py-3">
                         <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${
                           coupon.is_active
-                            ? "bg-[#39ff14]/10 text-[#39ff14] border-[#39ff14]/30"
-                            : "bg-red-500/10 text-red-400 border-red-500/30"
+                            ? "bg-green-100 text-green-700 border-green-200"
+                            : "bg-red-100 text-red-700 border-red-200"
                         }`}>
                           {coupon.is_active ? "Active" : "Inactive"}
                         </span>

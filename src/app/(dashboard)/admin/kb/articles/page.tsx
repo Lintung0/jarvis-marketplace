@@ -1,13 +1,13 @@
-import { createClient } from "@/lib/supabase/server"
+import { createAdminClient } from "@/lib/supabase/server"
 import { AdminKBArticleActions } from "./AdminKBArticleActions"
 import { KBArticleForm } from "./KBArticleForm"
 
 export default async function AdminKBArticlesPage() {
-  const supabase = await createClient()
+  const admin = createAdminClient()
 
-  const { data: articles } = await supabase
+  const { data: articles } = await admin
     .from("kb_articles")
-    .select("*, category:kb_categories!category_id(name)")
+    .select("*, category:kb_categories(name)")
     .order("created_at", { ascending: false })
 
   return (

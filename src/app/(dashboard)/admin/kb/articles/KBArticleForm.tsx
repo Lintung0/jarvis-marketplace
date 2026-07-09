@@ -21,7 +21,10 @@ export function KBArticleForm() {
   useEffect(() => {
     async function load() {
       const supabase = createClient()
-      const { data } = await supabase.from("kb_categories").select("*").order("sort_order")
+      const { data, error } = await supabase.from("kb_categories").select("*").order("sort_order")
+      if (error) {
+        console.warn("Failed to load KB categories:", error.message)
+      }
       setCategories(data ?? [])
       if (data && data.length > 0) setCategoryId(data[0].id)
     }
@@ -90,9 +93,13 @@ export function KBArticleForm() {
             onChange={(e) => setCategoryId(e.target.value)}
             className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
           >
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>{cat.name}</option>
-            ))}
+            {categories.length === 0 ? (
+              <option value="">No categories available</option>
+            ) : (
+              categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>{cat.name}</option>
+              ))
+            )}
           </select>
         </div>
         <div>

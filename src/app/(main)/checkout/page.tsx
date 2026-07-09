@@ -239,7 +239,7 @@ export default function CheckoutPage() {
                   setCouponError(data.error ?? "Invalid coupon");
                 } else {
                   setCouponCode(code);
-                  setDiscountAmount(data.discount ?? 0);
+                  setDiscountAmount(data.coupon?.discount_amount ?? 0);
                 }
               } catch {
                 setCouponError("Failed to validate coupon");
