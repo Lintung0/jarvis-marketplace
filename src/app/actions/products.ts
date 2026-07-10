@@ -4,7 +4,6 @@ import { logger } from "@/lib/logger"
 
 import { createClient, createAdminClient } from "@/lib/supabase/server"
 import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
 
 async function upsertImages(supabase: any, productId: string, imageUrls: string[]) {
   if (imageUrls.length === 0) return
@@ -63,7 +62,7 @@ export async function createProduct(formData: FormData) {
   if (product) await upsertImages(supabase, product.id, imageUrls)
 
   revalidatePath("/vendor/products")
-  redirect("/vendor/products")
+  return "/vendor/products"
 }
 
 export async function updateProduct(productId: string, formData: FormData, imageUrls?: string[]) {
@@ -100,7 +99,7 @@ export async function updateProduct(productId: string, formData: FormData, image
   await upsertImages(supabase, productId, finalUrls)
 
   revalidatePath("/vendor/products")
-  redirect("/vendor/products")
+  return "/vendor/products"
 }
 
 export async function deleteProduct(productId: string) {
