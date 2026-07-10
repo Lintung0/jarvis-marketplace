@@ -91,6 +91,21 @@ export async function updateProduct(productId: string, formData: FormData) {
     .eq("vendor_id", user.id)
 
   if (error) throw new Error(error.message)
+
+  // Update images if provided
+  const imageUrls: string[] = JSON.parse(formData.get("image_urls") as string || "[]").filter(Boolean)
+  if (imageUrls.length > 0) {
+    await supabase.from("product_images").delete().eq("product_id", productId)
+    const images = imageUrls.map((url, i) => ({
+      product_id: productId,
+      url,
+      is_primary: i === 0,
+      sort_order: i,
+    }))
+    const { error: imgError } = await supabase.from("product_images").insert(images)
+    if (imgError) logger.error("Failed to update product images:", imgError)
+  }
+
   revalidatePath("/vendor/products")
   redirect("/vendor/products")
 }

@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { createProduct, updateProduct } from "@/app/actions/products"
 import { generateProductDescription } from "@/app/actions/ai"
 import { isRedirectError } from "next/dist/client/components/redirect-error"
-import { ImagePlus, X, Loader2, Upload } from "lucide-react"
+import { ImagePlus, X, Loader2, Link as LinkIcon } from "lucide-react"
 
 interface ProductFormProps {
   initialData?: {
@@ -23,10 +23,11 @@ interface ProductFormProps {
 }
 
 interface ImagePreview {
-  file: File
+  type: "file" | "url"
+  file?: File
+  url: string
   preview: string
   uploading: boolean
-  url?: string
 }
 
 export function ProductForm({ initialData, categories = [] }: ProductFormProps) {
@@ -37,28 +38,52 @@ export function ProductForm({ initialData, categories = [] }: ProductFormProps) 
   const [aiTone, setAiTone] = useState("professional")
   const [description, setDescription] = useState(initialData?.description || "")
   const [images, setImages] = useState<ImagePreview[]>([])
+  const [urlInput, setUrlInput] = useState("")
   const [submitting, setSubmitting] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const urlInputRef = useRef<HTMLInputElement>(null)
   const isEdit = !!initialData?.id
 
   function handleFiles(files: FileList | null) {
     if (!files) return
     const newImages: ImagePreview[] = Array.from(files).map((file) => ({
+      type: "file",
       file,
+      url: "",
       preview: URL.createObjectURL(file),
       uploading: false,
     }))
     setImages((prev) => [...prev, ...newImages])
   }
 
+  function handleUrlAdd() {
+    const url = urlInput.trim()
+    if (!url) return
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      setError("Invalid URL. Must start with http:// or https://")
+      return
+    }
+    setImages((prev) => [...prev, {
+      type: "url",
+      url,
+      preview: url,
+      uploading: false,
+    }])
+    setUrlInput("")
+    setError(null)
+  }
+
   function removeImage(index: number) {
-    URL.revokeObjectURL(images[index].preview)
+    if (images[index].type === "file") {
+      URL.revokeObjectURL(images[index].preview)
+    }
     setImages((prev) => prev.filter((_, i) => i !== index))
   }
 
   async function uploadImage(img: ImagePreview): Promise<string> {
+    if (img.type === "url") return img.url
     const formData = new FormData()
-    formData.append("file", img.file)
+    formData.append("file", img.file!)
     const res = await fetch("/api/upload", { method: "POST", body: formData })
     if (!res.ok) {
       const err = await res.json().catch(() => ({ error: "Upload failed" }))
@@ -72,12 +97,12 @@ export function ProductForm({ initialData, categories = [] }: ProductFormProps) 
     setError(null)
     setSubmitting(true)
     try {
-      if (isEdit) {
+      if (initialData?.id) {
+        formData.set("image_urls", JSON.stringify(images.map((img) => img.type === "url" ? img.url : "")))
         await updateProduct(initialData.id, formData)
         return
       }
 
-      // Upload images first
       const imageUrls: string[] = []
       for (let i = 0; i < images.length; i++) {
         setImages((prev) => {
@@ -94,7 +119,6 @@ export function ProductForm({ initialData, categories = [] }: ProductFormProps) 
         })
       }
 
-      // Attach image URLs to form data
       formData.set("image_urls", JSON.stringify(imageUrls))
       await createProduct(formData)
     } catch (e: any) {
@@ -144,7 +168,13 @@ export function ProductForm({ initialData, categories = [] }: ProductFormProps) 
         <div className="flex flex-wrap gap-3">
           {images.map((img, i) => (
             <div key={i} className="relative w-24 h-24 rounded-lg border border-gray-200 overflow-hidden group">
-              <img src={img.preview} alt="" className="w-full h-full object-cover" />
+              {img.type === "url" && !img.uploading ? (
+                <img src={img.url} alt="" className="w-full h-full object-cover"
+                  onError={(e) => { (e.target as HTMLImageElement).src = "/placeholder-product.png" }}
+                />
+              ) : (
+                <img src={img.preview} alt="" className="w-full h-full object-cover" />
+              )}
               {img.uploading && (
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                   <Loader2 className="w-5 h-5 animate-spin text-white" />
@@ -157,6 +187,11 @@ export function ProductForm({ initialData, categories = [] }: ProductFormProps) 
               >
                 <X className="w-3 h-3 text-white" />
               </button>
+              {img.type === "url" && (
+                <span className="absolute bottom-1 left-1 bg-blue-500 text-white text-[8px] px-1 rounded">
+                  URL
+                </span>
+              )}
             </div>
           ))}
 
@@ -167,7 +202,7 @@ export function ProductForm({ initialData, categories = [] }: ProductFormProps) 
             className="w-24 h-24 rounded-lg border-2 border-dashed border-gray-300 hover:border-orange-400 transition flex flex-col items-center justify-center gap-1 text-gray-400 hover:text-orange-500"
           >
             <ImagePlus className="w-6 h-6" />
-            <span className="text-[10px] font-medium">Add Image</span>
+            <span className="text-[10px] font-medium">Upload</span>
           </button>
         </div>
 
@@ -179,7 +214,31 @@ export function ProductForm({ initialData, categories = [] }: ProductFormProps) 
           className="hidden"
           onChange={(e) => handleFiles(e.target.files)}
         />
-        <p className="text-xs text-gray-400">Supported: JPG, PNG, WebP, GIF. Max 10MB per image.</p>
+
+        <div className="flex items-center gap-2">
+          <div className="relative flex-1">
+            <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              ref={urlInputRef}
+              value={urlInput}
+              onChange={(e) => setUrlInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleUrlAdd())}
+              placeholder="Paste image URL..."
+              className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg pl-10 pr-4 py-2 text-sm focus:border-orange-400 outline-none"
+            />
+          </div>
+          <button
+            type="button"
+            onClick={handleUrlAdd}
+            disabled={!urlInput.trim() || submitting}
+            className="px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all disabled:opacity-50"
+          >
+            Add URL
+          </button>
+        </div>
+        <p className="text-xs text-gray-400">
+          Upload: JPG, PNG, WebP, GIF (max 10MB) &mdash; or paste an external image URL
+        </p>
       </div>
 
       <div className="space-y-4">
