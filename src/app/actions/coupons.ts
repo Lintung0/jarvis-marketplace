@@ -9,6 +9,7 @@ export async function createCoupon(data: {
   value: number
   min_order: number
   max_uses: number | null
+  start_at: string | null
   expires_at: string | null
 }) {
   const supabase = await createClient()
@@ -30,6 +31,7 @@ export async function createCoupon(data: {
     value: data.value,
     min_order: data.min_order,
     max_uses: data.max_uses,
+    start_at: data.start_at,
     expires_at: data.expires_at,
     is_active: true,
     used_count: 0,

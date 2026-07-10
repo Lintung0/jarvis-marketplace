@@ -70,10 +70,18 @@ export default async function AdminCouponsPage() {
                           {coupon.is_active ? "Active" : "Inactive"}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-gray-500 text-xs">
-                        {coupon.expires_at
-                          ? new Date(coupon.expires_at).toLocaleDateString("id-ID")
-                          : "-"}
+                      <td className="px-4 py-3 text-gray-500 text-xs whitespace-nowrap">
+                        {coupon.start_at ? (
+                          <span>
+                            {new Date(coupon.start_at).toLocaleDateString("id-ID")}
+                            {" → "}
+                            {coupon.expires_at
+                              ? new Date(coupon.expires_at).toLocaleDateString("id-ID")
+                              : "∞"}
+                          </span>
+                        ) : coupon.expires_at ? (
+                          new Date(coupon.expires_at).toLocaleDateString("id-ID")
+                        ) : "-"}
                       </td>
                       <td className="px-4 py-3">
                         <CouponActions couponId={coupon.id} isActive={coupon.is_active} />

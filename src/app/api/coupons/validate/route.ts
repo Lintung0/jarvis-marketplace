@@ -35,7 +35,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (coupon.expires_at && new Date(coupon.expires_at) < new Date()) {
+    const now = new Date();
+
+    if (coupon.start_at && new Date(coupon.start_at) > now) {
+      return NextResponse.json(
+        { valid: false, error: "Kupon belum berlaku" },
+        { status: 200 }
+      );
+    }
+
+    if (coupon.expires_at && new Date(coupon.expires_at) < now) {
       return NextResponse.json(
         { valid: false, error: "Kupon sudah kedaluwarsa" },
         { status: 200 }
