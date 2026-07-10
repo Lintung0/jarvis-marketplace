@@ -123,10 +123,10 @@ export default async function ProductsPage({ searchParams }: PageProps) {
 
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-200">
+        <h1 className="text-2xl font-bold text-gray-900">
           {q ? `Hasil pencarian: "${q}"` : "Semua Produk"}
         </h1>
-        <p className="text-sm text-gray-400 mt-1">
+        <p className="text-sm text-gray-600 mt-1">
           {count ?? 0} produk ditemukan
         </p>
       </div>
@@ -140,12 +140,11 @@ export default async function ProductsPage({ searchParams }: PageProps) {
 
       <div className="flex gap-8">
         {/* Sidebar Filter */}
-        <div className="hidden lg:block w-52 flex-shrink-0">
+        <div className="hidden lg:block w-52 flex-shrink-0 sticky top-24 self-start">
           <Suspense>
             <ProductFilters
               categories={(categories ?? []) as Category[]}
               activeCategory={category}
-              activeType={type}
             />
           </Suspense>
         </div>
