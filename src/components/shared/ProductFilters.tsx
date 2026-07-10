@@ -45,7 +45,7 @@ export default function ProductFilters({ categories, brands = [], activeCategory
         <aside className="space-y-6">
       {/* Filter Tipe */}
       <div>
-        <h3 className="text-sm font-semibold text-gray-200 mb-3">{t("products.product_type_label")}</h3>
+        <h3 className="text-sm font-semibold text-[#1e293b] mb-3">{t("products.product_type_label")}</h3>
         <div className="space-y-1.5">
           {productTypes.map((type) => (
             <button
@@ -53,8 +53,8 @@ export default function ProductFilters({ categories, brands = [], activeCategory
               onClick={() => updateFilter("type", type.value)}
               className={`w-full text-left text-sm px-3 py-2 rounded-xl transition ${
                 (activeType ?? "") === type.value
-                  ? "bg-indigo-600 text-white font-medium"
-                  : "text-gray-400 hover:bg-[#0d0d1a]"
+                  ? "bg-orange-500 text-white font-medium"
+                  : "text-gray-700 hover:bg-orange-50"
               }`}
             >
               {type.label}
@@ -65,7 +65,7 @@ export default function ProductFilters({ categories, brands = [], activeCategory
 
       {/* Filter Brand */}
       <div>
-        <h3 className="text-sm font-semibold text-gray-200 mb-3">{t("products.brand")}</h3>
+        <h3 className="text-sm font-semibold text-[#1e293b] mb-3">{t("products.brand")}</h3>
         <div className="space-y-1.5">
           <button
             onClick={() => updateFilter("brand", "")}
@@ -83,8 +83,8 @@ export default function ProductFilters({ categories, brands = [], activeCategory
               onClick={() => updateFilter("brand", brand.slug)}
               className={`w-full text-left text-sm px-3 py-2 rounded-xl transition ${
                 activeBrand === brand.slug
-                  ? "bg-indigo-600 text-white font-medium"
-                  : "text-gray-400 hover:bg-[#0d0d1a]"
+                  ? "bg-orange-500 text-white font-medium"
+                  : "text-gray-700 hover:bg-orange-50"
               }`}
             >
               {brand.name}
@@ -95,7 +95,7 @@ export default function ProductFilters({ categories, brands = [], activeCategory
 
       {/* Filter Kategori */}
       <div>
-        <h3 className="text-sm font-semibold text-gray-200 mb-3">{t("products.category")}</h3>
+        <h3 className="text-sm font-semibold text-[#1e293b] mb-3">{t("products.category")}</h3>
         <div className="space-y-1.5">
           <button
             onClick={() => updateFilter("category", "")}
@@ -113,8 +113,8 @@ export default function ProductFilters({ categories, brands = [], activeCategory
               onClick={() => updateFilter("category", cat.slug)}
               className={`w-full text-left text-sm px-3 py-2 rounded-xl transition ${
                 activeCategory === cat.slug
-                  ? "bg-indigo-600 text-white font-medium"
-                  : "text-gray-400 hover:bg-[#0d0d1a]"
+                  ? "bg-orange-500 text-white font-medium"
+                  : "text-gray-700 hover:bg-orange-50"
               }`}
             >
               {cat.icon && <span className="mr-1.5">{cat.icon}</span>}

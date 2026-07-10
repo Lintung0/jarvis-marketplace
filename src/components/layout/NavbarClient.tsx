@@ -140,22 +140,12 @@ function SearchHeader({ user, profile, categories, unreadMessages = 0 }: { user:
         </Link>
 
         <form onSubmit={handleSearch} className="flex-1 flex max-w-2xl mx-auto">
-          <select
-            className="hidden md:block border border-gray-200 border-r-0 rounded-l-lg px-3 py-2.5 text-sm text-gray-600 bg-gray-50 focus:outline-none cursor-pointer"
-            onChange={(e) => e.target.value && router.push(`/categories/${e.target.value}`)}
-            defaultValue=""
-          >
-            <option value="">{t("nav.all_categories")}</option>
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.slug}>{catName(t, cat.slug, cat.name)}</option>
-            ))}
-          </select>
           <input
             type="text"
             placeholder={t("nav.search_placeholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:border-orange-400 md:rounded-none"
+            className="flex-1 border border-gray-200 rounded-l-lg px-4 py-2.5 text-sm focus:outline-none focus:border-orange-400"
           />
           <button
             type="submit"
@@ -212,37 +202,21 @@ function SearchHeader({ user, profile, categories, unreadMessages = 0 }: { user:
 function CategoryNav({ categories }: { categories: Category[] }) {
   const { t } = useTranslation();
   return (
-    <nav className="hidden lg:block bg-white">
+    <nav className="hidden lg:block bg-white border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4">
-        <ul className="flex overflow-x-auto">
-          {categories.map((cat) => (
-            <li key={cat.id}>
-              <Link
-                href={`/categories/${cat.slug}`}
-                className="flex items-center px-3 py-3 text-sm text-gray-600 whitespace-nowrap border-b-2 border-transparent hover:text-orange-500 hover:border-orange-500 transition-all"
-              >
-                {cat.icon && <span className="mr-1.5">{cat.icon}</span>}
-                {catName(t, cat.slug, cat.name)}
-              </Link>
-            </li>
-          ))}
-          <li className="ml-auto">
-            <Link href="/products" className="flex items-center px-3 py-3 text-sm text-gray-500 whitespace-nowrap hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500 transition-all">
+        <ul className="flex">
+          <li>
+            <Link href="/products" className="flex items-center px-4 py-3 text-sm font-medium text-gray-600 hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500 transition-all">
               {t("nav.all_products") || "All Products"}
             </Link>
           </li>
           <li>
-            <Link href="/brands" className="flex items-center px-3 py-3 text-sm text-gray-500 whitespace-nowrap hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500 transition-all">
-              {t("nav.brands") || "Brands"}
-            </Link>
-          </li>
-          <li>
-            <Link href="/vendors" className="flex items-center px-3 py-3 text-sm text-gray-500 whitespace-nowrap hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500 transition-all">
+            <Link href="/vendors" className="flex items-center px-4 py-3 text-sm font-medium text-gray-600 hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500 transition-all">
               {t("nav.vendors") || "Vendors"}
             </Link>
           </li>
           <li>
-            <Link href="/blog" className="flex items-center px-3 py-3 text-sm text-gray-500 whitespace-nowrap hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500 transition-all">
+            <Link href="/blog" className="flex items-center px-4 py-3 text-sm font-medium text-gray-600 hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500 transition-all">
               {t("nav.blog") || "Blog"}
             </Link>
           </li>

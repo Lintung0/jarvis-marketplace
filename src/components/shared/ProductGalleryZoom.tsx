@@ -10,7 +10,11 @@ interface Props {
 }
 
 export default function ProductGalleryZoom({ images, title }: Props) {
-  const primary = images.find((img) => img.is_primary) ?? images[0];
+  const sorted = [...images].sort((a, b) => {
+    if (a.is_primary !== b.is_primary) return a.is_primary ? -1 : 1;
+    return (a.sort_order ?? 0) - (b.sort_order ?? 0);
+  });
+  const primary = sorted[0];
   const hasImage = !!primary?.url;
   const [selected, setSelected] = useState<string>(
     primary?.url ?? ""
