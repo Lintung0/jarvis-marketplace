@@ -13,7 +13,9 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const sorted = [...(product.images ?? [])].sort((a, b) => {
     if (a.is_primary !== b.is_primary) return a.is_primary ? -1 : 1;
-    return (a.sort_order ?? 0) - (b.sort_order ?? 0);
+    const sortDiff = (a.sort_order ?? 0) - (b.sort_order ?? 0);
+    if (sortDiff !== 0) return sortDiff;
+    return (a.url || "").localeCompare(b.url || "");
   });
   const primaryImageUrl = sorted[0]?.url;
 

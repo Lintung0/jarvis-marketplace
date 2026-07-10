@@ -12,7 +12,9 @@ interface Props {
 export default function ProductGalleryZoom({ images, title }: Props) {
   const sorted = [...images].sort((a, b) => {
     if (a.is_primary !== b.is_primary) return a.is_primary ? -1 : 1;
-    return (a.sort_order ?? 0) - (b.sort_order ?? 0);
+    const sortDiff = (a.sort_order ?? 0) - (b.sort_order ?? 0);
+    if (sortDiff !== 0) return sortDiff;
+    return (a.url || "").localeCompare(b.url || "");
   });
   const primary = sorted[0];
   const hasImage = !!primary?.url;
