@@ -18,6 +18,7 @@ interface ProductFormProps {
     stock: number
     status: string
     category_id?: string | null
+    images?: { id: string; url: string; alt: string | null; is_primary: boolean; sort_order: number }[]
   }
   categories?: { id: string; name: string; slug: string }[]
 }
@@ -37,7 +38,14 @@ export function ProductForm({ initialData, categories = [] }: ProductFormProps) 
   const [aiKeywords, setAiKeywords] = useState("")
   const [aiTone, setAiTone] = useState("professional")
   const [description, setDescription] = useState(initialData?.description || "")
-  const [images, setImages] = useState<ImagePreview[]>([])
+  const existingImages: ImagePreview[] = (initialData?.images ?? []).map((img) => ({
+  type: "url" as const,
+  file: undefined,
+  url: img.url,
+  preview: img.url,
+  uploading: false,
+}))
+const [images, setImages] = useState<ImagePreview[]>(existingImages)
   const [urlInput, setUrlInput] = useState("")
   const [submitting, setSubmitting] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -97,29 +105,32 @@ export function ProductForm({ initialData, categories = [] }: ProductFormProps) 
     setError(null)
     setSubmitting(true)
     try {
-      if (initialData?.id) {
-        formData.set("image_urls", JSON.stringify(images.map((img) => img.type === "url" ? img.url : "")))
-        await updateProduct(initialData.id, formData)
-        return
-      }
-
       const imageUrls: string[] = []
       for (let i = 0; i < images.length; i++) {
-        setImages((prev) => {
-          const next = [...prev]
-          next[i] = { ...next[i], uploading: true }
-          return next
-        })
-        const url = await uploadImage(images[i])
-        imageUrls.push(url)
-        setImages((prev) => {
-          const next = [...prev]
-          next[i] = { ...next[i], uploading: false, url }
-          return next
-        })
+        if (images[i].type === "file" && !images[i].url) {
+          setImages((prev) => {
+            const next = [...prev]
+            next[i] = { ...next[i], uploading: true }
+            return next
+          })
+          const url = await uploadImage(images[i])
+          imageUrls.push(url)
+          setImages((prev) => {
+            const next = [...prev]
+            next[i] = { ...next[i], uploading: false, url }
+            return next
+          })
+        } else {
+          imageUrls.push(images[i].url)
+        }
       }
 
       formData.set("image_urls", JSON.stringify(imageUrls))
+
+      if (initialData?.id) {
+        await updateProduct(initialData.id, formData)
+        return
+      }
       await createProduct(formData)
     } catch (e: any) {
       if (isRedirectError(e)) throw e
