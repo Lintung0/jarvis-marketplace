@@ -28,7 +28,7 @@ export default async function BrandDetailPage({ params }: PageProps) {
     .from("products")
     .select(
       `*,
-      images: product_images (id, url, alt, is_primary, sort_order),
+      images: product_images (id, url, alt, is_primary),
       vendor: profiles (id, username, full_name, avatar_url)`
     )
     .eq("brand_id", brand.id)

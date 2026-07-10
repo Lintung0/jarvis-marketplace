@@ -4,7 +4,6 @@ import { useState, useRef } from "react"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { createProduct, updateProduct } from "@/app/actions/products"
-import { generateProductDescription } from "@/app/actions/ai"
 import { isRedirectError } from "next/dist/client/components/redirect-error"
 import { ImagePlus, X, Loader2, Link as LinkIcon } from "lucide-react"
 
@@ -33,10 +32,6 @@ interface ImagePreview {
 
 export function ProductForm({ initialData, categories = [] }: ProductFormProps) {
   const [error, setError] = useState<string | null>(null)
-  const [aiLoading, setAiLoading] = useState(false)
-  const [showAiDialog, setShowAiDialog] = useState(false)
-  const [aiKeywords, setAiKeywords] = useState("")
-  const [aiTone, setAiTone] = useState("professional")
   const [description, setDescription] = useState(initialData?.description || "")
   const existingImages: ImagePreview[] = (initialData?.images ?? []).map((img) => ({
   type: "url" as const,
@@ -136,30 +131,6 @@ const [images, setImages] = useState<ImagePreview[]>(existingImages)
       setError(e.message)
     } finally {
       setSubmitting(false)
-    }
-  }
-
-  async function handleGenerateDescription() {
-    const titleEl = document.getElementById("title") as HTMLInputElement
-    const title = titleEl?.value || initialData?.title || ""
-    if (!title) {
-      setError("Please enter a product title first")
-      return
-    }
-    setAiLoading(true)
-    setError(null)
-    try {
-      const result = await generateProductDescription({
-        title,
-        keywords: aiKeywords || undefined,
-        tone: aiTone,
-      })
-      setDescription(result)
-      setShowAiDialog(false)
-    } catch (e: any) {
-      setError(e.message)
-    } finally {
-      setAiLoading(false)
     }
   }
 
@@ -277,16 +248,7 @@ const [images, setImages] = useState<ImagePreview[]>(existingImages)
               rows={5}
               required
             />
-            <button
-              type="button"
-              onClick={() => setShowAiDialog(true)}
-              className="absolute top-2 right-2 px-3 py-1.5 text-xs font-medium rounded-lg gradient-brand text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all flex items-center gap-1.5"
-            >
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
-              </svg>
-              Generate with AI
-            </button>
+
           </div>
         </div>
       </div>
@@ -361,64 +323,6 @@ const [images, setImages] = useState<ImagePreview[]>(existingImages)
           </select>
         </div>
       </div>
-
-      {showAiDialog && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={() => setShowAiDialog(false)}>
-          <div className="bg-white rounded-2xl border border-gray-200 p-6 w-full max-w-md mx-4 shadow-xl" onClick={(e) => e.stopPropagation()}>
-            <h3 className="font-bold text-gray-900 mb-4">Generate Description with AI</h3>
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm font-medium text-gray-700 block mb-1">Keywords (optional)</label>
-                <input
-                  value={aiKeywords}
-                  onChange={(e) => setAiKeywords(e.target.value)}
-                  placeholder="e.g. trendy, murah, berkualitas"
-                  className="w-full bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:border-orange-400 outline-none"
-                />
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-700 block mb-1">Tone</label>
-                <select
-                  value={aiTone}
-                  onChange={(e) => setAiTone(e.target.value)}
-                  className="w-full bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:border-orange-400 outline-none"
-                >
-                  <option value="professional">Professional</option>
-                  <option value="casual">Casual</option>
-                  <option value="persuasive">Persuasive</option>
-                </select>
-              </div>
-              <div className="flex gap-3 justify-end pt-2">
-                <button
-                  type="button"
-                  onClick={() => setShowAiDialog(false)}
-                  className="px-4 py-2 text-sm font-medium text-gray-400 hover:text-gray-900 transition"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  onClick={handleGenerateDescription}
-                  disabled={aiLoading}
-                  className="px-4 py-2 text-sm font-medium rounded-lg gradient-brand text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all disabled:opacity-50 flex items-center gap-2"
-                >
-                  {aiLoading ? (
-                    <>
-                      <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                      </svg>
-                      Generating...
-                    </>
-                  ) : (
-                    "Generate"
-                  )}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
         <a

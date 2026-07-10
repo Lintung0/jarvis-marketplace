@@ -11,7 +11,7 @@ export default async function FeaturedProducts() {
     .from("products")
     .select(
       `*,
-      images: product_images (id, url, alt, sort_order, is_primary),
+      images: product_images (id, url, alt, is_primary),
       vendor: profiles (id, username, full_name, avatar_url)`
     )
     .eq("status", "active")

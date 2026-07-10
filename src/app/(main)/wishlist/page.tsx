@@ -16,7 +16,7 @@ export default async function WishlistPage() {
       id,
       product: products (
         *,
-        images: product_images (id, url, alt, is_primary, sort_order),
+        images: product_images (id, url, alt, is_primary),
         vendor: profiles (id, username, full_name, avatar_url)
       )
     `)

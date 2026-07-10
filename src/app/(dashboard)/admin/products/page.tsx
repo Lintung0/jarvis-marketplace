@@ -8,7 +8,7 @@ export default async function AdminProductsPage() {
 
   const { data: products } = await supabase
     .from("products")
-    .select("*, vendor: profiles(full_name, username), images: product_images(url, is_primary, sort_order)")
+    .select("*, vendor: profiles(full_name, username), images: product_images(url, is_primary)")
     .order("created_at", { ascending: false })
     .limit(50)
 

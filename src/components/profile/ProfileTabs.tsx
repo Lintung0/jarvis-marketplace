@@ -285,8 +285,6 @@ export default function ProfileTabs({ profile, orders, wishlistItems }: ProfileT
                   if (!product) return null;
                   const sorted = [...(product.images ?? [])].sort((a, b) => {
                     if (a.is_primary !== b.is_primary) return a.is_primary ? -1 : 1;
-                    const sortDiff = (a.sort_order ?? 0) - (b.sort_order ?? 0);
-                    if (sortDiff !== 0) return sortDiff;
                     return (a.url || "").localeCompare(b.url || "");
                   });
                   const primaryImage = sorted[0];
