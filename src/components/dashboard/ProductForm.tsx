@@ -125,12 +125,11 @@ const [images, setImages] = useState<ImagePreview[]>(existingImages)
         }
       }
 
-      formData.set("image_urls", JSON.stringify(imageUrls))
-
       if (initialData?.id) {
-        await updateProduct(initialData.id, formData)
+        await updateProduct(initialData.id, formData, imageUrls)
         return
       }
+      formData.set("image_urls", JSON.stringify(imageUrls))
       await createProduct(formData)
     } catch (e: any) {
       if (isRedirectError(e)) throw e

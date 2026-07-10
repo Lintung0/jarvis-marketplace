@@ -6,6 +6,20 @@ import { createClient, createAdminClient } from "@/lib/supabase/server"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
+async function upsertImages(supabase: any, productId: string, imageUrls: string[]) {
+  if (imageUrls.length === 0) return
+  const { error: delErr } = await supabase.from("product_images").delete().eq("product_id", productId)
+  if (delErr) logger.error("Failed to delete old images:", delErr)
+  const images = imageUrls.map((url: string, i: number) => ({
+    product_id: productId,
+    url,
+    is_primary: i === 0,
+    sort_order: i,
+  }))
+  const { error: insErr } = await supabase.from("product_images").insert(images)
+  if (insErr) throw new Error("Failed to save images: " + insErr.message)
+}
+
 export async function createProduct(formData: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -17,6 +31,7 @@ export async function createProduct(formData: FormData) {
   const stock = parseInt(formData.get("stock") as string)
   const status = formData.get("status") as string
   const category_id = formData.get("category_id") as string
+  const imageUrls: string[] = JSON.parse(formData.get("image_urls") as string || "[]")
   let slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
   const { data: existingSlug } = await supabase
     .from("products")
@@ -45,24 +60,13 @@ export async function createProduct(formData: FormData) {
 
   if (error) throw new Error(error.message)
 
-  // Save product images
-  const imageUrls: string[] = JSON.parse(formData.get("image_urls") as string || "[]")
-  if (imageUrls.length > 0 && product) {
-    const images = imageUrls.map((url, i) => ({
-      product_id: product.id,
-      url,
-      is_primary: i === 0,
-      sort_order: i,
-    }))
-    const { error: imgError } = await supabase.from("product_images").insert(images)
-    if (imgError) logger.error("Failed to save product images:", imgError)
-  }
+  if (product) await upsertImages(supabase, product.id, imageUrls)
 
   revalidatePath("/vendor/products")
   redirect("/vendor/products")
 }
 
-export async function updateProduct(productId: string, formData: FormData) {
+export async function updateProduct(productId: string, formData: FormData, imageUrls?: string[]) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("Unauthorized")
@@ -73,6 +77,7 @@ export async function updateProduct(productId: string, formData: FormData) {
   const stock = parseInt(formData.get("stock") as string)
   const status = formData.get("status") as string
   const category_id = formData.get("category_id") as string
+  const finalUrls = (imageUrls || JSON.parse(formData.get("image_urls") as string || "[]")).filter(Boolean)
   let slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
   const { data: existingSlug } = await supabase
     .from("products")
@@ -92,19 +97,7 @@ export async function updateProduct(productId: string, formData: FormData) {
 
   if (error) throw new Error(error.message)
 
-  // Update images if provided
-  const imageUrls: string[] = JSON.parse(formData.get("image_urls") as string || "[]").filter(Boolean)
-  if (imageUrls.length > 0) {
-    await supabase.from("product_images").delete().eq("product_id", productId)
-    const images = imageUrls.map((url, i) => ({
-      product_id: productId,
-      url,
-      is_primary: i === 0,
-      sort_order: i,
-    }))
-    const { error: imgError } = await supabase.from("product_images").insert(images)
-    if (imgError) logger.error("Failed to update product images:", imgError)
-  }
+  await upsertImages(supabase, productId, finalUrls)
 
   revalidatePath("/vendor/products")
   redirect("/vendor/products")
