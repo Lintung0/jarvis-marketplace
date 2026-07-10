@@ -8,7 +8,7 @@ export default async function ModeratorProductsPage() {
   
   const { data: products } = await supabase
     .from("products")
-    .select("*, vendor: profiles(full_name, username), images: product_images(url, is_primary)")
+    .select("*, vendor: profiles(full_name, username), images: product_images(url, is_primary, sort_order)")
     .eq("status", "pending")
     .order("created_at", { ascending: false })
 

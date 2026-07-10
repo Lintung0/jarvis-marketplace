@@ -32,7 +32,7 @@ export default async function ProfilePage() {
       *,
       items: order_items (
         id, title, price, quantity,
-        product: products (id, slug, images: product_images (url, is_primary))
+        product: products (id, slug, images: product_images (url, is_primary, sort_order))
       )
     `)
     .eq("buyer_id", user.id)
@@ -44,7 +44,7 @@ export default async function ProfilePage() {
       *,
       product: products (
         *,
-        images: product_images (url, is_primary)
+        images: product_images (url, is_primary, sort_order)
       )
     `)
     .eq("user_id", user.id)

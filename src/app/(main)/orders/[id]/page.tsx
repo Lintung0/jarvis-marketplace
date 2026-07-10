@@ -65,7 +65,7 @@ export default async function OrderDetailPage({ params, searchParams }: PageProp
       if (products) {
         const { data: images } = await admin
           .from("product_images")
-          .select("product_id, url, is_primary")
+          .select("product_id, url, is_primary, sort_order")
           .in("product_id", productIds);
 
         const imagesByProduct: Record<string, { url: string; is_primary: boolean }[]> = {};

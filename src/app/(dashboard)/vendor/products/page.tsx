@@ -23,7 +23,7 @@ export default async function VendorProductsPage() {
     .select(`
       *,
       category:categories (name, slug),
-      images:product_images (url, is_primary)
+      images:product_images (url, is_primary, sort_order)
     `)
     .eq("vendor_id", user.id)
     .order("created_at", { ascending: false });

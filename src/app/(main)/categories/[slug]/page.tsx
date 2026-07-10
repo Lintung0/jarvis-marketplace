@@ -85,7 +85,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
     .from("products")
     .select(
       `*,
-      images: product_images (id, url, alt, is_primary),
+      images: product_images (id, url, alt, is_primary, sort_order),
       vendor: profiles (id, username, full_name, avatar_url)`,
       { count: "exact" }
     )

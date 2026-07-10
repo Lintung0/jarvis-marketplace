@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const { data: product } = await supabase
     .from("products")
-    .select("title, description, images: product_images(url, is_primary)")
+    .select("title, description, images: product_images(url, is_primary, sort_order)")
     .eq("slug", slug)
     .single();
 
@@ -45,7 +45,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
     .from("products")
     .select(
       `*,
-      images: product_images (id, url, alt, is_primary),
+      images: product_images (id, url, alt, is_primary, sort_order),
       vendor: profiles (id, username, full_name, avatar_url, is_verified),
       category: categories (id, name, slug),
       reviews: product_reviews (
@@ -83,13 +83,14 @@ export default async function ProductDetailPage({ params }: PageProps) {
     .from("products")
     .select(
       `*,
-      images: product_images (id, url, alt, is_primary),
+      images: product_images (id, url, alt, is_primary, sort_order),
       vendor: profiles (id, username, full_name, avatar_url)`
     )
     .eq("category_id", product.category_id)
     .eq("status", "active")
     .neq("id", product.id)
     .in("vendor_id", activeVendorIds.length > 0 ? activeVendorIds : [null])
+    .order("created_at", { ascending: false })
     .limit(4);
 
   const jsonLd = {

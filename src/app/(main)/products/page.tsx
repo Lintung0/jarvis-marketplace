@@ -50,7 +50,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
     .from("products")
     .select(
       `*,
-      images: product_images (id, url, alt, is_primary),
+      images: product_images (id, url, alt, is_primary, sort_order),
       vendor: profiles (id, username, full_name, avatar_url)`,
       { count: "exact" }
     )
@@ -220,8 +220,8 @@ function Pagination({
               href={buildUrl(page)}
               className={`px-3.5 py-1.5 rounded-xl text-sm font-medium transition ${
                 page === current
-                  ? "bg-indigo-600 text-white"
-                  : "bg-[#0d0d1a] border border-[#2a2a4a] text-gray-400 hover:bg-[#0a0a15]"
+                  ? "bg-orange-500 text-white"
+                  : "bg-white border border-gray-200 text-gray-600 hover:bg-orange-50"
               }`}
             >
               {page}
