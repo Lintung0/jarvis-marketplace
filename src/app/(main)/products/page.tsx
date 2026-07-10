@@ -43,13 +43,6 @@ export default async function ProductsPage({ searchParams }: PageProps) {
     .eq("is_active", true)
     .order("name");
 
-  // Fetch brands untuk filter
-  const { data: brands } = await supabase
-    .from("brands")
-    .select("id, name, slug")
-    .eq("is_active", true)
-    .order("name");
-
   const activeVendorIds = await getActiveVendorIds(supabase);
 
   // Build query produk
@@ -151,10 +144,8 @@ export default async function ProductsPage({ searchParams }: PageProps) {
           <Suspense>
             <ProductFilters
               categories={(categories ?? []) as Category[]}
-              brands={(brands ?? []) as { id: string; name: string; slug: string }[]}
               activeCategory={category}
               activeType={type}
-              activeBrand={brand}
             />
           </Suspense>
         </div>

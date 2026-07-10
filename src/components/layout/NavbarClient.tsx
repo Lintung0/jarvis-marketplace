@@ -204,19 +204,19 @@ function CategoryNav({ categories }: { categories: Category[] }) {
   return (
     <nav className="hidden lg:block bg-white border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4">
-        <ul className="flex">
+        <ul className="flex justify-center">
           <li>
-            <Link href="/products" className="flex items-center px-4 py-3 text-sm font-medium text-gray-600 hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500 transition-all">
+            <Link href="/products" className="flex items-center px-5 py-3 text-sm font-medium text-gray-600 hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500 transition-all">
               {t("nav.all_products") || "All Products"}
             </Link>
           </li>
           <li>
-            <Link href="/vendors" className="flex items-center px-4 py-3 text-sm font-medium text-gray-600 hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500 transition-all">
+            <Link href="/vendors" className="flex items-center px-5 py-3 text-sm font-medium text-gray-600 hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500 transition-all">
               {t("nav.vendors") || "Vendors"}
             </Link>
           </li>
           <li>
-            <Link href="/blog" className="flex items-center px-4 py-3 text-sm font-medium text-gray-600 hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500 transition-all">
+            <Link href="/blog" className="flex items-center px-5 py-3 text-sm font-medium text-gray-600 hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500 transition-all">
               {t("nav.blog") || "Blog"}
             </Link>
           </li>

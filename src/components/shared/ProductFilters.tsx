@@ -6,10 +6,8 @@ import type { Category } from "@/types";
 
 interface Props {
     categories: Category[];
-    brands?: { id: string; name: string; slug: string }[];
     activeCategory?: string;
     activeType?: string;
-    activeBrand?: string;
 }
 
 function catName(t: (key: string) => string, slug: string, fallback: string) {
@@ -17,7 +15,7 @@ function catName(t: (key: string) => string, slug: string, fallback: string) {
   return translated !== "categories.slugs." + slug ? translated : fallback;
 }
 
-export default function ProductFilters({ categories, brands = [], activeCategory, activeType, activeBrand }: Props ) {
+export default function ProductFilters({ categories, activeCategory, activeType }: Props ) {
     const { t } = useTranslation();
     const router = useRouter();
     const pathname= usePathname();
@@ -63,54 +61,14 @@ export default function ProductFilters({ categories, brands = [], activeCategory
         </div>
       </div>
 
-      {/* Filter Brand */}
-      <div>
-        <h3 className="text-sm font-semibold text-[#1e293b] mb-3">{t("products.brand")}</h3>
-        <div className="space-y-1.5">
-          <button
-            onClick={() => updateFilter("brand", "")}
-            className={`w-full text-left text-sm px-3 py-2 rounded-xl transition ${
-              !activeBrand
-                ? "bg-indigo-600 text-white font-medium"
-                : "text-gray-400 hover:bg-[#0d0d1a]"
-            }`}
-          >
-            {t("products.all_brands")}
-          </button>
-          {brands.map((brand) => (
-            <button
-              key={brand.id}
-              onClick={() => updateFilter("brand", brand.slug)}
-              className={`w-full text-left text-sm px-3 py-2 rounded-xl transition ${
-                activeBrand === brand.slug
-                  ? "bg-orange-500 text-white font-medium"
-                  : "text-gray-700 hover:bg-orange-50"
-              }`}
-            >
-              {brand.name}
-            </button>
-          ))}
-        </div>
-      </div>
-
       {/* Filter Kategori */}
       <div>
         <h3 className="text-sm font-semibold text-[#1e293b] mb-3">{t("products.category")}</h3>
         <div className="space-y-1.5">
-          <button
-            onClick={() => updateFilter("category", "")}
-            className={`w-full text-left text-sm px-3 py-2 rounded-xl transition ${
-              !activeCategory
-                ? "bg-indigo-600 text-white font-medium"
-                : "text-gray-400 hover:bg-[#0d0d1a]"
-            }`}
-          >
-            {t("categories.all_categories")}
-          </button>
           {categories.map((cat) => (
             <button
               key={cat.id}
-              onClick={() => updateFilter("category", cat.slug)}
+              onClick={() => updateFilter("category", cat.slug === activeCategory ? "" : cat.slug)}
               className={`w-full text-left text-sm px-3 py-2 rounded-xl transition ${
                 activeCategory === cat.slug
                   ? "bg-orange-500 text-white font-medium"
