@@ -17,7 +17,7 @@ interface ProductFormProps {
     stock: number
     status: string
     category_id?: string | null
-    images?: { id: string; url: string; alt: string | null; is_primary: boolean; sort_order: number }[]
+    images?: { id: string; url: string; alt: string | null; is_primary: boolean }[]
   }
   categories?: { id: string; name: string; slug: string }[]
 }

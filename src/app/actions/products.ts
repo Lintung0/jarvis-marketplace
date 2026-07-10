@@ -13,7 +13,6 @@ async function upsertImages(supabase: any, productId: string, imageUrls: string[
     product_id: productId,
     url,
     is_primary: i === 0,
-    sort_order: i,
   }))
   const { error: insErr } = await supabase.from("product_images").insert(images)
   if (insErr) throw new Error("Failed to save images: " + insErr.message)
