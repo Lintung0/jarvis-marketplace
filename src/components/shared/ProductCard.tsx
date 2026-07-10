@@ -1,8 +1,6 @@
 "use client"
 
-import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import WishlistButton from "@/components/shared/WishlistButton";
 import PriceDisplay from "@/components/ui/PriceDisplay";
 import type { Product } from "@/types";
@@ -13,10 +11,8 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const [imgError, setImgError] = useState(false);
   const primaryImageUrl =
     product.images?.find((img) => img.is_primary)?.url;
-  const hasPrimaryImage = !!(primaryImageUrl && !imgError);
 
   const discountPercent = product.sale_price
     ? Math.round(((product.price - product.sale_price) / product.price) * 100)
@@ -28,24 +24,14 @@ export default function ProductCard({ product }: ProductCardProps) {
     <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:border-orange-100">
       <Link href={`/products/${product.slug}`}>
         <div className="relative overflow-hidden bg-gray-50" style={{ height: 220 }}>
-          {hasPrimaryImage ? (
-            <img
-              src={primaryImageUrl}
-              alt={product.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              onError={() => setImgError(true)}
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gray-100">
-              <Image
-                src="/placeholder-product.png"
-                alt={product.title}
-                fill
-                className="object-cover opacity-50"
-                sizes="(max-width: 768px) 50vw, 25vw"
-              />
-            </div>
-          )}
+          <img
+            src={primaryImageUrl || "/placeholder-product.png"}
+            alt={product.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = "/placeholder-product.png"
+            }}
+          />
           {product.sale_price && (
             <span className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-lg">
               -{discountPercent}%
