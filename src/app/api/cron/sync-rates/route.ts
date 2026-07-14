@@ -30,6 +30,7 @@ export async function GET(req: Request) {
     return NextResponse.json({ success: true, rate: rateIdr });
   } catch (error: any) {
     console.error('Cron sync failed:', error);
-    return NextResponse.json({ error: 'Sync failed' }, { status: 500 });
+    // Tambahin ini biar tau errornya apa
+    return NextResponse.json({ error: 'Sync failed', details: error.message }, { status: 500 });
   }
 }
