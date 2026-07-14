@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server"
+import { createClient, createAdminClient } from "@/lib/supabase/server"
 import StatsCard from "@/components/dashboard/StatsCard"
 import { DollarSign, TrendingUp, Wallet, Banknote } from "lucide-react"
 import { formatCurrency } from "@/lib/utils"
@@ -6,10 +6,11 @@ import { PayoutRequestForm } from "./PayoutRequestForm"
 
 export default async function VendorEarningsPage() {
   const supabase = await createClient()
+  const admin = createAdminClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return null
 
-  const { data: orderItems } = await supabase
+  const { data: orderItems } = await admin
     .from("order_items")
     .select("price, quantity, vendor_earning, order:orders!inner(status)")
     .eq("vendor_id", user.id)

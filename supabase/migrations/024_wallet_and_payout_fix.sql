@@ -23,3 +23,15 @@ CREATE POLICY "Admins can manage all withdrawals"
   USING (
     EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
   );
+
+-- Fix: Add missing SELECT policy for vendors on orders table
+-- Previously vendors could UPDATE but not SELECT orders, breaking order_items joins
+CREATE POLICY "Vendors can view orders for their items"
+  ON public.orders FOR SELECT
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.order_items
+      WHERE order_items.order_id = orders.id
+      AND order_items.vendor_id = auth.uid()
+    )
+  );

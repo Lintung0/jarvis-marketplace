@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server"
+import { createClient, createAdminClient } from "@/lib/supabase/server"
 import { Wallet, TrendingUp, ArrowUpRight, ArrowDownLeft, DollarSign, Banknote, CreditCard, Plus } from "lucide-react"
 import StatsCard from "@/components/dashboard/StatsCard"
 import { formatCurrency } from "@/lib/utils"
@@ -7,10 +7,11 @@ import Link from "next/link"
 
 export default async function VendorWalletPage() {
   const supabase = await createClient()
+  const admin = createAdminClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return null
 
-  const { data: orderItems } = await supabase
+  const { data: orderItems } = await admin
     .from("order_items")
     .select("price, quantity, vendor_earning, created_at, order:orders!inner(status, id)")
     .eq("vendor_id", user.id)
