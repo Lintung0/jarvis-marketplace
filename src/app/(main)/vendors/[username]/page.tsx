@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getActiveVendorIds } from "@/lib/queries";
 import ProductGrid from "@/components/shared/ProductGrid";
 import FollowButton from "@/components/shared/FollowButton";
-import { MapPin, Calendar, Package, Star, BadgeCheck, Users } from "lucide-react";
+import { MapPin, Calendar, Package, Star, BadgeCheck, Users, Crown } from "lucide-react";
 import type { Product, Profile } from "@/types";
 import { getFollowCounts } from "@/app/actions/follows";
 import { generateMeta } from "@/lib/seo";
@@ -144,8 +144,18 @@ export default async function VendorProfilePage({ params }: PageProps) {
               <div className="flex-1 pt-6">
                 <div className="flex items-start justify-between flex-wrap gap-4">
                   <div>
-                    <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
+                    <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3 flex-wrap">
                       {profile.full_name ?? profile.username}
+                      {profile.plan_name && profile.plan_name !== "Free" && (
+                        <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold border ${
+                          profile.plan_name === "Pro"
+                            ? "bg-orange-50 text-orange-700 border-orange-200"
+                            : "bg-purple-50 text-purple-700 border-purple-200"
+                        }`}>
+                          <Crown className="w-3 h-3" />
+                          {profile.plan_name}
+                        </span>
+                      )}
                       {currentUser && !isOwnProfile && (
                         <FollowButton vendorId={vendor.id} vendorName={profile.full_name ?? profile.username} />
                       )}

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { BadgeCheck } from "lucide-react";
+import { BadgeCheck, Crown } from "lucide-react";
 import type { Profile } from "@/types";
 
 interface Props {
@@ -39,6 +39,11 @@ export default function VendorCard({ vendor }: Props) {
             </p>
             {vendor.is_verified && (
               <BadgeCheck className="w-4 h-4 text-blue-500" />
+            )}
+            {vendor.plan_name && vendor.plan_name !== "Free" && (
+              <Crown className={`w-4 h-4 ${
+                vendor.plan_name === "Pro" ? "text-orange-500" : "text-purple-500"
+              }`} />
             )}
           </div>
           <p className="text-xs text-gray-500 truncate">@{vendor.username}</p>

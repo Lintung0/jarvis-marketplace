@@ -90,6 +90,16 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
                         Verified
                       </span>
                     )}
+                    {profile.plan_name && profile.plan_name !== "Free" && (
+                      <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-semibold border ${
+                        profile.plan_name === "Pro"
+                          ? "bg-orange-50 text-orange-700 border-orange-200"
+                          : "bg-purple-50 text-purple-700 border-purple-200"
+                      }`}>
+                        <Crown className="w-3.5 h-3.5" />
+                        {profile.plan_name}
+                      </span>
+                    )}
                   </div>
 
                   <div className="flex items-center gap-4 mt-3 text-sm text-gray-500 flex-wrap">

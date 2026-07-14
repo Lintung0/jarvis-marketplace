@@ -4,6 +4,20 @@ import { createClient, createAdminClient } from "@/lib/supabase/server"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
+async function updateProfilePlanName(userId: string) {
+  const supabase = await createClient()
+  const { data: sub } = await supabase
+    .from("vendor_subscriptions")
+    .select("plan:membership_plans(name)")
+    .eq("vendor_id", userId)
+    .eq("status", "active")
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle()
+  const planName = (sub?.plan as any)?.name ?? null
+  await supabase.from("profiles").update({ plan_name: planName }).eq("id", userId)
+}
+
 export async function getPlans() {
   const supabase = await createClient()
   const { data } = await supabase
@@ -83,8 +97,10 @@ export async function subscribe(planId: string) {
     })
 
     if (error) throw new Error(error.message)
+    await updateProfilePlanName(user.id)
     revalidatePath("/membership")
     revalidatePath("/vendor")
+    revalidatePath("/profile")
     redirect("/vendor?subscribed=free")
     return
   }

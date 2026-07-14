@@ -41,6 +41,17 @@ export async function GET(req: NextRequest) {
             .update({ status: "active", updated_at: new Date().toISOString() })
             .eq("id", subscription_id);
 
+          // Update profile plan_name
+          const { data: updatedSub } = await admin
+            .from("vendor_subscriptions")
+            .select("vendor_id, plan:membership_plans(name)")
+            .eq("id", subscription_id)
+            .single();
+          if (updatedSub) {
+            const planName = (updatedSub.plan as any)?.name ?? null;
+            await admin.from("profiles").update({ plan_name: planName }).eq("id", updatedSub.vendor_id);
+          }
+
           return NextResponse.redirect(new URL("/vendor?subscribed=success", req.url));
         }
       }

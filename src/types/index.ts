@@ -18,6 +18,7 @@ export interface Profile {
   is_verified: boolean
   is_banned: boolean
   balance: number
+  plan_name: string | null
   created_at: string
   updated_at: string
 }

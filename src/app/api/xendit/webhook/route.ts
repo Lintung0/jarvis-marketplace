@@ -33,6 +33,16 @@ export async function POST(req: NextRequest) {
         .update({ status: "active", updated_at: new Date().toISOString() })
         .eq("id", externalId);
 
+      const { data: updatedSub } = await supabase
+        .from("vendor_subscriptions")
+        .select("vendor_id, plan:membership_plans(name)")
+        .eq("id", externalId)
+        .single();
+      if (updatedSub) {
+        const planName = (updatedSub.plan as any)?.name ?? null;
+        await supabase.from("profiles").update({ plan_name: planName }).eq("id", updatedSub.vendor_id);
+      }
+
       return NextResponse.json({ received: true });
     }
 

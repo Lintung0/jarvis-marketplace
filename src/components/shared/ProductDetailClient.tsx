@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Star, ShoppingCart, Heart, Package, Shield, TrendingUp, Store, BadgeCheck, MessageCircle } from "lucide-react";
+import { Star, ShoppingCart, Heart, Package, Shield, TrendingUp, Store, BadgeCheck, MessageCircle, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/stores/cartStore";
 import PriceDisplay from "@/components/ui/PriceDisplay";
@@ -139,7 +139,12 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
               <div className="font-semibold flex items-center gap-1">
                 {product.vendor?.full_name ?? "Unknown Vendor"}
                 {product.vendor?.is_verified && (
-                  <BadgeCheck className="w-4 h-4 text-orange-500" />
+                  <BadgeCheck className="w-4 h-4 text-blue-500" />
+                )}
+                {(product.vendor as any)?.plan_name && (product.vendor as any).plan_name !== "Free" && (
+                  <Crown className={`w-4 h-4 ${
+                    (product.vendor as any).plan_name === "Pro" ? "text-orange-500" : "text-purple-500"
+                  }`} />
                 )}
               </div>
               <div className="text-sm text-muted-foreground">Lihat Toko</div>
