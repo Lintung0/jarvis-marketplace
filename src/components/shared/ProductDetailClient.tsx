@@ -304,7 +304,7 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
                           </div>
                         </div>
                       </div>
-                      <p className="text-gray-300">{review.comment}</p>
+                      <p className="text-gray-300">{review.review_text}</p>
                       <p className="text-xs text-gray-400 mt-2">
                         {new Date(review.created_at).toLocaleDateString("id-ID", {
                           day: "numeric",

@@ -29,8 +29,8 @@ export default function ReviewList({ reviews }: Props ) {
                 {new Date(review.created_at).toLocaleDateString("id-ID")}
               </span>
             </div>
-            {review.comment && (
-              <p className="text-sm text-gray-400">{review.comment}</p>
+            {review.review_text && (
+              <p className="text-sm text-gray-400">{review.review_text}</p>
             )}
           </div>
         ))}
