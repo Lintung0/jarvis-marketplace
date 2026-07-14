@@ -6,12 +6,13 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Search, Menu, Heart, LogOut, Loader2, User, Store, HelpCircle, MessageCircle, Tag, ChevronDown, MapPin, Package } from "lucide-react";
+import { ShoppingCart, Search, Menu, Heart, LogOut, Loader2, User, Store, HelpCircle, MessageCircle, Tag, ChevronDown, Package } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import LanguageSwitcher from "./LanguageSwitcher";
 import CurrencySwitcher from "./CurrencySwitcher";
+import LocationPicker from "./LocationPicker";
 
 interface Category {
   id: number;
@@ -69,10 +70,7 @@ function TopBar({ user, profile }: { user: any; profile: any }) {
           <Link href="/sell" className="hover:text-orange-500 transition-colors">{t("nav.sell")}</Link>
         </div>
         <div className="flex items-center gap-4">
-          <span className="hidden md:flex items-center gap-1">
-            <MapPin className="w-3 h-3" />
-            Indonesia
-          </span>
+          <LocationPicker />
           <CurrencySwitcher />
           <LanguageSwitcher />
           {user ? (

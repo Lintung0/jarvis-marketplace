@@ -17,6 +17,7 @@ interface ProductFormProps {
     stock: number
     status: string
     category_id?: string | null
+    location?: string | null
     images?: { id: string; url: string; alt: string | null; is_primary: boolean }[]
   }
   categories?: { id: string; name: string; slug: string }[]
@@ -271,6 +272,20 @@ const [images, setImages] = useState<ImagePreview[]>(existingImages)
               </option>
             ))}
           </select>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Location</h3>
+        <div className="space-y-2">
+          <label htmlFor="location" className="text-sm font-medium text-gray-700">Product Location</label>
+          <Input
+            id="location"
+            name="location"
+            defaultValue={initialData?.location || ""}
+            placeholder="e.g. Jakarta, Indonesia"
+          />
+          <p className="text-xs text-gray-400">Lokasi produk akan muncul di kartu produk</p>
         </div>
       </div>
 

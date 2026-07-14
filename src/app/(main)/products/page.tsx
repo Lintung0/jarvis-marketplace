@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveVendorIds } from "@/lib/queries";
+import { cookies } from "next/headers";
 import ProductGrid from "@/components/shared/ProductGrid";
 import ProductFilters from "@/components/shared/ProductFilters";
 import SortSelect from "@/components/shared/SortSelect";
@@ -14,21 +15,27 @@ interface PageProps {
     category?: string;
     type?: string;
     brand?: string;
+    location?: string;
     sort?: string;
     page?: string;
   }>;
 }
 
-const sortOptions = [
-  { value: "newest",     label: "Terbaru" },
-  { value: "oldest",     label: "Terlama" },
-  { value: "price_asc",  label: "Harga: Termurah" },
-  { value: "price_desc", label: "Harga: Termahal" },
-  { value: "popular",    label: "Terpopuler" },
-];
-
 export default async function ProductsPage({ searchParams }: PageProps) {
-  const { q, category, type, brand, sort = "newest", page = "1" } = await searchParams;
+  const { q, category, type, brand, location: locParam, sort = "newest", page = "1" } = await searchParams;
+
+  // Baca lokasi dari cookie kalo gak ada query param
+  let location = locParam
+  if (!location) {
+    const cookieStore = await cookies()
+    const locCookie = cookieStore.get("jarvis-location")
+    if (locCookie) {
+      try {
+        const parsed = JSON.parse(decodeURIComponent(locCookie.value))
+        if (parsed.name) location = parsed.name
+      } catch {}
+    }
+  }
 
   const supabase = await createClient();
   const pageSize = 20;
@@ -65,6 +72,11 @@ export default async function ProductsPage({ searchParams }: PageProps) {
   // Filter type
   if (type) {
     query = query.eq("type", type);
+  }
+
+  // Filter lokasi
+  if (location) {
+    query = query.ilike("location", `%${location}%`);
   }
 
   // Filter brand
@@ -124,7 +136,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900">
-          {q ? `Hasil pencarian: "${q}"` : "Semua Produk"}
+          {q ? `Hasil pencarian: "${q}"` : location ? `Produk di "${location}"` : "Semua Produk"}
         </h1>
         <p className="text-sm text-gray-600 mt-1">
           {count ?? 0} produk ditemukan
@@ -145,6 +157,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
             <ProductFilters
               categories={(categories ?? []) as Category[]}
               activeCategory={category}
+              activeLocation={location}
             />
           </Suspense>
         </div>
@@ -174,7 +187,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
           {/* Pagination */}
           {totalPages > 1 && (
             <Suspense>
-              <Pagination current={currentPage} total={totalPages} searchParams={{ q, category, type, brand, sort }} />
+              <Pagination current={currentPage} total={totalPages} searchParams={{ q, category, type, brand, location, sort }} />
             </Suspense>
           )}
         </div>

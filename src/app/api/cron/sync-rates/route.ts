@@ -9,20 +9,14 @@ export async function GET(req: Request) {
 
   try {
     const API_KEY = process.env.EXCHANGE_RATE_API_KEY;
-    if (!API_KEY) throw new Error("API Key kosong di Vercel");
+    if (!API_KEY) throw new Error("API Key tidak diset");
 
-    const url = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`;
-    const res = await fetch(url);
+    const res = await fetch(`https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`);
     const data = await res.json();
     
-    // DEBUG: return data buat liat API bilang apa
     if (data.result !== 'success') {
-      return NextResponse.json({ 
-        error: 'API Error', 
-        api_result: data.result, 
-        error_type: data['error-type'],
-        full_data: data 
-      }, { status: 400 });
+      console.warn('Cron Sync: API Failed');
+      return NextResponse.json({ success: false, message: 'API Failed' });
     }
 
     const rateIdr = data.conversion_rates.IDR;
@@ -35,7 +29,8 @@ export async function GET(req: Request) {
     });
 
     return NextResponse.json({ success: true, rate: rateIdr });
-  } catch (error: any) {
-    return NextResponse.json({ error: 'Sync failed', details: error.message }, { status: 500 });
+  } catch (error) {
+    console.error('Cron Sync Error:', error);
+    return NextResponse.json({ success: false, error: 'Internal failure' });
   }
 }

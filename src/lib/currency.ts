@@ -25,21 +25,38 @@ let cachedRates: Record<string, number> | null = null
 let lastFetch = 0
 const CACHE_TTL = 3_600_000
 
+function getApiBaseUrl(): string {
+  if (typeof window !== "undefined") return ""
+  return process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+}
+
 export async function getExchangeRates(): Promise<Record<string, number>> {
   const now = Date.now()
   if (cachedRates && now - lastFetch < CACHE_TTL) return cachedRates
 
   try {
-    const res = await fetch("https://api.frankfurter.dev/latest?base=USD")
-    if (!res.ok) throw new Error("Failed to fetch rates")
-    const data: ExchangeRateResponse = await res.json()
-    cachedRates = { ...data.rates, USD: 1 }
-    lastFetch = now
-    return cachedRates
+    const base = getApiBaseUrl()
+    const res = await fetch(`${base}/api/exchange-rate`)
+    if (res.ok) {
+      const data = await res.json()
+      cachedRates = { USD: 1, IDR: data.rate }
+      lastFetch = now
+      return cachedRates
+    }
+    throw new Error("Failed to fetch from own API")
   } catch {
-    cachedRates = FALLBACK_RATES
-    lastFetch = now
-    return FALLBACK_RATES
+    try {
+      const res = await fetch("https://api.frankfurter.dev/latest?base=USD")
+      if (!res.ok) throw new Error("Failed to fetch rates")
+      const data: ExchangeRateResponse = await res.json()
+      cachedRates = { ...data.rates, USD: 1 }
+      lastFetch = now
+      return cachedRates
+    } catch {
+      cachedRates = FALLBACK_RATES
+      lastFetch = now
+      return FALLBACK_RATES
+    }
   }
 }
 
