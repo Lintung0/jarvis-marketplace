@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveVendorIds } from "@/lib/queries";
-import { cookies } from "next/headers";
 import ProductGrid from "@/components/shared/ProductGrid";
 import ProductFilters from "@/components/shared/ProductFilters";
 import SortSelect from "@/components/shared/SortSelect";
@@ -22,20 +21,7 @@ interface PageProps {
 }
 
 export default async function ProductsPage({ searchParams }: PageProps) {
-  const { q, category, type, brand, location: locParam, sort = "newest", page = "1" } = await searchParams;
-
-  // Baca lokasi dari cookie kalo gak ada query param & bukan default
-  let location = locParam
-  if (!location) {
-    const cookieStore = await cookies()
-    const locCookie = cookieStore.get("jarvis-location")
-    if (locCookie) {
-      try {
-        const parsed = JSON.parse(decodeURIComponent(locCookie.value))
-        if (parsed.name && parsed.name !== "Indonesia") location = parsed.name
-      } catch {}
-    }
-  }
+  const { q, category, type, brand, location, sort = "newest", page = "1" } = await searchParams;
 
   const supabase = await createClient();
   const pageSize = 20;
