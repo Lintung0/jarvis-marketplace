@@ -23,7 +23,7 @@ export async function getAllPlansAdmin() {
     .from("profiles")
     .select("role")
     .eq("id", user.id)
-    .single()
+    .maybeSingle()
 
   if (profile?.role !== "admin") throw new Error("Unauthorized")
 
@@ -43,7 +43,7 @@ export async function getVendorSubscription(vendorId: string) {
     .eq("status", "active")
     .order("created_at", { ascending: false })
     .limit(1)
-    .single()
+    .maybeSingle()
   return data
 }
 
@@ -257,7 +257,7 @@ export async function getAllSubscriptionsAdmin() {
     .from("profiles")
     .select("role")
     .eq("id", user.id)
-    .single()
+    .maybeSingle()
 
   if (profile?.role !== "admin") throw new Error("Unauthorized")
 
