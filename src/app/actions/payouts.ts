@@ -94,7 +94,7 @@ export async function markPayoutAsPaid(payoutId: string) {
 
   const { error } = await supabase
     .from("withdrawals")
-    .update({ status: "paid" })
+    .update({ status: "paid", paid_at: new Date().toISOString() })
     .eq("id", payoutId)
 
   if (error) throw new Error(error.message)

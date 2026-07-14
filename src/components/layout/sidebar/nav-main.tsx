@@ -65,7 +65,7 @@ const vendorNav: NavGroup[] = [
       { title: "Dashboard", href: "/vendor", icon: LayoutDashboard },
       { title: "Products", href: "/vendor/products", icon: Package },
       { title: "Orders", href: "/vendor/orders", icon: ShoppingCart },
-      { title: "Earnings", href: "/vendor/earnings", icon: DollarSign },
+      { title: "Wallet", href: "/vendor/wallet", icon: DollarSign },
       { title: "Membership", href: "/membership", icon: Crown },
     ],
   },

@@ -56,14 +56,17 @@ export default async function AdminPayoutsPage() {
                     <td className="px-4 py-3 text-gray-500 capitalize">
                       {w.method?.replace(/_/g, " ")}
                     </td>
-                    <td className="px-4 py-3 text-gray-500 max-w-[160px] truncate">
-                      {w.account_details?.details ?? "-"}
+                    <td className="px-4 py-3 text-gray-500 max-w-[200px] truncate">
+                      {typeof w.account_details === "object"
+                        ? [w.account_details?.bank, w.account_details?.name, w.account_details?.number].filter(Boolean).join(" - ") || w.account_details?.details || "-"
+                        : w.account_details ?? "-"}
                     </td>
                     <td className="px-4 py-3">
                       <StatusBadge status={w.status} />
                     </td>
-                    <td className="px-4 py-3 text-gray-500">
-                      {new Date(w.created_at).toLocaleDateString("id-ID")}
+                    <td className="px-4 py-3 text-gray-500 text-xs">
+                      <div>{new Date(w.created_at).toLocaleDateString("id-ID")}</div>
+                      {w.paid_at && <div className="text-green-600">Paid: {new Date(w.paid_at).toLocaleDateString("id-ID")}</div>}
                     </td>
                     <td className="px-4 py-3">
                       <AdminPayoutActions payout={w} />

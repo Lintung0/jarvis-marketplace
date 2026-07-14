@@ -6,6 +6,9 @@ import { requestPayout } from "@/app/actions/payouts";
 export function PayoutRequestForm({ maxAmount }: { maxAmount: number }) {
   const [amount, setAmount] = useState("");
   const [method, setMethod] = useState("bank_transfer");
+  const [accountBank, setAccountBank] = useState("");
+  const [accountName, setAccountName] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
   const [accountDetails, setAccountDetails] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -23,10 +26,17 @@ export function PayoutRequestForm({ maxAmount }: { maxAmount: number }) {
       const formData = new FormData();
       formData.set("amount", amount);
       formData.set("method", method);
-      formData.set("account_details", accountDetails);
+      if (method === "bank_transfer") {
+        formData.set("account_details", JSON.stringify({ bank: accountBank, name: accountName, number: accountNumber }));
+      } else {
+        formData.set("account_details", accountDetails);
+      }
       await requestPayout(formData);
       setSuccess(true);
       setAmount("");
+      setAccountBank("");
+      setAccountName("");
+      setAccountNumber("");
       setAccountDetails("");
     } catch (e: any) {
       setError(e.message);
@@ -58,7 +68,7 @@ export function PayoutRequestForm({ maxAmount }: { maxAmount: number }) {
       </div>
 
       <div>
-        <label className="text-sm font-medium text-gray-300 block mb-1">Payment Method</label>
+        <label className="text-sm font-medium text-gray-700 block mb-1">Payment Method</label>
         <select
           value={method}
           onChange={(e) => setMethod(e.target.value)}
@@ -66,21 +76,59 @@ export function PayoutRequestForm({ maxAmount }: { maxAmount: number }) {
         >
           <option value="bank_transfer">Bank Transfer</option>
           <option value="paypal">PayPal</option>
-          <option value="go_pay">GoPay</option>
+          <option value="manual">Transfer Manual</option>
         </select>
       </div>
 
-      <div>
-        <label className="text-sm font-medium text-gray-300 block mb-1">Account Details</label>
-        <input
-          type="text"
-          value={accountDetails}
-          onChange={(e) => setAccountDetails(e.target.value)}
-          placeholder="Bank name / Account number / Email"
-          required
-          className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
-        />
-      </div>
+      {method === "bank_transfer" ? (
+        <div className="space-y-3">
+          <div>
+            <label className="text-sm font-medium text-gray-700 block mb-1">Bank Name</label>
+            <input
+              type="text"
+              value={accountBank}
+              onChange={(e) => setAccountBank(e.target.value)}
+              placeholder="BCA / Mandiri / BRI..."
+              required
+              className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            />
+          </div>
+          <div>
+            <label className="text-sm font-medium text-gray-700 block mb-1">Account Name</label>
+            <input
+              type="text"
+              value={accountName}
+              onChange={(e) => setAccountName(e.target.value)}
+              placeholder="John Doe"
+              required
+              className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            />
+          </div>
+          <div>
+            <label className="text-sm font-medium text-gray-700 block mb-1">Account Number</label>
+            <input
+              type="text"
+              value={accountNumber}
+              onChange={(e) => setAccountNumber(e.target.value)}
+              placeholder="1234567890"
+              required
+              className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            />
+          </div>
+        </div>
+      ) : (
+        <div>
+          <label className="text-sm font-medium text-gray-700 block mb-1">Account Details</label>
+          <input
+            type="text"
+            value={accountDetails}
+            onChange={(e) => setAccountDetails(e.target.value)}
+            placeholder="Email / No. HP / ID"
+            required
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+          />
+        </div>
+      )}
 
       <button
         type="submit"

@@ -202,11 +202,12 @@ export interface Withdrawal {
   id: string
   vendor_id: string
   amount: number
-  method: "paypal" | "iban" | "swift"
+  method: "bank_transfer" | "paypal" | "manual"
   account_details: Record<string, string>
   status: WithdrawalStatus
   notes: string | null
   created_at: string
+  paid_at?: string | null
 }
 
 export interface BlogPost {

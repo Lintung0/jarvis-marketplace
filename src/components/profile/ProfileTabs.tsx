@@ -375,7 +375,7 @@ export default function ProfileTabs({ profile, orders, wishlistItems }: ProfileT
                 <div className="space-y-2">
                   <SettingLink icon={Store} label="Kelola Toko" href="/vendor/products" />
                   <SettingLink icon={ShoppingBag} label="Pesanan Masuk" href="/vendor/orders" />
-                  <SettingLink icon={CreditCard} label="Penarikan Saldo" href="/vendor/withdrawals" />
+                  <SettingLink icon={CreditCard} label="Dompet & Penarikan" href="/vendor/wallet" />
                 </div>
               </div>
             )}
