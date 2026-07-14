@@ -10,14 +10,17 @@ ALTER TABLE public.withdrawals ADD COLUMN IF NOT EXISTS paid_at TIMESTAMPTZ;
 ALTER TABLE public.withdrawals ENABLE ROW LEVEL SECURITY;
 
 -- RLS policies for withdrawals
+DROP POLICY IF EXISTS "Vendors can view own withdrawals" ON public.withdrawals;
 CREATE POLICY "Vendors can view own withdrawals"
   ON public.withdrawals FOR SELECT
   USING (auth.uid() = vendor_id);
 
+DROP POLICY IF EXISTS "Vendors can create withdrawals" ON public.withdrawals;
 CREATE POLICY "Vendors can create withdrawals"
   ON public.withdrawals FOR INSERT
   WITH CHECK (auth.uid() = vendor_id);
 
+DROP POLICY IF EXISTS "Admins can manage all withdrawals" ON public.withdrawals;
 CREATE POLICY "Admins can manage all withdrawals"
   ON public.withdrawals FOR ALL
   USING (
@@ -26,6 +29,7 @@ CREATE POLICY "Admins can manage all withdrawals"
 
 -- Fix: Add missing SELECT policy for vendors on orders table
 -- Previously vendors could UPDATE but not SELECT orders, breaking order_items joins
+DROP POLICY IF EXISTS "Vendors can view orders for their items" ON public.orders;
 CREATE POLICY "Vendors can view orders for their items"
   ON public.orders FOR SELECT
   USING (
