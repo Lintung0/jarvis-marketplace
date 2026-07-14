@@ -103,6 +103,7 @@ const adminNav: NavGroup[] = [
       { title: "Products", href: "/admin/products", icon: Package },
       { title: "Orders", href: "/admin/orders", icon: ShoppingCart },
       { title: "Payouts", href: "/admin/payouts", icon: DollarSign },
+      { title: "Membership", href: "/admin/membership", icon: Crown },
       { title: "Return Requests", href: "/moderator/returns", icon: ShoppingBag },
       { title: "Users", href: "/admin/users", icon: Users },
       { title: "Vendor Apps", href: "/admin/vendor-applications", icon: Users },

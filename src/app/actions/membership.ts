@@ -156,7 +156,13 @@ export async function adminTogglePlan(planId: string, isActive: boolean) {
     .eq("id", planId)
 
   if (error) throw new Error(error.message)
-  // admin membership page removed
+  revalidatePath("/admin/membership")
+}
+
+export async function adminTogglePlanForm(formData: FormData) {
+  const planId = formData.get("planId") as string
+  const isActive = formData.get("isActive") === "true"
+  return adminTogglePlan(planId, isActive)
 }
 
 export async function adminCreatePlan(formData: FormData) {
@@ -187,7 +193,7 @@ export async function adminCreatePlan(formData: FormData) {
   })
 
   if (error) throw new Error(error.message)
-  // admin membership page removed
+  revalidatePath("/admin/membership")
 }
 
 export async function adminUpdatePlan(planId: string, formData: FormData) {
@@ -221,7 +227,7 @@ export async function adminUpdatePlan(planId: string, formData: FormData) {
     .eq("id", planId)
 
   if (error) throw new Error(error.message)
-  // admin membership page removed
+  revalidatePath("/admin/membership")
 }
 
 export async function adminDeletePlan(planId: string) {
