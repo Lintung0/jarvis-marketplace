@@ -24,7 +24,7 @@ interface PageProps {
 export default async function ProductsPage({ searchParams }: PageProps) {
   const { q, category, type, brand, location: locParam, sort = "newest", page = "1" } = await searchParams;
 
-  // Baca lokasi dari cookie kalo gak ada query param
+  // Baca lokasi dari cookie kalo gak ada query param & bukan default
   let location = locParam
   if (!location) {
     const cookieStore = await cookies()
@@ -32,7 +32,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
     if (locCookie) {
       try {
         const parsed = JSON.parse(decodeURIComponent(locCookie.value))
-        if (parsed.name) location = parsed.name
+        if (parsed.name && parsed.name !== "Indonesia") location = parsed.name
       } catch {}
     }
   }
