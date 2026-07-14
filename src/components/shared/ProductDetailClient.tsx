@@ -261,8 +261,8 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
 
           {activeTab === "specs" && (
             <div className="space-y-2">
-              {product.options && Object.keys(product.options).length > 0 ? (
-                Object.entries(product.options).map(([key, value]) => (
+              {(product as any).specs && typeof (product as any).specs === "object" && Object.keys((product as any).specs).length > 0 ? (
+                Object.entries((product as any).specs).map(([key, value]) => (
                   <div key={key} className="flex py-2 border-b border-gray-200">
                     <div className="w-1/3 font-semibold text-gray-300">{key}</div>
                     <div className="w-2/3 text-gray-400">{String(value)}</div>

@@ -8,6 +8,11 @@ import { createProduct, updateProduct } from "@/app/actions/products"
 import { isRedirectError } from "next/dist/client/components/redirect-error"
 import { ImagePlus, X, Loader2, Link as LinkIcon } from "lucide-react"
 
+interface SpecEntry {
+  key: string
+  value: string
+}
+
 interface ProductFormProps {
   initialData?: {
     id: string
@@ -19,6 +24,7 @@ interface ProductFormProps {
     status: string
     category_id?: string | null
     location?: string | null
+    specs?: Record<string, string> | null
     images?: { id: string; url: string; alt: string | null; is_primary: boolean }[]
   }
   categories?: { id: string; name: string; slug: string }[]
@@ -35,6 +41,10 @@ interface ImagePreview {
 export function ProductForm({ initialData, categories = [] }: ProductFormProps) {
   const [error, setError] = useState<string | null>(null)
   const [description, setDescription] = useState(initialData?.description || "")
+  const initSpecs = initialData?.specs
+    ? Object.entries(initialData.specs).map(([k, v]) => ({ key: k, value: v }))
+    : [{ key: "", value: "" }]
+  const [specs, setSpecs] = useState<SpecEntry[]>(initSpecs)
   const existingImages: ImagePreview[] = (initialData?.images ?? []).map((img) => ({
   type: "url" as const,
   file: undefined,
@@ -121,6 +131,11 @@ const [images, setImages] = useState<ImagePreview[]>(existingImages)
           imageUrls.push(images[i].url)
         }
       }
+
+      const specsObj = specs
+        .filter((s) => s.key.trim() && s.value.trim())
+        .reduce((acc, s) => ({ ...acc, [s.key.trim()]: s.value.trim() }), {})
+      formData.set("specs", JSON.stringify(specsObj))
 
       const redirectUrl = initialData?.id
         ? await updateProduct(initialData.id, formData, imageUrls)
@@ -316,6 +331,53 @@ const [images, setImages] = useState<ImagePreview[]>(existingImages)
               required
             />
           </div>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Spesifikasi</h3>
+        <div className="space-y-2">
+          <p className="text-xs text-gray-400">Tambah spesifikasi produk (contoh: Ukuran, Warna, Bahan)</p>
+          {specs.map((spec, i) => (
+            <div key={i} className="flex gap-2">
+              <input
+                value={spec.key}
+                onChange={(e) => {
+                  const next = [...specs]
+                  next[i] = { ...next[i], key: e.target.value }
+                  setSpecs(next)
+                }}
+                placeholder="Nama (contoh: Ukuran)"
+                className="flex-1 bg-white border border-gray-200 text-gray-900 rounded-lg px-3 py-2 text-sm focus:border-orange-400 outline-none"
+              />
+              <input
+                value={spec.value}
+                onChange={(e) => {
+                  const next = [...specs]
+                  next[i] = { ...next[i], value: e.target.value }
+                  setSpecs(next)
+                }}
+                placeholder="Nilai (contoh: XL)"
+                className="flex-[2] bg-white border border-gray-200 text-gray-900 rounded-lg px-3 py-2 text-sm focus:border-orange-400 outline-none"
+              />
+              {specs.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => setSpecs(specs.filter((_, j) => j !== i))}
+                  className="px-3 py-2 text-red-500 hover:bg-red-50 rounded-lg transition text-sm"
+                >
+                  &times;
+                </button>
+              )}
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={() => setSpecs([...specs, { key: "", value: "" }])}
+            className="text-sm text-orange-500 hover:text-orange-600 transition font-medium"
+          >
+            + Tambah spesifikasi
+          </button>
         </div>
       </div>
 

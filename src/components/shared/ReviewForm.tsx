@@ -29,11 +29,11 @@ export default function ReviewForm({ productId }: Props) {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) { router.push("/login"); return }
 
-      const { error } = await supabase.from("reviews").insert({
+      const { error } = await supabase.from("product_reviews").insert({
         product_id: productId,
         user_id: user.id,
         rating,
-        comment: comment || null,
+        review_text: comment || null,
         is_approved: false,
       })
 

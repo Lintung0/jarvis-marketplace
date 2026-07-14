@@ -70,6 +70,7 @@ export interface Product {
   commission_rate: number | null
   tags: string[] | null
   location: string | null
+  specs: Record<string, string> | null
   views: number
   sold_count: number
   created_at: string

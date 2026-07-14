@@ -30,6 +30,8 @@ export async function createProduct(formData: FormData) {
   const status = formData.get("status") as string
   const category_id = formData.get("category_id") as string
   const location = formData.get("location") as string
+  const specsRaw = formData.get("specs") as string
+  const specs = specsRaw ? JSON.parse(specsRaw) : {}
   const imageUrls: string[] = JSON.parse(formData.get("image_urls") as string || "[]")
   let slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
   const { data: existingSlug } = await supabase
@@ -53,6 +55,7 @@ export async function createProduct(formData: FormData) {
       status,
       category_id: category_id || null,
       location: location || null,
+      specs,
       type: "physical",
     })
     .select("id")
@@ -78,6 +81,8 @@ export async function updateProduct(productId: string, formData: FormData, image
   const status = formData.get("status") as string
   const category_id = formData.get("category_id") as string
   const location = formData.get("location") as string
+  const specsRaw = formData.get("specs") as string
+  const specs = specsRaw ? JSON.parse(specsRaw) : {}
   const finalUrls = (imageUrls || JSON.parse(formData.get("image_urls") as string || "[]")).filter(Boolean)
   let slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
   const { data: existingSlug } = await supabase
@@ -92,7 +97,7 @@ export async function updateProduct(productId: string, formData: FormData, image
 
   const { error } = await supabase
     .from("products")
-    .update({ title, slug, description, price, stock, status, category_id: category_id || null, location: location || null, updated_at: new Date().toISOString() })
+    .update({ title, slug, description, price, stock, status, category_id: category_id || null, location: location || null, specs, updated_at: new Date().toISOString() })
     .eq("id", productId)
     .eq("vendor_id", user.id)
 
