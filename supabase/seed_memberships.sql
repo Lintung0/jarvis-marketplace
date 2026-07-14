@@ -18,7 +18,7 @@ create table if not exists public.vendor_subscriptions (
   id uuid default gen_random_uuid() primary key,
   vendor_id uuid references public.profiles(id) on delete cascade not null,
   plan_id uuid references public.membership_plans(id) on delete restrict not null,
-  status text default 'active' check (status in ('active', 'expired', 'cancelled')),
+  status text default 'active' check (status in ('active', 'expired', 'cancelled', 'pending')),
   start_date timestamptz default now(),
   end_date timestamptz not null,
   payment_id text,
