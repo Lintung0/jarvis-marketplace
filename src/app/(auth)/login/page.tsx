@@ -90,10 +90,10 @@ export default function LoginPage() {
               />
             </div>
             <div>
-              <div className="flex justify-between items-center mb-1.5">
+              {/* <div className="flex justify-between items-center mb-1.5">
                 <label className="text-xs font-semibold text-gray-600">{t("auth.password")}</label>
                 <a href="#" className="text-xs text-orange-500 hover:text-orange-600">{t("auth.forgot_password")}</a>
-              </div>
+              </div> */}
               <input
                 name="password"
                 type="password"
