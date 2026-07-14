@@ -3,6 +3,7 @@
 import { useState, useRef } from "react"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import LocationInput from "@/components/ui/LocationInput"
 import { createProduct, updateProduct } from "@/app/actions/products"
 import { isRedirectError } from "next/dist/client/components/redirect-error"
 import { ImagePlus, X, Loader2, Link as LinkIcon } from "lucide-react"
@@ -279,13 +280,12 @@ const [images, setImages] = useState<ImagePreview[]>(existingImages)
         <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Location</h3>
         <div className="space-y-2">
           <label htmlFor="location" className="text-sm font-medium text-gray-700">Product Location</label>
-          <Input
-            id="location"
-            name="location"
+          <LocationInput
             defaultValue={initialData?.location || ""}
-            placeholder="e.g. Jakarta, Indonesia"
+            name="location"
+            placeholder="Cari kota..."
           />
-          <p className="text-xs text-gray-400">Lokasi produk akan muncul di kartu produk</p>
+          <p className="text-xs text-gray-400">Ketik nama kota, pilih dari daftar suggestions</p>
         </div>
       </div>
 
