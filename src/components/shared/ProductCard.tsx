@@ -50,7 +50,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </Link>
       <div className="p-4">
-        <p className="text-xs text-gray-400 mb-1 flex items-center gap-1">
+        <p className="text-xs text-gray-600 mb-1 flex items-center gap-1">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
             <circle cx="12" cy="10" r="3" />
@@ -81,7 +81,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="flex flex-col min-w-0">
             <PriceDisplay amount={product.sale_price ?? product.price} className="text-sm sm:text-base font-bold text-teal-600 truncate" />
             {product.sale_price && (
-              <span className="text-[10px] sm:text-xs text-gray-400 line-through truncate">
+              <span className="text-[10px] sm:text-xs text-gray-500 line-through truncate">
                 <PriceDisplay amount={product.price} />
               </span>
             )}
@@ -113,8 +113,8 @@ export default function ProductCard({ product }: ProductCardProps) {
           </button>
         </div>
         <Link href={`/vendors/${product.vendor?.username}`} className="block mt-2">
-          <p className="text-xs text-gray-400">
-            oleh <span className="text-teal-400 font-medium hover:underline">{product.vendor?.full_name ?? "Vendor"}</span>
+          <p className="text-xs text-gray-600">
+            oleh <span className="text-teal-500 font-medium hover:underline">{product.vendor?.full_name ?? "Vendor"}</span>
           </p>
         </Link>
       </div>

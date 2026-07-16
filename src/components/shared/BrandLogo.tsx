@@ -13,9 +13,9 @@ export default function BrandLogo({ name, logo_url }: BrandLogoProps) {
 
   if (!logo_url || error) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
-        <span className="font-bold text-gray-800 text-sm uppercase tracking-wide">
-          {name.substring(0, 3)}
+      <div className="w-full h-full flex items-center justify-center bg-teal-50 rounded-xl">
+        <span className="font-bold text-teal-600 text-lg uppercase">
+          {name.substring(0, 2)}
         </span>
       </div>
     );
@@ -27,8 +27,8 @@ export default function BrandLogo({ name, logo_url }: BrandLogoProps) {
       alt={name}
       fill
       unoptimized
-      className="object-contain p-3 group-hover:scale-105 transition-transform"
-      sizes="128px"
+      className="object-contain group-hover:scale-105 transition-transform"
+      sizes="64px"
       onError={() => setError(true)}
     />
   );
