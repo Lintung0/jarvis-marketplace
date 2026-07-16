@@ -100,7 +100,7 @@ export default function LocationPicker() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1 hover:text-orange-500 transition-colors text-xs"
+        className="flex items-center gap-1 hover:text-teal-500 transition-colors text-xs"
       >
         <MapPin className="w-3 h-3" />
         <span className="max-w-[100px] truncate">{location.name}</span>
@@ -117,7 +117,7 @@ export default function LocationPicker() {
                 value={query}
                 onChange={(e) => handleInput(e.target.value)}
                 placeholder="Cari kota/kecamatan..."
-                className="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-lg pl-9 pr-4 py-2 text-sm focus:border-orange-400 outline-none"
+                className="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-lg pl-9 pr-4 py-2 text-sm focus:border-teal-400 outline-none"
               />
               {loading && (
                 <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 animate-spin" />
@@ -131,7 +131,7 @@ export default function LocationPicker() {
                 <li key={i}>
                   <button
                     onClick={() => selectLocation(r)}
-                    className="w-full text-left px-4 py-3 hover:bg-orange-50 transition-colors flex items-start gap-3"
+                    className="w-full text-left px-4 py-3 hover:bg-teal-50 transition-colors flex items-start gap-3"
                   >
                     <MapPin className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
                     <div>

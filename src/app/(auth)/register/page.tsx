@@ -109,8 +109,8 @@ export default function RegisterPage() {
     return (
       <div className="text-center">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-          <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center mx-auto mb-5">
-            <Mail className="w-8 h-8 text-orange-500" />
+          <div className="w-16 h-16 rounded-full bg-teal-100 flex items-center justify-center mx-auto mb-5">
+            <Mail className="w-8 h-8 text-teal-500" />
           </div>
           <h1 className="text-xl font-bold text-gray-900 mb-2">Cek Inbox Kamu</h1>
           <p className="text-sm text-gray-500 mb-1">
@@ -139,7 +139,7 @@ export default function RegisterPage() {
 
           <div className="mt-6 pt-4 border-t border-gray-100">
             <p className="text-xs text-gray-400 mb-1">Tidak menerima email? Cek folder spam.</p>
-            <Link href="/login" className="text-sm text-orange-500 font-semibold hover:text-orange-600">
+            <Link href="/login" className="text-sm text-teal-500 font-semibold hover:text-teal-600">
               Ke Halaman Login
             </Link>
           </div>
@@ -159,7 +159,7 @@ export default function RegisterPage() {
               </svg>
             </div>
             <span className="text-2xl font-bold text-[#1a1a2e]">
-              Mode<span className="text-orange-500">sy</span>
+              Mode<span className="text-teal-500">sy</span>
             </span>
           </Link>
           <h1 className="text-2xl font-bold text-gray-900">{tr("auth.create_account")}</h1>
@@ -173,7 +173,7 @@ export default function RegisterPage() {
                 key={item}
                 onClick={() => setType(item)}
                 className="flex-1 py-2 rounded-lg text-sm font-semibold capitalize transition-all"
-                style={type === item ? { background: "white", color: "#ff6b35", boxShadow: "0 1px 4px rgba(0,0,0,0.1)" } : { color: "#6b7280" }}
+                style={type === item ? { background: "white", color: "#00a99d", boxShadow: "0 1px 4px rgba(0,0,0,0.1)" } : { color: "#6b7280" }}
               >
                 {item === "buyer" ? "🛍️ " : "🏪 "}{item === "buyer" ? tr("auth.buyer") : tr("auth.seller")}
               </button>
@@ -185,28 +185,28 @@ export default function RegisterPage() {
               <div>
                 <label className="block text-xs font-semibold text-gray-600 mb-1.5">Nama Lengkap</label>
                 <input name="full_name" placeholder="John Doe" required
-                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-orange-400 transition-colors" />
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-teal-400 transition-colors" />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-600 mb-1.5">Username</label>
                 <input name="username" placeholder="johndoe" required pattern="[a-z0-9_]+"
-                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-orange-400 transition-colors" />
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-teal-400 transition-colors" />
               </div>
             </div>
             <div>
               <label className="block text-xs font-semibold text-gray-600 mb-1.5">Email</label>
               <input name="email" type="email" placeholder="kamu@email.com" required
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-400 transition-colors" />
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal-400 transition-colors" />
             </div>
             <div>
               <label className="block text-xs font-semibold text-gray-600 mb-1.5">Password</label>
               <input name="password" type="password" placeholder="Min. 6 karakter" required minLength={6}
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-400 transition-colors" />
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal-400 transition-colors" />
             </div>
             <div>
               <label className="block text-xs font-semibold text-gray-600 mb-1.5">Konfirmasi Password</label>
               <input name="confirm_password" type="password" placeholder="Ulangi password" required
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-400 transition-colors" />
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal-400 transition-colors" />
             </div>
 
             {error && <p className="text-red-600 text-sm bg-red-50 px-3 py-2 rounded-xl">{error}</p>}
@@ -221,7 +221,7 @@ export default function RegisterPage() {
 
           <p className="text-center text-sm text-gray-500 mt-5">
             {tr("auth.already_have_account")}{" "}
-            <Link href="/login" className="text-orange-500 font-semibold hover:text-orange-600">{tr("auth.sign_in_link")}</Link>
+            <Link href="/login" className="text-teal-500 font-semibold hover:text-teal-600">{tr("auth.sign_in_link")}</Link>
           </p>
         </div>
       </div>

@@ -40,7 +40,7 @@ export function CategoryForm() {
             onChange={(e) => setName(e.target.value)}
             placeholder="Category name"
             required
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
           />
         </div>
         <div>
@@ -49,7 +49,7 @@ export function CategoryForm() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Category description"
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
           />
         </div>
         <div>
@@ -58,12 +58,12 @@ export function CategoryForm() {
             value={icon}
             onChange={(e) => setIcon(e.target.value)}
             placeholder="📁"
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
           />
         </div>
         <button
           type="submit"
-          className="w-full px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all"
+          className="w-full px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:shadow-lg hover:shadow-teal-500/25 transition-all"
         >
           Create Category
         </button>

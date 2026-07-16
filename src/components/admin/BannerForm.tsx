@@ -78,7 +78,7 @@ export function BannerForm({ initialData, onClose }: BannerFormProps) {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Summer Sale Banner"
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
           />
         </div>
         <div>
@@ -88,7 +88,7 @@ export function BannerForm({ initialData, onClose }: BannerFormProps) {
             onChange={(e) => setImageUrl(e.target.value)}
             placeholder="https://images.unsplash.com/..."
             required
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
           />
           {imageUrl && (
             <div className="mt-2 w-full h-24 rounded-lg overflow-hidden bg-gray-100">
@@ -102,7 +102,7 @@ export function BannerForm({ initialData, onClose }: BannerFormProps) {
             value={link}
             onChange={(e) => setLink(e.target.value)}
             placeholder="/categories/clothing"
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
           />
         </div>
         <div>
@@ -110,7 +110,7 @@ export function BannerForm({ initialData, onClose }: BannerFormProps) {
           <select
             value={placement}
             onChange={(e) => setPlacement(e.target.value)}
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
           >
             {placements.map((p) => (
               <option key={p} value={p} className="capitalize">
@@ -126,13 +126,13 @@ export function BannerForm({ initialData, onClose }: BannerFormProps) {
             onChange={(e) => setSortOrder(e.target.value)}
             type="number"
             min="0"
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
           />
         </div>
         <button
           type="submit"
           disabled={loading}
-          className="w-full px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:shadow-lg hover:shadow-teal-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Saving..." : initialData ? "Update Banner" : "Create Banner"}
         </button>

@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!vendor) return {};
 
   const name = vendor.full_name ?? vendor.username;
-  const description = vendor.bio?.slice(0, 160) ?? `Toko ${name} di JarvisMarketplace - Jual produk digital, fisik, dan lisensi`;
+  const description = vendor.bio?.slice(0, 160) ?? `Toko ${name} di Modesy - Jual produk digital, fisik, dan lisensi`;
 
   return generateMeta({
     title: name,
@@ -149,7 +149,7 @@ export default async function VendorProfilePage({ params }: PageProps) {
                       {profile.plan_name && profile.plan_name !== "Free" && (
                         <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold border ${
                           profile.plan_name === "Pro"
-                            ? "bg-orange-50 text-orange-700 border-orange-200"
+                            ? "bg-teal-50 text-teal-700 border-teal-200"
                             : "bg-purple-50 text-purple-700 border-purple-200"
                         }`}>
                           <Crown className="w-3 h-3" />
@@ -179,8 +179,8 @@ export default async function VendorProfilePage({ params }: PageProps) {
 
                   {/* Stats Cards */}
                   <div className="flex gap-3">
-                    <div className="bg-orange-50 border border-orange-200 rounded-xl px-6 py-3 text-center">
-                      <div className="flex items-center gap-2 text-orange-600 mb-1">
+                    <div className="bg-teal-50 border border-teal-200 rounded-xl px-6 py-3 text-center">
+                      <div className="flex items-center gap-2 text-teal-600 mb-1">
                         <Package className="w-4 h-4" />
                         <span className="text-2xl font-bold">{count ?? 0}</span>
                       </div>
@@ -223,7 +223,7 @@ export default async function VendorProfilePage({ params }: PageProps) {
                     href={profile.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm text-orange-600 hover:text-orange-700 font-medium mt-3"
+                    className="inline-flex items-center gap-2 text-sm text-teal-600 hover:text-teal-700 font-medium mt-3"
                   >
                     🔗 {profile.website}
                   </a>

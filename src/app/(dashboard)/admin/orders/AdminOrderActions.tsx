@@ -23,7 +23,7 @@ export function AdminOrderActions({ orderId, currentStatus }: { orderId: string;
     <select
       value={status}
       onChange={handleChange}
-      className="bg-white border border-gray-200 text-gray-700 rounded-lg px-2 py-1 text-xs focus:border-orange-400 outline-none"
+      className="bg-white border border-gray-200 text-gray-700 rounded-lg px-2 py-1 text-xs focus:border-teal-400 outline-none"
     >
       {statuses.map((s) => (
         <option key={s} value={s}>{s}</option>

@@ -61,10 +61,10 @@ export function StatusRow({
 
 export function ConfigAlert({ title, children }: { title?: string; children: React.ReactNode }) {
   return (
-    <Alert className="bg-orange-50 border-orange-200">
-      <Info className="h-4 w-4 text-orange-500" />
-      {title && <AlertTitle className="text-orange-800 text-sm">{title}</AlertTitle>}
-      <AlertDescription className="text-xs text-orange-600">{children}</AlertDescription>
+    <Alert className="bg-teal-50 border-teal-200">
+      <Info className="h-4 w-4 text-teal-500" />
+      {title && <AlertTitle className="text-teal-800 text-sm">{title}</AlertTitle>}
+      <AlertDescription className="text-xs text-teal-600">{children}</AlertDescription>
     </Alert>
   )
 }
@@ -81,7 +81,7 @@ export function SettingsCard({ title, children }: { title: string; children: Rea
 }
 
 export function AdminSettingsForm({ stats, storageDriver, aiConfig, watermarkEnabled: initialWatermark }: AdminSettingsFormProps) {
-  const [appName, setAppName] = useState("JarvisMarketplace")
+  const [appName, setAppName] = useState("Modesy")
   const [commissionRate, setCommissionRate] = useState("10")
   const [freeShippingThreshold, setFreeShippingThreshold] = useState("50000")
   const [shippingFee, setShippingFee] = useState("10000")
@@ -172,7 +172,7 @@ export function AdminSettingsForm({ stats, storageDriver, aiConfig, watermarkEna
           />
           {!aiConfig.configured && (
             <ConfigAlert>
-              Set <code className="font-mono bg-orange-100 px-1 rounded">OPENAI_API_KEY</code> in .env.local to enable AI features.
+              Set <code className="font-mono bg-teal-100 px-1 rounded">OPENAI_API_KEY</code> in .env.local to enable AI features.
             </ConfigAlert>
           )}
         </SettingsCard>
@@ -180,7 +180,7 @@ export function AdminSettingsForm({ stats, storageDriver, aiConfig, watermarkEna
         <SettingsCard title="Image Watermark">
           <StatusRow
             title="Watermark on Uploads"
-            subtitle='Adds "JarvisMarketplace" watermark to bottom-right of uploaded images'
+            subtitle='Adds "Modesy" watermark to bottom-right of uploaded images'
             status={watermarkEnabled ? "active" : "inactive"}
             extra={
               <Switch

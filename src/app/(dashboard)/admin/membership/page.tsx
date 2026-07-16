@@ -23,7 +23,7 @@ export default async function AdminMembershipPage() {
         </div>
         <Link
           href="/admin/membership/new"
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:shadow-lg hover:shadow-teal-500/25 transition-all"
         >
           <Plus className="w-4 h-4" />
           New Plan
@@ -34,8 +34,8 @@ export default async function AdminMembershipPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <div className="bg-white rounded-2xl border border-gray-200 p-5">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center">
-              <Crown className="w-5 h-5 text-orange-600" />
+            <div className="w-10 h-10 rounded-xl bg-teal-100 flex items-center justify-center">
+              <Crown className="w-5 h-5 text-teal-600" />
             </div>
             <div>
               <p className="text-xs text-gray-400 font-medium">Total Plans</p>
@@ -100,7 +100,7 @@ export default async function AdminMembershipPage() {
                 <tr key={plan.id} className="hover:bg-gray-50">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
-                      <Crown className={`w-4 h-4 ${plan.price === 0 ? "text-gray-400" : plan.price >= 200000 ? "text-purple-500" : "text-orange-500"}`} />
+                      <Crown className={`w-4 h-4 ${plan.price === 0 ? "text-gray-400" : plan.price >= 200000 ? "text-purple-500" : "text-teal-500"}`} />
                       <div>
                         <p className="font-medium text-gray-900">{plan.name}</p>
                         <p className="text-xs text-gray-400">{plan.description}</p>
@@ -179,7 +179,7 @@ export default async function AdminMembershipPage() {
                   <tr key={sub.id} className="hover:bg-gray-50">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 flex items-center justify-center text-white text-xs font-bold">
+                        <div className="w-7 h-7 rounded-full bg-gradient-to-r from-teal-500 to-teal-600 flex items-center justify-center text-white text-xs font-bold">
                           {(sub.vendor?.full_name ?? sub.vendor?.username ?? "?").charAt(0)}
                         </div>
                         <p className="font-medium text-gray-900">{sub.vendor?.full_name ?? sub.vendor?.username}</p>
@@ -188,7 +188,7 @@ export default async function AdminMembershipPage() {
                     <td className="px-4 py-3">
                       <span className={`font-medium ${
                         sub.plan?.price === 0 ? "text-gray-500" :
-                        sub.plan?.price >= 200000 ? "text-purple-600" : "text-orange-600"
+                        sub.plan?.price >= 200000 ? "text-purple-600" : "text-teal-600"
                       }`}>
                         {sub.plan?.name ?? "?"}
                       </span>

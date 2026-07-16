@@ -17,7 +17,7 @@ export default function SubscribeButton({ planId, planName, isLoggedIn }: Props)
     return (
       <a
         href={`/login?redirectTo=/membership`}
-        className="block w-full text-center py-3 rounded-xl text-sm font-semibold border-2 border-orange-500 text-orange-500 hover:bg-orange-50 transition"
+        className="block w-full text-center py-3 rounded-xl text-sm font-semibold border-2 border-teal-500 text-teal-500 hover:bg-teal-50 transition"
       >
         Login to Subscribe
       </a>
@@ -40,8 +40,8 @@ export default function SubscribeButton({ planId, planName, isLoggedIn }: Props)
       disabled={loading}
       className={`w-full py-3 rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 ${
         planName === "Pro"
-          ? "gradient-brand text-white hover:shadow-lg hover:shadow-orange-500/25"
-          : "border-2 border-orange-500 text-orange-500 hover:bg-orange-50"
+          ? "gradient-brand text-white hover:shadow-lg hover:shadow-teal-500/25"
+          : "border-2 border-teal-500 text-teal-500 hover:bg-teal-50"
       }`}
     >
       {loading ? (

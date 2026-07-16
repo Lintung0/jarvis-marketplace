@@ -32,7 +32,7 @@ export default async function AdminUsersPage() {
           { role: "all", label: "All Users", count: users?.length ?? 0, color: "bg-gray-100 text-gray-700" },
           { role: "admin", label: "Admins", count: grouped.admin?.length ?? 0, color: "bg-red-50 text-red-600" },
           { role: "moderator", label: "Moderators", count: grouped.moderator?.length ?? 0, color: "bg-purple-50 text-purple-600" },
-          { role: "vendor", label: "Vendors", count: grouped.vendor?.length ?? 0, color: "bg-orange-50 text-orange-600" },
+          { role: "vendor", label: "Vendors", count: grouped.vendor?.length ?? 0, color: "bg-teal-50 text-teal-600" },
           { role: "member", label: "Members", count: grouped.member?.length ?? 0, color: "bg-blue-50 text-blue-600" },
         ].map((item) => (
           <div key={item.role} className={`rounded-xl p-4 border ${item.color.split(" ")[0]} border-gray-200`}>
@@ -71,7 +71,7 @@ export default async function AdminUsersPage() {
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold ${
                           u.role === "admin" ? "bg-red-500" :
                           u.role === "moderator" ? "bg-purple-500" :
-                          u.role === "vendor" ? "bg-orange-500" :
+                          u.role === "vendor" ? "bg-teal-500" :
                           "bg-blue-500"
                         }`}>
                           {(u.full_name ?? u.username ?? "?").charAt(0)}
@@ -84,7 +84,7 @@ export default async function AdminUsersPage() {
                       <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${
                         u.role === "admin" ? "bg-red-50 text-red-600 border-red-200" :
                         u.role === "moderator" ? "bg-purple-50 text-purple-600 border-purple-200" :
-                        u.role === "vendor" ? "bg-orange-50 text-orange-600 border-orange-200" :
+                        u.role === "vendor" ? "bg-teal-50 text-teal-600 border-teal-200" :
                         "bg-blue-50 text-blue-600 border-blue-200"
                       }`}>
                         {u.role ?? "member"}

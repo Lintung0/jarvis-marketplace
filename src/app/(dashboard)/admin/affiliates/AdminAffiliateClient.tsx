@@ -75,7 +75,7 @@ export default function AdminAffiliateClient({
         </div>
         <div className="bg-white rounded-2xl border border-gray-200 p-4">
           <p className="text-xs font-medium text-gray-500">Pending Payouts</p>
-          <p className="text-2xl font-bold text-orange-600 mt-1">{pendingConversions.length}</p>
+          <p className="text-2xl font-bold text-teal-600 mt-1">{pendingConversions.length}</p>
         </div>
         <div className="bg-white rounded-2xl border border-gray-200 p-4">
           <p className="text-xs font-medium text-gray-500">Approved</p>
@@ -117,7 +117,7 @@ export default function AdminAffiliateClient({
               placeholder="Search affiliates..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full max-w-sm border border-gray-200 rounded-xl pl-9 pr-3 py-2 text-sm focus:outline-none focus:border-orange-400"
+              className="w-full max-w-sm border border-gray-200 rounded-xl pl-9 pr-3 py-2 text-sm focus:outline-none focus:border-teal-400"
             />
           </div>
 
@@ -158,7 +158,7 @@ export default function AdminAffiliateClient({
                             </div>
                           </div>
                         </td>
-                        <td className="px-4 py-3 font-mono text-xs font-bold text-orange-600">{aff.referral_code}</td>
+                        <td className="px-4 py-3 font-mono text-xs font-bold text-teal-600">{aff.referral_code}</td>
                         <td className="px-4 py-3 text-gray-700 text-xs">{aff.commission_rate}%</td>
                         <td className="px-4 py-3 text-gray-700 text-xs">{aff.total_clicks}</td>
                         <td className="px-4 py-3 text-gray-700 text-xs">{aff.total_conversions}</td>

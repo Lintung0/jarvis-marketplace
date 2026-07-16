@@ -36,7 +36,7 @@ export default function OrderActions({ orderId, status }: Props) {
       <div className="flex flex-col gap-2 w-full">
         <button
           onClick={() => setShowReturn(true)}
-          className="flex-1 min-w-[200px] text-center py-3 rounded-xl border-2 border-orange-200 text-orange-600 hover:bg-orange-50 font-semibold text-sm transition"
+          className="flex-1 min-w-[200px] text-center py-3 rounded-xl border-2 border-teal-200 text-teal-600 hover:bg-teal-50 font-semibold text-sm transition"
         >
           Ajukan Pengembalian
         </button>

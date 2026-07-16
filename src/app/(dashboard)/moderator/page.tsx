@@ -29,10 +29,10 @@ export default async function ModeratorDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-gray-500">Pending Products</CardTitle>
-            <Package className="h-4 w-4 text-orange-500" />
+            <Package className="h-4 w-4 text-teal-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-600">{pendingProducts ?? 0}</div>
+            <div className="text-2xl font-bold text-teal-600">{pendingProducts ?? 0}</div>
             <p className="text-xs text-gray-500 mt-1">Awaiting approval</p>
           </CardContent>
         </Card>
@@ -90,7 +90,7 @@ export default async function ModeratorDashboard() {
         <Card className="cursor-pointer hover:shadow-md transition">
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
-              <div className="h-12 w-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600">
+              <div className="h-12 w-12 bg-teal-100 rounded-full flex items-center justify-center text-teal-600">
                 <Package className="h-6 w-6" />
               </div>
               <div>

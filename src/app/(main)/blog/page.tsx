@@ -41,12 +41,12 @@ export default async function BlogPage() {
                 </div>
               )}
               <div className="p-4">
-                <p className="text-xs text-orange-500 font-medium mb-1">
+                <p className="text-xs text-teal-500 font-medium mb-1">
                   {new Date(post.created_at).toLocaleDateString("id-ID", {
                     day: "numeric", month: "long", year: "numeric",
                   })}
                 </p>
-                <h2 className="font-semibold text-gray-900 line-clamp-2 mb-2 group-hover:text-orange-500 transition">
+                <h2 className="font-semibold text-gray-900 line-clamp-2 mb-2 group-hover:text-teal-500 transition">
                   {post.title}
                 </h2>
                 {post.excerpt && (

@@ -149,7 +149,7 @@ export default function DashboardSidebar({ role }: DashboardSidebarProps) {
       <div className="flex items-center justify-between p-4 border-b border-border">
         {!collapsed && (
           <Link href="/" className="font-bold text-xl text-foreground">
-            Mode<span className="text-orange-500">sy</span>
+            Mode<span className="text-teal-500">sy</span>
           </Link>
         )}
         <Button

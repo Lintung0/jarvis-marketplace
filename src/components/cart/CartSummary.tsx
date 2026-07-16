@@ -18,7 +18,7 @@ export default function CartSummary() {
       <div className="bg-white border border-gray-100 rounded-2xl p-6 space-y-5 shadow-sm">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-            <ShoppingCart className="w-5 h-5 text-orange-500" />
+            <ShoppingCart className="w-5 h-5 text-teal-500" />
             Ringkasan Pesanan
           </h2>
           <button
@@ -35,7 +35,7 @@ export default function CartSummary() {
           {items.map((item) => (
             <div key={item.id} className="flex justify-between text-sm bg-gray-50 p-3 rounded-xl">
               <span className="truncate max-w-[180px] font-medium text-gray-700">
-                {item.product_title} <span className="text-orange-500">×{item.quantity}</span>
+                {item.product_title} <span className="text-teal-500">×{item.quantity}</span>
               </span>
               <span className="font-semibold text-gray-900">
                 <PriceDisplay amount={item.price * item.quantity} />
@@ -73,7 +73,7 @@ export default function CartSummary() {
         {/* Total */}
         <div className="flex justify-between items-center pt-4 border-t-2 border-gray-200">
           <span className="text-lg font-bold text-gray-900">Total Bayar</span>
-          <span className="text-2xl font-bold text-orange-500">
+          <span className="text-2xl font-bold text-teal-500">
             <PriceDisplay amount={finalTotal} />
           </span>
         </div>

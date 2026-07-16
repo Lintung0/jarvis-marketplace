@@ -36,7 +36,7 @@ export default async function WishlistPage() {
         </div>
         <Link
           href="/products"
-          className="text-sm text-orange-500 hover:underline"
+          className="text-sm text-teal-500 hover:underline"
         >
           Lanjut belanja →
         </Link>

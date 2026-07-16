@@ -29,7 +29,7 @@ export default async function ModeratorProductsPage() {
               <div className="flex-1">
                 <h3 className="font-semibold text-gray-900">{p.title}</h3>
                 <p className="text-xs text-gray-500">by {p.vendor?.full_name ?? p.vendor?.username ?? "Unknown"}</p>
-                <p className="text-sm font-semibold text-orange-500 mt-1">{formatCurrency(p.price)}</p>
+                <p className="text-sm font-semibold text-teal-500 mt-1">{formatCurrency(p.price)}</p>
               </div>
               <div className="flex gap-2">
                 <form action={async () => {

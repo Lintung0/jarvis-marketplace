@@ -145,13 +145,13 @@ export default function ChatClient({ currentUserId, otherUser, initialMessages }
             onKeyDown={handleKeyDown}
             placeholder="Ketik pesan..."
             rows={1}
-            className="flex-1 border border-gray-200 rounded-2xl px-4 py-3 text-sm resize-none focus:outline-none focus:border-orange-400 bg-white"
+            className="flex-1 border border-gray-200 rounded-2xl px-4 py-3 text-sm resize-none focus:outline-none focus:border-teal-400 bg-white"
             style={{ minHeight: "44px", maxHeight: "120px" }}
           />
           <button
             onClick={handleSend}
             disabled={!input.trim() || sending}
-            className="h-11 w-11 rounded-full gradient-brand text-white flex items-center justify-center flex-shrink-0 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-orange-500/25 transition-all"
+            className="h-11 w-11 rounded-full gradient-brand text-white flex items-center justify-center flex-shrink-0 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-teal-500/25 transition-all"
           >
             {sending ? (
               <Loader2 className="w-5 h-5 animate-spin" />

@@ -1,7 +1,7 @@
 {
   "nav": {
     "topbar_free_shipping": "Free shipping on orders over $50",
-    "sell": "Sell on JarvisMarketplace",
+    "sell": "Sell on Modesy",
     "help": "Help",
     "sign_in": "Sign In",
     "search_placeholder": "Search for products, brands and more...",
@@ -248,7 +248,7 @@
     "subscribe": "Subscribe",
     "marketplace": "Marketplace",
     "browse_all": "Browse All",
-    "sell": "Sell on JarvisMarketplace",
+    "sell": "Sell on Modesy",
     "how_it_works": "How It Works",
     "pricing_plans": "Pricing Plans",
     "vendor_dashboard": "Vendor Dashboard",
@@ -269,7 +269,7 @@
     "accessibility": "Accessibility",
     "accepted_payments": "Accepted payments:",
     "brand_desc": "The marketplace where buyers and sellers connect. Find unique items or start selling today.",
-    "copyright": "© {year} JarvisMarketplace. All rights reserved."
+    "copyright": "© {year} Modesy. All rights reserved."
   },
   "search": {
     "results_for": "Search results for",

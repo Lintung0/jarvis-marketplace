@@ -47,7 +47,7 @@ export default function OrderSummary({
       {/* Main Card */}
       <div className="bg-white border border-gray-100 rounded-2xl p-6 space-y-5 shadow-sm">
         <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-gradient-to-br from-[#ff6b35] to-[#f7931e] rounded-full flex items-center justify-center">
+          <div className="w-10 h-10 bg-gradient-to-br from-[#00a99d] to-[#00b3a1] rounded-full flex items-center justify-center">
             <ShoppingBag className="w-5 h-5 text-white" />
           </div>
           <h2 className="text-xl font-bold text-gray-900">Ringkasan Pesanan</h2>
@@ -58,7 +58,7 @@ export default function OrderSummary({
           {items.map((item) => (
             <div key={item.id} className="flex justify-between text-sm bg-gray-50 p-3 rounded-xl border border-gray-100">
               <span className="truncate max-w-[180px] font-medium text-gray-700">
-                {item.product_title} <span className="text-orange-500 font-semibold">×{item.quantity}</span>
+                {item.product_title} <span className="text-teal-500 font-semibold">×{item.quantity}</span>
               </span>
               <span className="font-bold text-gray-900">
                 <PriceDisplay amount={item.price * item.quantity} />
@@ -129,13 +129,13 @@ export default function OrderSummary({
                 value={inputCode}
                 onChange={(e) => setInputCode(e.target.value.toUpperCase())}
                 placeholder="Masukkan kode kupon"
-                className="flex-1 bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:border-orange-400 outline-none uppercase"
+                className="flex-1 bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:border-teal-400 outline-none uppercase"
                 onKeyDown={(e) => e.key === "Enter" && handleApply()}
               />
               <button
                 onClick={handleApply}
                 disabled={couponLoading || !inputCode.trim()}
-                className="px-4 py-2.5 text-sm font-semibold rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2.5 text-sm font-semibold rounded-xl bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:shadow-lg hover:shadow-teal-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {couponLoading ? (
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -151,9 +151,9 @@ export default function OrderSummary({
         </div>
 
         {/* Total */}
-        <div className={`flex justify-between items-center pt-4 border-t-2 ${discountAmount > 0 ? "border-green-200" : "border-gray-200"} bg-orange-50 -mx-6 px-6 py-4 rounded-b-2xl`}>
+        <div className={`flex justify-between items-center pt-4 border-t-2 ${discountAmount > 0 ? "border-green-200" : "border-gray-200"} bg-teal-50 -mx-6 px-6 py-4 rounded-b-2xl`}>
           <span className="text-lg font-bold text-gray-900">Total Pembayaran</span>
-          <span className="text-2xl font-bold text-orange-500">
+          <span className="text-2xl font-bold text-teal-500">
             <PriceDisplay amount={finalTotal} />
           </span>
         </div>

@@ -15,7 +15,7 @@ export default function CartItemCard({ item }: CartItemProps) {
   const { removeItem, updateQuantity } = useCartStore();
 
   return (
-    <div className="flex gap-4 p-4 rounded-2xl border border-gray-200 bg-white hover:border-orange-500/40 transition-colors shadow-sm">
+    <div className="flex gap-4 p-4 rounded-2xl border border-gray-200 bg-white hover:border-teal-500/40 transition-colors shadow-sm">
       {/* Image */}
       <Link href={`/products/${item.product_slug}`} className="relative w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-gray-50">
         {item.product_image ? (
@@ -35,7 +35,7 @@ export default function CartItemCard({ item }: CartItemProps) {
 
       {/* Info */}
       <div className="flex-1 min-w-0">
-        <Link href={`/products/${item.product_slug}`} className="font-semibold text-gray-900 hover:text-orange-500 transition-colors line-clamp-2">
+        <Link href={`/products/${item.product_slug}`} className="font-semibold text-gray-900 hover:text-teal-500 transition-colors line-clamp-2">
           {item.product_title}
         </Link>
         {item.options && Object.keys(item.options).length > 0 && (
@@ -44,7 +44,7 @@ export default function CartItemCard({ item }: CartItemProps) {
           </p>
         )}
         <div className="flex items-center gap-4 mt-2">
-          <span className="text-lg font-bold text-orange-500">
+          <span className="text-lg font-bold text-teal-500">
             <PriceDisplay amount={item.price} />
           </span>
           <div className="flex items-center border border-gray-300 rounded-lg">

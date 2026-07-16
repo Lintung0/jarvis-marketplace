@@ -84,13 +84,13 @@ export default function ReviewForm({ productId }: Props) {
         onChange={(e) => setComment(e.target.value)}
         placeholder="Share your thoughts about this product..."
         rows={3}
-        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none mb-4"
+        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none mb-4"
       />
 
       <button
         type="submit"
         disabled={loading}
-        className="bg-[#ff6b35] text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-[#e55a2b] transition disabled:opacity-50"
+        className="bg-[#00a99d] text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-[#00998f] transition disabled:opacity-50"
       >
         {loading ? "Submitting..." : "Submit Review"}
       </button>

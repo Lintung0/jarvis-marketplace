@@ -67,7 +67,7 @@ export default async function CategoriesSection() {
           <h2 className="text-xl font-bold text-gray-900">{t("categories.title")}</h2>
           <p className="text-gray-500 text-sm mt-0.5">{t("categories.subtitle")}</p>
         </div>
-        <Link href="/categories" className="text-sm font-semibold text-orange-500 hover:text-orange-600 flex items-center gap-1">
+        <Link href="/categories" className="text-sm font-semibold text-teal-500 hover:text-teal-600 flex items-center gap-1">
           {t("categories.view_all")} →
         </Link>
       </div>

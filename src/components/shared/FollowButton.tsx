@@ -69,8 +69,8 @@ export default function FollowButton({ vendorId, vendorName }: FollowButtonProps
       className={cn(
         "inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200",
         following
-          ? "bg-[#ff6b35] text-white hover:bg-[#e55a2b] shadow-sm"
-          : "border-2 border-[#ff6b35] text-[#ff6b35] hover:bg-[#ff6b35] hover:text-white"
+          ? "bg-[#00a99d] text-white hover:bg-[#00998f] shadow-sm"
+          : "border-2 border-[#00a99d] text-[#00a99d] hover:bg-[#00a99d] hover:text-white"
       )}
     >
       {toggling ? (

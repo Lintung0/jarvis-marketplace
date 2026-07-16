@@ -63,7 +63,7 @@ export function PayoutRequestForm({ maxAmount }: { maxAmount: number }) {
           placeholder={`Max ${maxAmount}`}
           max={maxAmount}
           required
-          className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+          className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
         />
       </div>
 
@@ -72,7 +72,7 @@ export function PayoutRequestForm({ maxAmount }: { maxAmount: number }) {
         <select
           value={method}
           onChange={(e) => setMethod(e.target.value)}
-          className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+          className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
         >
           <option value="bank_transfer">Bank Transfer</option>
           <option value="paypal">PayPal</option>
@@ -90,7 +90,7 @@ export function PayoutRequestForm({ maxAmount }: { maxAmount: number }) {
               onChange={(e) => setAccountBank(e.target.value)}
               placeholder="BCA / Mandiri / BRI..."
               required
-              className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+              className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
             />
           </div>
           <div>
@@ -101,7 +101,7 @@ export function PayoutRequestForm({ maxAmount }: { maxAmount: number }) {
               onChange={(e) => setAccountName(e.target.value)}
               placeholder="John Doe"
               required
-              className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+              className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
             />
           </div>
           <div>
@@ -112,7 +112,7 @@ export function PayoutRequestForm({ maxAmount }: { maxAmount: number }) {
               onChange={(e) => setAccountNumber(e.target.value)}
               placeholder="1234567890"
               required
-              className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+              className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
             />
           </div>
         </div>
@@ -125,14 +125,14 @@ export function PayoutRequestForm({ maxAmount }: { maxAmount: number }) {
             onChange={(e) => setAccountDetails(e.target.value)}
             placeholder="Email / No. HP / ID"
             required
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
           />
         </div>
       )}
 
       <button
         type="submit"
-        className="px-6 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all"
+        className="px-6 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:shadow-lg hover:shadow-teal-500/25 transition-all"
       >
         Request Payout
       </button>

@@ -11,7 +11,7 @@ export default function VendorCard({ vendor }: Props) {
   return (
     <Link
       href={`/vendors/${vendor.username}`}
-      className="group block bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-md hover:border-orange-200 transition-all"
+      className="group block bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-md hover:border-teal-200 transition-all"
     >
       <div className="flex items-center gap-4">
         {/* Avatar */}
@@ -34,7 +34,7 @@ export default function VendorCard({ vendor }: Props) {
         {/* Info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5">
-            <p className="font-semibold text-gray-900 truncate group-hover:text-orange-500 transition-colors">
+            <p className="font-semibold text-gray-900 truncate group-hover:text-teal-500 transition-colors">
               {vendor.full_name ?? vendor.username}
             </p>
             {vendor.is_verified && (
@@ -42,7 +42,7 @@ export default function VendorCard({ vendor }: Props) {
             )}
             {vendor.plan_name && vendor.plan_name !== "Free" && (
               <Crown className={`w-4 h-4 ${
-                vendor.plan_name === "Pro" ? "text-orange-500" : "text-purple-500"
+                vendor.plan_name === "Pro" ? "text-teal-500" : "text-purple-500"
               }`} />
             )}
           </div>

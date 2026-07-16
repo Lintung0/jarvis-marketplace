@@ -46,7 +46,7 @@ export function AppSidebar({
           <SidebarMenuItem>
             <SidebarMenuButton className="hover:text-foreground h-10 group-data-[collapsible=icon]:px-0! hover:bg-[var(--primary)]/5">
               <Logo />
-              <span className="font-semibold">JarvisMarketplace</span>
+              <span className="font-semibold">Modesy</span>
               <ChevronsUpDown className="ml-auto group-data-[collapsible=icon]:hidden" />
             </SidebarMenuButton>
           </SidebarMenuItem>

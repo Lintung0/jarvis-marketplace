@@ -53,7 +53,7 @@ export default function RegisterSW() {
 
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] w-[90vw] max-w-md animate-in slide-in-from-bottom-4 fade-in duration-300">
-      <div className="bg-white rounded-2xl shadow-2xl border border-orange-100 p-4 flex items-center gap-3">
+      <div className="bg-white rounded-2xl shadow-2xl border border-teal-100 p-4 flex items-center gap-3">
         <div className="w-10 h-10 rounded-full gradient-brand flex items-center justify-center flex-shrink-0">
           <RefreshCw className="w-5 h-5 text-white" />
         </div>
@@ -62,7 +62,7 @@ export default function RegisterSW() {
             Update tersedia
           </p>
           <p className="text-xs text-gray-500">
-            Versi baru JarvisMarketplace siap diinstal
+            Versi baru Modesy siap diinstal
           </p>
         </div>
         <button

@@ -80,7 +80,7 @@ export default function ProductFilters({ categories, activeCategory, activeLocat
             value={locInput}
             onChange={(e) => handleLocInput(e.target.value)}
             placeholder="Cari lokasi..."
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg pl-9 pr-9 py-2 text-sm focus:border-orange-400 outline-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg pl-9 pr-9 py-2 text-sm focus:border-teal-400 outline-none"
           />
           {loading && (
             <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 animate-spin" />
@@ -105,7 +105,7 @@ export default function ProductFilters({ categories, activeCategory, activeLocat
                   <button
                     type="button"
                     onClick={() => selectLocation(name)}
-                    className="w-full text-left px-4 py-3 hover:bg-orange-50 transition-colors flex items-start gap-3"
+                    className="w-full text-left px-4 py-3 hover:bg-teal-50 transition-colors flex items-start gap-3"
                   >
                     <MapPin className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
                     <div>
@@ -120,7 +120,7 @@ export default function ProductFilters({ categories, activeCategory, activeLocat
         )}
 
         {activeLocation && suggestions.length === 0 && (
-          <p className="text-xs text-orange-500 mt-1 font-medium">
+          <p className="text-xs text-teal-500 mt-1 font-medium">
             Filter: {activeLocation}
           </p>
         )}
@@ -136,8 +136,8 @@ export default function ProductFilters({ categories, activeCategory, activeLocat
               onClick={() => updateFilter("category", cat.slug === activeCategory ? "" : cat.slug)}
               className={`w-full text-left text-sm px-3 py-2 rounded-xl transition ${
                 activeCategory === cat.slug
-                  ? "bg-orange-500 text-white font-medium"
-                  : "text-gray-700 hover:bg-orange-50"
+                  ? "bg-teal-500 text-white font-medium"
+                  : "text-gray-700 hover:bg-teal-50"
               }`}
             >
               {cat.icon && <span className="mr-1.5">{cat.icon}</span>}

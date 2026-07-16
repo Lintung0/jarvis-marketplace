@@ -36,7 +36,7 @@ export default async function MembershipPage() {
             <div
               key={plan.id}
               className={`relative bg-white border rounded-2xl shadow-sm flex flex-col ${
-                isPro ? "border-orange-400 shadow-lg shadow-orange-100 scale-105 md:scale-105" : "border-gray-200"
+                isPro ? "border-teal-400 shadow-lg shadow-teal-100 scale-105 md:scale-105" : "border-gray-200"
               }`}
             >
               {isPro && (
@@ -48,7 +48,7 @@ export default async function MembershipPage() {
 
               <div className="p-6 flex-1 flex flex-col">
                 <div className="mb-6">
-                  <h3 className={`text-lg font-bold ${isPro ? "text-orange-600" : "text-gray-900"}`}>
+                  <h3 className={`text-lg font-bold ${isPro ? "text-teal-600" : "text-gray-900"}`}>
                     {plan.name}
                   </h3>
                   <p className="text-sm text-gray-500 mt-1">{plan.description}</p>
@@ -56,7 +56,7 @@ export default async function MembershipPage() {
 
                 <div className="mb-6">
                   <div className="flex items-baseline gap-1">
-                    <span className={`text-4xl font-extrabold ${isPro ? "text-orange-600" : "text-gray-900"}`}>
+                    <span className={`text-4xl font-extrabold ${isPro ? "text-teal-600" : "text-gray-900"}`}>
                       {formatPrice(plan.price)}
                     </span>
                     {plan.price > 0 && <span className="text-sm text-gray-500">/bulan</span>}

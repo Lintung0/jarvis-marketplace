@@ -29,6 +29,7 @@ import {
   Settings,
   ShoppingBag,
   RefreshCw,
+  Building2,
   type LucideIcon,
   ChevronRight,
 } from "lucide-react";
@@ -108,6 +109,7 @@ const adminNav: NavGroup[] = [
       { title: "Users", href: "/admin/users", icon: Users },
       { title: "Vendor Apps", href: "/admin/vendor-applications", icon: Users },
       { title: "Categories", href: "/admin/categories", icon: Tag },
+      { title: "Brands", href: "/admin/brands", icon: Building2 },
       { title: "Coupons", href: "/admin/coupons", icon: Ticket },
       { title: "KB", href: "/admin/kb/articles", icon: BookOpen },
       { title: "Banners", href: "/admin/banners", icon: ImageIcon },

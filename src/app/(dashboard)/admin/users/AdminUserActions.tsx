@@ -55,7 +55,7 @@ export function AdminUserActions({ user }: { user: User }) {
           value={selectedRole}
           onChange={(e) => handleRoleChange(e.target.value)}
           disabled={loading === "role"}
-          className="bg-white border border-gray-200 text-gray-700 rounded-lg px-2 py-1 text-xs focus:border-orange-400 outline-none disabled:opacity-50"
+          className="bg-white border border-gray-200 text-gray-700 rounded-lg px-2 py-1 text-xs focus:border-teal-400 outline-none disabled:opacity-50"
         >
           {ROLES.map((r) => (
             <option key={r} value={r}>{r}</option>

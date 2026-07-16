@@ -59,7 +59,7 @@ export default async function ModeratorReturnsPage() {
                       <p className="text-xs text-gray-400">{req.user?.email}</p>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="inline-block bg-orange-50 text-orange-700 px-2 py-0.5 rounded text-xs font-medium">
+                      <span className="inline-block bg-teal-50 text-teal-700 px-2 py-0.5 rounded text-xs font-medium">
                         {req.reason}
                       </span>
                     </td>

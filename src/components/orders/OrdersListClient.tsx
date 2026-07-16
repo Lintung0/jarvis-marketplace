@@ -51,7 +51,7 @@ export default function OrdersListClient({ orders }: Props) {
               onClick={() => setActiveTab(tab.id)}
               className={`px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition ${
                 activeTab === tab.id
-                  ? "bg-white text-orange-500 shadow-sm"
+                  ? "bg-white text-teal-500 shadow-sm"
                   : "text-gray-500 hover:text-gray-700"
               }`}
             >
@@ -60,7 +60,7 @@ export default function OrdersListClient({ orders }: Props) {
                 <span
                   className={`ml-1.5 text-xs px-1.5 py-0.5 rounded-full ${
                     activeTab === tab.id
-                      ? "bg-orange-100 text-orange-600"
+                      ? "bg-teal-100 text-teal-600"
                       : "bg-gray-200 text-gray-500"
                   }`}
                 >
@@ -80,7 +80,7 @@ export default function OrdersListClient({ orders }: Props) {
               ? "Belum ada transaksi"
               : `Tidak ada pesanan "${ORDER_TABS.find((t) => t.id === activeTab)?.label}"`}
           </h2>
-          <p className="text-gray-400 mb-6">Yuk mulai belanja di JarvisMarketplace!</p>
+          <p className="text-gray-400 mb-6">Yuk mulai belanja di Modesy!</p>
           <Link
             href="/"
             className="inline-block gradient-brand text-white px-6 py-3 rounded-xl font-semibold hover:opacity-90 transition shadow-md"

@@ -61,7 +61,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     },
     publisher: {
       "@type": "Organization",
-      name: "JarvisMarketplace",
+      name: "Modesy",
     },
     mainEntityOfPage: {
       "@type": "WebPage",
@@ -77,7 +77,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
 
-      <Link href="/blog" className="text-sm text-orange-500 hover:underline mb-6 inline-block">
+      <Link href="/blog" className="text-sm text-teal-500 hover:underline mb-6 inline-block">
         ← Kembali ke Blog
       </Link>
 

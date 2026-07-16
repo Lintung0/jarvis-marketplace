@@ -36,7 +36,7 @@ export function NotificationItem({
     <div
       className={cn(
         "px-4 py-3 border-b border-border text-sm cursor-pointer hover:bg-muted transition",
-        !notif.is_read && "bg-orange-50/30",
+        !notif.is_read && "bg-teal-50/30",
       )}
       onClick={() => onMarkRead(notif.id)}
     >
@@ -131,7 +131,7 @@ export default function Notifications({ userId }: { userId: string }) {
             <Link
               href="/notifications"
               onClick={() => setOpen(false)}
-              className="block w-full text-center py-2.5 text-xs text-orange-600 font-medium hover:bg-muted transition"
+              className="block w-full text-center py-2.5 text-xs text-teal-600 font-medium hover:bg-muted transition"
             >
               View All Notifications
             </Link>

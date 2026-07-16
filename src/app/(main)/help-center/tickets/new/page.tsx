@@ -42,7 +42,7 @@ export default function NewTicketPage() {
       <div className="mb-8">
         <Link
           href="/help-center/tickets"
-          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-orange-600 transition mb-4"
+          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-teal-600 transition mb-4"
         >
           <ArrowLeft className="w-4 h-4" />
           Kembali ke Tiket
@@ -63,7 +63,7 @@ export default function NewTicketPage() {
             onChange={(e) => setSubject(e.target.value)}
             required
             placeholder="Contoh: Saya mengalami masalah pembayaran"
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-500 transition-colors"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal-500 transition-colors"
           />
         </div>
 
@@ -72,7 +72,7 @@ export default function NewTicketPage() {
           <select
             value={priority}
             onChange={(e) => setPriority(e.target.value)}
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-500 transition-colors"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal-500 transition-colors"
           >
             {priorities.map((p) => (
               <option key={p.value} value={p.value}>{p.label}</option>
@@ -88,14 +88,14 @@ export default function NewTicketPage() {
             required
             rows={6}
             placeholder="Jelaskan masalah kamu secara detail..."
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-500 transition-colors resize-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal-500 transition-colors resize-none"
           />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 rounded-xl font-semibold text-sm gradient-brand text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all disabled:opacity-50"
+          className="w-full py-3 rounded-xl font-semibold text-sm gradient-brand text-white hover:shadow-lg hover:shadow-teal-500/25 transition-all disabled:opacity-50"
         >
           {loading ? "Mengirim..." : "Kirim Tiket"}
         </button>

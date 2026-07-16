@@ -197,7 +197,7 @@ const [images, setImages] = useState<ImagePreview[]>(existingImages)
             type="button"
             onClick={() => fileInputRef.current?.click()}
             disabled={submitting}
-            className="w-24 h-24 rounded-lg border-2 border-dashed border-gray-300 hover:border-orange-400 transition flex flex-col items-center justify-center gap-1 text-gray-400 hover:text-orange-500"
+            className="w-24 h-24 rounded-lg border-2 border-dashed border-gray-300 hover:border-teal-400 transition flex flex-col items-center justify-center gap-1 text-gray-400 hover:text-teal-500"
           >
             <ImagePlus className="w-6 h-6" />
             <span className="text-[10px] font-medium">Upload</span>
@@ -222,14 +222,14 @@ const [images, setImages] = useState<ImagePreview[]>(existingImages)
               onChange={(e) => setUrlInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleUrlAdd())}
               placeholder="Paste image URL..."
-              className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg pl-10 pr-4 py-2 text-sm focus:border-orange-400 outline-none"
+              className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg pl-10 pr-4 py-2 text-sm focus:border-teal-400 outline-none"
             />
           </div>
           <button
             type="button"
             onClick={handleUrlAdd}
             disabled={!urlInput.trim() || submitting}
-            className="px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all disabled:opacity-50"
+            className="px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:shadow-lg hover:shadow-teal-500/25 transition-all disabled:opacity-50"
           >
             Add URL
           </button>
@@ -279,7 +279,7 @@ const [images, setImages] = useState<ImagePreview[]>(existingImages)
             id="category_id"
             name="category_id"
             defaultValue={initialData?.category_id || ""}
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
           >
             <option value="">Select a category</option>
             {categories.map((cat) => (
@@ -348,7 +348,7 @@ const [images, setImages] = useState<ImagePreview[]>(existingImages)
                   setSpecs(next)
                 }}
                 placeholder="Nama (contoh: Ukuran)"
-                className="flex-1 bg-white border border-gray-200 text-gray-900 rounded-lg px-3 py-2 text-sm focus:border-orange-400 outline-none"
+                className="flex-1 bg-white border border-gray-200 text-gray-900 rounded-lg px-3 py-2 text-sm focus:border-teal-400 outline-none"
               />
               <input
                 value={spec.value}
@@ -358,7 +358,7 @@ const [images, setImages] = useState<ImagePreview[]>(existingImages)
                   setSpecs(next)
                 }}
                 placeholder="Nilai (contoh: XL)"
-                className="flex-[2] bg-white border border-gray-200 text-gray-900 rounded-lg px-3 py-2 text-sm focus:border-orange-400 outline-none"
+                className="flex-[2] bg-white border border-gray-200 text-gray-900 rounded-lg px-3 py-2 text-sm focus:border-teal-400 outline-none"
               />
               {specs.length > 1 && (
                 <button
@@ -374,7 +374,7 @@ const [images, setImages] = useState<ImagePreview[]>(existingImages)
           <button
             type="button"
             onClick={() => setSpecs([...specs, { key: "", value: "" }])}
-            className="text-sm text-orange-500 hover:text-orange-600 transition font-medium"
+            className="text-sm text-teal-500 hover:text-teal-600 transition font-medium"
           >
             + Tambah spesifikasi
           </button>
@@ -390,7 +390,7 @@ const [images, setImages] = useState<ImagePreview[]>(existingImages)
             id="status"
             name="status"
             defaultValue={initialData?.status || "draft"}
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
             required
           >
             <option value="draft">Draft (Save as draft)</option>
@@ -411,7 +411,7 @@ const [images, setImages] = useState<ImagePreview[]>(existingImages)
         <button
           type="submit"
           disabled={submitting}
-          className="px-6 py-2 text-sm font-medium rounded-lg gradient-brand text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all disabled:opacity-50 flex items-center gap-2"
+          className="px-6 py-2 text-sm font-medium rounded-lg gradient-brand text-white hover:shadow-lg hover:shadow-teal-500/25 transition-all disabled:opacity-50 flex items-center gap-2"
         >
           {submitting ? (
             <>

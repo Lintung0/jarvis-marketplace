@@ -81,7 +81,7 @@ export default function VendorApplicationClient({ applications }: Props) {
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2">
-                    <Store className="w-4 h-4 text-orange-500" />
+                    <Store className="w-4 h-4 text-teal-500" />
                     <span className="font-medium text-gray-900">{app.store_name}</span>
                   </div>
                 </td>

@@ -20,9 +20,8 @@ export default async function Navbar() {
 
   const { data: categories } = await supabase
     .from("categories")
-    .select("id, name, slug, icon")
-    .order("name")
-    .limit(8);
+    .select("id, name, slug, icon, parent_id")
+    .order("name");
 
   return (
     <NavbarClient user={user} profile={profile} categories={categories ?? []} unreadMessages={unreadMessages} />

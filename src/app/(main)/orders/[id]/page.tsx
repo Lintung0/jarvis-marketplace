@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return generateMeta({
     title: `Order #${id.slice(0, 8).toUpperCase()}`,
-    description: `Detail pesanan #${id.slice(0, 8).toUpperCase()} di JarvisMarketplace`,
+    description: `Detail pesanan #${id.slice(0, 8).toUpperCase()} di Modesy`,
     path: `/orders/${id}`,
     noIndex: true,
   });
@@ -106,7 +106,7 @@ export default async function OrderDetailPage({ params, searchParams }: PageProp
           <div>
             <h2 className="font-bold text-green-800 text-lg">Pembayaran Berhasil!</h2>
             <p className="text-green-600 text-sm">
-              Terima kasih sudah belanja di JarvisMarketplace. Order kamu sedang diproses.
+              Terima kasih sudah belanja di Modesy. Order kamu sedang diproses.
             </p>
           </div>
         </div>
@@ -159,7 +159,7 @@ export default async function OrderDetailPage({ params, searchParams }: PageProp
                   )}
                   <p className="text-xs text-gray-400">Qty: {item.quantity}</p>
                 </div>
-                <p className="text-sm font-semibold text-orange-500 flex-shrink-0">
+                <p className="text-sm font-semibold text-teal-500 flex-shrink-0">
                   {formatCurrency(item.price * item.quantity)}
                 </p>
               </div>
@@ -169,7 +169,7 @@ export default async function OrderDetailPage({ params, searchParams }: PageProp
 
         <div className="border-t border-gray-200 mt-4 pt-4 flex justify-between font-bold text-gray-900 text-lg">
           <span>Total</span>
-          <span className="text-orange-500">{formatCurrency(orderWithItems.total)}</span>
+          <span className="text-teal-500">{formatCurrency(orderWithItems.total)}</span>
         </div>
       </div>
 
@@ -195,8 +195,8 @@ export default async function OrderDetailPage({ params, searchParams }: PageProp
         </Link>
         <Link
           href="/"
-          className="flex-1 text-center py-3 rounded-xl font-semibold text-sm border-2 transition-all hover:bg-orange-50"
-          style={{ borderColor: "#ff6b35", color: "#ff6b35" }}
+          className="flex-1 text-center py-3 rounded-xl font-semibold text-sm border-2 transition-all hover:bg-teal-50"
+          style={{ borderColor: "#00a99d", color: "#00a99d" }}
         >
           Lanjut Belanja
         </Link>

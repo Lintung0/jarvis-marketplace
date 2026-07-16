@@ -27,7 +27,7 @@ export default async function TicketDetailPage(props: { params: Promise<{ id: st
       <div className="mb-6">
         <Link
           href={isAdmin ? "/admin/tickets" : "/help-center/tickets"}
-          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-orange-600 transition mb-4"
+          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-teal-600 transition mb-4"
         >
           <ArrowLeft className="w-4 h-4" />
           Kembali

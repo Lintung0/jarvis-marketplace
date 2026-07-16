@@ -45,7 +45,7 @@ export default async function BillingPage() {
           </p>
           <Link
             href="/sell"
-            className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-medium text-sm hover:shadow-lg hover:shadow-orange-500/25 transition-all"
+            className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-teal-500 to-teal-600 text-white rounded-xl font-medium text-sm hover:shadow-lg hover:shadow-teal-500/25 transition-all"
           >
             Mulai Jualan
             <ArrowUpRight className="w-4 h-4" />
@@ -91,7 +91,7 @@ export default async function BillingPage() {
             {/* Progress bar */}
             <div className="mt-4 h-2 bg-white/10 rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-orange-400 to-orange-600 rounded-full transition-all"
+                className="h-full bg-gradient-to-r from-teal-400 to-teal-600 rounded-full transition-all"
                 style={{ width: `${Math.min((productCount / planLimit) * 100, 100)}%` }}
               />
             </div>
@@ -101,17 +101,17 @@ export default async function BillingPage() {
           <div className="grid grid-cols-2 gap-4 mb-8">
             <Link
               href="/membership"
-              className="bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-md hover:border-orange-200 transition-all group"
+              className="bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-md hover:border-teal-200 transition-all group"
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center mb-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center mb-3">
                 <ArrowUpRight className="w-5 h-5 text-white" />
               </div>
-              <p className="font-semibold text-gray-900 group-hover:text-orange-600 transition">Ganti Plan</p>
+              <p className="font-semibold text-gray-900 group-hover:text-teal-600 transition">Ganti Plan</p>
               <p className="text-xs text-gray-400 mt-1">Upgrade atau downgrade</p>
             </Link>
             <Link
               href="/vendor/products"
-              className="bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-md hover:border-orange-200 transition-all group"
+              className="bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-md hover:border-teal-200 transition-all group"
             >
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center mb-3">
                 <Package className="w-5 h-5 text-white" />
@@ -132,7 +132,7 @@ export default async function BillingPage() {
                     key={plan.id}
                     className={`relative flex items-center justify-between p-4 rounded-xl border ${
                       isActive
-                        ? "border-orange-500 bg-orange-50"
+                        ? "border-teal-500 bg-teal-50"
                         : "border-gray-200 hover:border-gray-300"
                     } transition`}
                   >
@@ -140,19 +140,19 @@ export default async function BillingPage() {
                       <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
                         plan.price === 0 ? "bg-gray-100" :
                         plan.price >= 200000 ? "bg-purple-100" :
-                        "bg-orange-100"
+                        "bg-teal-100"
                       }`}>
                         <Crown className={`w-5 h-5 ${
                           plan.price === 0 ? "text-gray-400" :
                           plan.price >= 200000 ? "text-purple-600" :
-                          "text-orange-600"
+                          "text-teal-600"
                         }`} />
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
                           <p className="font-semibold text-gray-900">{plan.name}</p>
                           {isActive && (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-600 text-[10px] font-medium">
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-teal-500/10 text-teal-600 text-[10px] font-medium">
                               <Check className="w-3 h-3" />
                               Aktif
                             </span>
@@ -179,7 +179,7 @@ export default async function BillingPage() {
                     {!isActive && (
                       <Link
                         href="/membership"
-                        className="px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all whitespace-nowrap"
+                        className="px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:shadow-lg hover:shadow-teal-500/25 transition-all whitespace-nowrap"
                       >
                         Pilih
                       </Link>

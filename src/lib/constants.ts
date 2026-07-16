@@ -1,4 +1,4 @@
-export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME ?? "JarvisMarketplace"
+export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME ?? "Modesy"
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
 
 export const ROLES = {
@@ -52,7 +52,7 @@ export const FOOTER_LINKS = {
     { label: "Privacy Policy", href: "/privacy-policy" },
   ],
   sell: [
-    { label: "Sell on JarvisMarketplace", href: "/sell" },
+    { label: "Sell on Modesy", href: "/sell" },
     { label: "Vendor Dashboard", href: "/vendor" },
   ],
 }

@@ -51,9 +51,9 @@ function ConversationCard({ conversation }: { conversation: Conversation }) {
   return (
     <Link
       href={`/chat/${otherUser.id}`}
-      className={`flex items-center gap-4 p-4 rounded-2xl border transition-all hover:shadow-md hover:border-orange-200 ${
+      className={`flex items-center gap-4 p-4 rounded-2xl border transition-all hover:shadow-md hover:border-teal-200 ${
         unreadCount > 0
-          ? "bg-orange-50 border-orange-200"
+          ? "bg-teal-50 border-teal-200"
           : "bg-white border-gray-100"
       }`}
     >
@@ -91,7 +91,7 @@ function ConversationCard({ conversation }: { conversation: Conversation }) {
             {lastMessage.content}
           </span>
           {unreadCount > 0 && (
-            <span className="bg-orange-500 text-white text-xs font-bold min-w-[20px] h-5 px-1.5 rounded-full flex items-center justify-center flex-shrink-0">
+            <span className="bg-teal-500 text-white text-xs font-bold min-w-[20px] h-5 px-1.5 rounded-full flex items-center justify-center flex-shrink-0">
               {unreadCount > 99 ? "99+" : unreadCount}
             </span>
           )}

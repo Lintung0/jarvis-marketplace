@@ -96,7 +96,7 @@ export default function CancelOrderModal({ orderId, isOpen, onClose }: Props) {
                 key={reason.id}
                 className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition ${
                   selectedReason === reason.id
-                    ? "border-orange-300 bg-orange-50"
+                    ? "border-teal-300 bg-teal-50"
                     : "border-gray-200 hover:border-gray-300"
                 }`}
               >
@@ -109,7 +109,7 @@ export default function CancelOrderModal({ orderId, isOpen, onClose }: Props) {
                     setSelectedReason(e.target.value);
                     setError("");
                   }}
-                  className="w-4 h-4 accent-orange-500"
+                  className="w-4 h-4 accent-teal-500"
                 />
                 <span className="text-sm text-gray-700">{reason.label}</span>
               </label>
@@ -124,7 +124,7 @@ export default function CancelOrderModal({ orderId, isOpen, onClose }: Props) {
                 setError("");
               }}
               placeholder="Tuliskan alasan kamu..."
-              className="w-full border border-gray-200 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-400 resize-none"
+              className="w-full border border-gray-200 rounded-xl p-3 text-sm focus:outline-none focus:border-teal-400 resize-none"
               rows={3}
             />
           )}

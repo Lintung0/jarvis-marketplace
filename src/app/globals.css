@@ -46,16 +46,16 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-  --color-orange-50: #fff7ed;
-  --color-orange-100: #ffedd5;
-  --color-orange-200: #fed7aa;
-  --color-orange-300: #fdba74;
-  --color-orange-400: #fb923c;
-  --color-orange-500: #f97316;
-  --color-orange-600: #ea580c;
-  --color-orange-700: #c2410c;
-  --color-brand: #ff6b35;
-  --color-brand-light: #f7931e;
+  --color-teal-50: #f0fdfa;
+  --color-teal-100: #ccfbf1;
+  --color-teal-200: #99f6e4;
+  --color-teal-300: #5eead4;
+  --color-teal-400: #2dd4bf;
+  --color-teal-500: #14b8a6;
+  --color-teal-600: #0d9488;
+  --color-teal-700: #0f766e;
+  --color-brand: #00a99d;
+  --color-brand-light: #00b3a1;
 }
 
 :root {
@@ -65,32 +65,32 @@
   --card-foreground: oklch(0.2 0.02 260);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2 0.02 260);
-  --primary: #ff6b35;
+  --primary: #00a99d;
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.95 0.01 260);
   --secondary-foreground: oklch(0.3 0.02 260);
   --muted: oklch(0.96 0.005 260);
   --muted-foreground: oklch(0.55 0.02 260);
-  --accent: #f7931e;
+  --accent: #00b3a1;
   --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.7 0.25 30);
   --border: oklch(0.9 0.01 260);
   --input: oklch(0.9 0.01 260);
-  --ring: #ff6b35;
-  --chart-1: #ff6b35;
-  --chart-2: #f7931e;
+  --ring: #00a99d;
+  --chart-1: #00a99d;
+  --chart-2: #00b3a1;
   --chart-3: #1a1a2e;
   --chart-4: #10b981;
   --chart-5: #3b82f6;
   --radius: 0.625rem;
   --sidebar: oklch(1 0 0);
   --sidebar-foreground: oklch(0.2 0.02 260);
-  --sidebar-primary: #ff6b35;
+  --sidebar-primary: #00a99d;
   --sidebar-primary-foreground: oklch(1 0 0);
   --sidebar-accent: oklch(0.95 0.01 260);
   --sidebar-accent-foreground: oklch(0.3 0.02 260);
   --sidebar-border: oklch(0.9 0.01 260);
-  --sidebar-ring: #ff6b35;
+  --sidebar-ring: #00a99d;
 }
 
 @layer base {
@@ -107,7 +107,7 @@
     @apply transition-all duration-200;
   }
   ::selection {
-    background-color: rgba(255, 107, 53, 0.2);
+    background-color: rgba(0, 169, 157, 0.2);
     color: #1a1a2e;
   }
   ::-webkit-scrollbar {
@@ -135,9 +135,9 @@
     display: none;
   }
   .gradient-brand {
-    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    background: linear-gradient(135deg, #00a99d, #00b3a1);
   }
   .text-brand {
-    color: #ff6b35;
+    color: #00a99d;
   }
 }

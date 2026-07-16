@@ -11,7 +11,7 @@ export default async function KnowledgeBasePage() {
       <div className="gradient-brand rounded-2xl p-8 md:p-12 text-white mb-10 text-center">
         <h1 className="text-3xl font-bold mb-3">Knowledge Base</h1>
         <p className="text-white/80 mb-6 max-w-lg mx-auto">
-          Cari panduan, tutorial, dan informasi lengkap seputar JarvisMarketplace.
+          Cari panduan, tutorial, dan informasi lengkap seputar Modesy.
         </p>
         <div className="relative max-w-md mx-auto">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -29,11 +29,11 @@ export default async function KnowledgeBasePage() {
           <Link
             key={cat.id}
             href={`/help-center/kb/${cat.slug}`}
-            className="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md hover:border-orange-200 transition group"
+            className="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md hover:border-teal-200 transition group"
           >
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="font-semibold text-gray-900 group-hover:text-orange-600 transition">
+                <h3 className="font-semibold text-gray-900 group-hover:text-teal-600 transition">
                   {cat.name}
                 </h3>
                 {cat.description && (
@@ -43,7 +43,7 @@ export default async function KnowledgeBasePage() {
                   {cat.kb_articles?.[0]?.count ?? 0} artikel
                 </p>
               </div>
-              <BookOpen className="w-5 h-5 text-orange-400 shrink-0 mt-1" />
+              <BookOpen className="w-5 h-5 text-teal-400 shrink-0 mt-1" />
             </div>
           </Link>
         ))}
@@ -59,7 +59,7 @@ export default async function KnowledgeBasePage() {
       <div className="mt-8 text-center">
         <Link
           href="/help-center"
-          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-orange-600 transition"
+          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-teal-600 transition"
         >
           <ChevronRight className="w-4 h-4 rotate-180" />
           Kembali ke Pusat Bantuan

@@ -43,14 +43,14 @@ export default async function VendorProductsPage() {
           </span>
           {atLimit ? (
             <Link href="/membership">
-              <Button className="bg-orange-600 hover:bg-orange-700">
+              <Button className="bg-teal-600 hover:bg-teal-700">
                 <AlertTriangle className="h-4 w-4 mr-2" />
                 Upgrade to Add More
               </Button>
             </Link>
           ) : (
             <Link href="/vendor/products/new">
-              <Button className="bg-orange-600 hover:bg-orange-700">
+              <Button className="bg-teal-600 hover:bg-teal-700">
                 <Plus className="h-4 w-4 mr-2" />
                 Add Product
               </Button>

@@ -17,8 +17,8 @@ export default function NotFound() {
         </Link>
         <Link
           href="/products"
-          className="px-6 py-3 rounded-xl font-semibold text-sm border-2 hover:bg-orange-50 transition-all"
-          style={{ borderColor: "#ff6b35", color: "#ff6b35" }}
+          className="px-6 py-3 rounded-xl font-semibold text-sm border-2 hover:bg-teal-50 transition-all"
+          style={{ borderColor: "#00a99d", color: "#00a99d" }}
         >
           Lihat Produk
         </Link>

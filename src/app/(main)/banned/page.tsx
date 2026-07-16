@@ -11,10 +11,10 @@ export default async function BannedPage() {
         </div>
         <h1 className="text-2xl font-bold text-gray-900 mb-2">Akun Dibanned</h1>
         <p className="text-gray-500 mb-6">
-          Akun kamu telah dinonaktifkan oleh admin. Kamu tidak dapat mengakses fitur-fitur JarvisMarketplace.
+          Akun kamu telah dinonaktifkan oleh admin. Kamu tidak dapat mengakses fitur-fitur Modesy.
         </p>
         <p className="text-sm text-gray-400 mb-8">
-          Jika kamu merasa ini adalah kesalahan, silakan hubungi tim support JarvisMarketplace.
+          Jika kamu merasa ini adalah kesalahan, silakan hubungi tim support Modesy.
         </p>
         <Link
           href="/"

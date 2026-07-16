@@ -72,7 +72,7 @@ export default async function VendorDashboard() {
             </span>
           )}
           <Link href="/membership">
-            <button className="gradient-brand text-white text-xs font-medium px-4 py-2 rounded-lg hover:shadow-lg hover:shadow-orange-500/25 transition">
+            <button className="gradient-brand text-white text-xs font-medium px-4 py-2 rounded-lg hover:shadow-lg hover:shadow-teal-500/25 transition">
               Upgrade Plan
             </button>
           </Link>
@@ -82,7 +82,7 @@ export default async function VendorDashboard() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">Dashboard Overview</h1>
         <Link href="/vendor/products/new">
-          <button className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+          <button className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
             + Add New Product
           </button>
         </Link>
@@ -127,10 +127,10 @@ export default async function VendorDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-gray-500">Pending Earnings</CardTitle>
-            <TrendingUp className="h-4 w-4 text-orange-500" />
+            <TrendingUp className="h-4 w-4 text-teal-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-600">{formatCurrency(pendingEarnings)}</div>
+            <div className="text-2xl font-bold text-teal-600">{formatCurrency(pendingEarnings)}</div>
             <p className="text-xs text-gray-500 mt-1">Waiting for payment</p>
           </CardContent>
         </Card>
@@ -158,7 +158,7 @@ export default async function VendorDashboard() {
                     </p>
                   </div>
                   <div className="flex items-center gap-3 flex-shrink-0 ml-3">
-                    <span className="text-sm font-semibold text-orange-500">{formatCurrency(item.price * item.quantity)}</span>
+                    <span className="text-sm font-semibold text-teal-500">{formatCurrency(item.price * item.quantity)}</span>
                     <StatusBadge status={item.order?.status ?? "pending"} />
                   </div>
                 </Link>

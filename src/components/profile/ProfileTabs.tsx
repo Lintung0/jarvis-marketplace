@@ -25,7 +25,7 @@ interface StatusConfig {
 const STATUS_CONFIG: Record<string, StatusConfig> = {
   pending: { label: "Pending", icon: Clock, color: "text-yellow-600", bg: "bg-yellow-50" },
   paid: { label: "Paid", icon: CheckCircle, color: "text-blue-600", bg: "bg-blue-50" },
-  processing: { label: "Processing", icon: Truck, color: "text-orange-600", bg: "bg-orange-50" },
+  processing: { label: "Processing", icon: Truck, color: "text-teal-600", bg: "bg-teal-50" },
   shipped: { label: "Shipped", icon: Truck, color: "text-purple-600", bg: "bg-purple-50" },
   delivered: { label: "Delivered", icon: CheckCircle, color: "text-green-600", bg: "bg-green-50" },
   cancelled: { label: "Cancelled", icon: XCircle, color: "text-red-600", bg: "bg-red-50" },
@@ -95,7 +95,7 @@ export default function ProfileTabs({ profile, orders, wishlistItems }: ProfileT
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex-1 flex items-center justify-center gap-2 px-6 py-4 font-semibold text-sm transition relative ${
                   activeTab === tab.id
-                    ? "text-orange-500"
+                    ? "text-teal-500"
                     : "text-gray-500 hover:text-gray-700"
                 }`}
               >
@@ -104,14 +104,14 @@ export default function ProfileTabs({ profile, orders, wishlistItems }: ProfileT
                 {tab.count !== undefined && tab.count > 0 && (
                   <span className={`text-xs px-2 py-0.5 rounded-full ${
                     activeTab === tab.id
-                      ? "bg-orange-100 text-orange-600"
+                      ? "bg-teal-100 text-teal-600"
                       : "bg-gray-100 text-gray-500"
                   }`}>
                     {tab.count}
                   </span>
                 )}
                 {activeTab === tab.id && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-orange-500" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-500" />
                 )}
               </button>
             );
@@ -133,7 +133,7 @@ export default function ProfileTabs({ profile, orders, wishlistItems }: ProfileT
                     onClick={() => setOrderSubTab(tab.id)}
                     className={`px-3 py-1.5 rounded-lg text-sm font-semibold whitespace-nowrap transition ${
                       orderSubTab === tab.id
-                        ? "bg-white text-orange-500 shadow-sm"
+                        ? "bg-white text-teal-500 shadow-sm"
                         : "text-gray-500 hover:text-gray-700"
                     }`}
                   >
@@ -141,7 +141,7 @@ export default function ProfileTabs({ profile, orders, wishlistItems }: ProfileT
                     {count > 0 && (
                       <span className={`ml-1 text-xs px-1.5 py-0.5 rounded-full ${
                         orderSubTab === tab.id
-                          ? "bg-orange-100 text-orange-600"
+                          ? "bg-teal-100 text-teal-600"
                           : "bg-gray-200 text-gray-500"
                       }`}>
                         {count}
@@ -251,7 +251,7 @@ export default function ProfileTabs({ profile, orders, wishlistItems }: ProfileT
                           <span className="text-xs text-gray-400">
                             {order.items?.length ?? 0} item
                           </span>
-                          <span className="text-sm font-bold text-orange-500">
+                          <span className="text-sm font-bold text-teal-500">
                             Rp{order.total.toLocaleString("id-ID")}
                           </span>
                         </div>
@@ -328,7 +328,7 @@ export default function ProfileTabs({ profile, orders, wishlistItems }: ProfileT
                           <div className="flex items-center gap-2 mt-2">
                             {product.sale_price ? (
                               <>
-                                <span className="text-sm font-bold text-orange-500">Rp{product.sale_price.toLocaleString("id-ID")}</span>
+                                <span className="text-sm font-bold text-teal-500">Rp{product.sale_price.toLocaleString("id-ID")}</span>
                                 <span className="text-xs text-gray-400 line-through">Rp{product.price.toLocaleString("id-ID")}</span>
                               </>
                             ) : (
@@ -405,7 +405,7 @@ export default function ProfileTabs({ profile, orders, wishlistItems }: ProfileT
                 <div className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${
                     profile.role === "admin" ? "bg-red-100 text-red-600" :
-                    profile.role === "vendor" ? "bg-orange-100 text-orange-600" :
+                    profile.role === "vendor" ? "bg-teal-100 text-teal-600" :
                     profile.role === "moderator" ? "bg-purple-100 text-purple-600" :
                     "bg-blue-100 text-blue-600"
                   }`}>
@@ -424,7 +424,7 @@ export default function ProfileTabs({ profile, orders, wishlistItems }: ProfileT
                   </div>
                 </div>
                 {profile.role === "member" && (
-                  <Link href="/sell" className="text-sm text-orange-500 hover:text-orange-600 font-semibold">
+                  <Link href="/sell" className="text-sm text-teal-500 hover:text-teal-600 font-semibold">
                     Jadi Vendor
                   </Link>
                 )}

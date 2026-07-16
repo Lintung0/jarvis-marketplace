@@ -1,6 +1,6 @@
 import sharp from "sharp"
 
-const WATERMARK_TEXT = "JarvisMarketplace"
+const WATERMARK_TEXT = "Modesy"
 const WATERMARK_FONT_SIZE = 48
 const WATERMARK_OPACITY = 0.3
 const WATERMARK_PADDING = 20

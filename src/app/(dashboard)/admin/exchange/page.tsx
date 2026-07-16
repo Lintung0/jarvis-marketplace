@@ -46,11 +46,11 @@ export default async function AdminExchangePage() {
                 name="rate"
                 type="number"
                 defaultValue={currentRate}
-                className="flex-1 bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+                className="flex-1 bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
               />
               <button
                 type="submit"
-                className="px-6 py-2 text-sm font-medium rounded-lg gradient-brand text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all"
+                className="px-6 py-2 text-sm font-medium rounded-lg gradient-brand text-white hover:shadow-lg hover:shadow-teal-500/25 transition-all"
               >
                 Simpan
               </button>

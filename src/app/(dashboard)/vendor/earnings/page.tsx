@@ -59,7 +59,7 @@ export default async function VendorEarningsPage() {
                   <p className="font-semibold text-gray-900">{formatCurrency(w.amount)}</p>
                   <p className="text-xs text-gray-400">{new Date(w.created_at).toLocaleDateString("id-ID")}</p>
                 </div>
-                <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${w.status === "paid" ? "bg-green-50 text-green-700 border-green-200" : w.status === "approved" ? "bg-orange-50 text-orange-700 border-orange-200" : w.status === "rejected" ? "bg-red-50 text-red-700 border-red-200" : "bg-yellow-50 text-yellow-700 border-yellow-200"}`}>
+                <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${w.status === "paid" ? "bg-green-50 text-green-700 border-green-200" : w.status === "approved" ? "bg-teal-50 text-teal-700 border-teal-200" : w.status === "rejected" ? "bg-red-50 text-red-700 border-red-200" : "bg-yellow-50 text-yellow-700 border-yellow-200"}`}>
                   {w.status}
                 </span>
               </div>

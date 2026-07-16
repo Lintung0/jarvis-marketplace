@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return generateMeta({
     title: product.title,
-    description: product.description?.slice(0, 160) ?? `${product.title} di JarvisMarketplace`,
+    description: product.description?.slice(0, 160) ?? `${product.title} di Modesy`,
     image: primaryImage,
     path: `/products/${slug}`,
   });
@@ -107,7 +107,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
       price: product.sale_price ?? product.price,
       priceCurrency: "IDR",
       availability: product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-      url: `${process.env.NEXT_PUBLIC_APP_URL ?? "https://jarvis-marketplace.com"}/products/${slug}`,
+      url: `${process.env.NEXT_PUBLIC_APP_URL ?? "https://modesy.com"}/products/${slug}`,
     },
     aggregateRating: product.reviews?.length > 0 ? {
       "@type": "AggregateRating",

@@ -66,7 +66,7 @@ export default async function VendorWalletPage() {
       </div>
 
       {/* Balance Card */}
-      <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-6 md:p-8 text-white mb-8 relative overflow-hidden">
+      <div className="bg-gradient-to-br from-teal-500 to-teal-600 rounded-2xl p-6 md:p-8 text-white mb-8 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2" />
         <div className="relative">
@@ -87,17 +87,17 @@ export default async function VendorWalletPage() {
       <div className="grid grid-cols-2 gap-4 mb-8">
         <Link
           href="/vendor/earnings"
-          className="bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-md hover:border-orange-200 transition-all group"
+          className="bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-md hover:border-teal-200 transition-all group"
         >
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center mb-3">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center mb-3">
             <ArrowUpRight className="w-5 h-5 text-white" />
           </div>
-          <p className="font-semibold text-gray-900 group-hover:text-orange-600 transition">Tarik Saldo</p>
+          <p className="font-semibold text-gray-900 group-hover:text-teal-600 transition">Tarik Saldo</p>
           <p className="text-xs text-gray-400 mt-1">Ajukan pencairan dana</p>
         </Link>
         <Link
           href="/vendor/earnings"
-          className="bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-md hover:border-orange-200 transition-all group"
+          className="bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-md hover:border-teal-200 transition-all group"
         >
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center mb-3">
             <TrendingUp className="w-5 h-5 text-white" />
@@ -118,7 +118,7 @@ export default async function VendorWalletPage() {
       {balance > 0 && (
         <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-8">
           <div className="flex items-center gap-2 mb-1">
-            <CreditCard className="w-5 h-5 text-orange-500" />
+            <CreditCard className="w-5 h-5 text-teal-500" />
             <h3 className="font-bold text-gray-900">Ajukan Penarikan</h3>
           </div>
           <p className="text-sm text-gray-400 mb-4">Saldo tersedia: {formatCurrency(balance)}</p>
@@ -170,7 +170,7 @@ export default async function VendorWalletPage() {
                         <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium ${
                           tx.status === "paid" ? "bg-blue-100 text-blue-700" :
                           tx.status === "rejected" ? "bg-red-100 text-red-700" :
-                          tx.status === "approved" ? "bg-orange-100 text-orange-700" :
+                          tx.status === "approved" ? "bg-teal-100 text-teal-700" :
                           "bg-yellow-100 text-yellow-700"
                         }`}>
                           {tx.status}

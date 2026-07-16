@@ -17,23 +17,23 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  title: { default: "JarvisMarketplace - Marketplace Terpercaya", template: "%s | JarvisMarketplace" },
+  title: { default: "Modesy - Marketplace Terpercaya", template: "%s | Modesy" },
   description: "Marketplace untuk produk digital, fisik, dan lisensi dari vendor pilihan",
   manifest: "/manifest.json",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://jarvis-marketplace.com"),
-  appleWebApp: { capable: true, title: "JarvisMarketplace", statusBarStyle: "black-translucent" },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://modesy.com"),
+  appleWebApp: { capable: true, title: "Modesy", statusBarStyle: "black-translucent" },
   other: { "mobile-web-app-capable": "yes" },
   openGraph: {
     type: "website",
-    siteName: "JarvisMarketplace",
-    title: "JarvisMarketplace - Marketplace Terpercaya",
+    siteName: "Modesy",
+    title: "Modesy - Marketplace Terpercaya",
     description: "Marketplace untuk produk digital, fisik, dan lisensi dari vendor pilihan",
     url: "/",
-    images: [{ url: "/og-default.png", width: 1200, height: 630, alt: "JarvisMarketplace" }],
+    images: [{ url: "/og-default.png", width: 1200, height: 630, alt: "Modesy" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "JarvisMarketplace - Marketplace Terpercaya",
+    title: "Modesy - Marketplace Terpercaya",
     description: "Marketplace untuk produk digital, fisik, dan lisensi dari vendor pilihan",
     images: ["/og-default.png"],
   },

@@ -21,7 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .select("slug, updated_at")
     .eq("status", "published")
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://jarvis-marketplace.com"
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://modesy.com"
 
   const staticPages = [
     { url: baseUrl, lastModified: new Date(), changeFrequency: "daily" as const, priority: 1 },

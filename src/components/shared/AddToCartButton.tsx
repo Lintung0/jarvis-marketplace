@@ -60,8 +60,8 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
                     onClick={() => handleOptionChange(option.name, val)}
                     className={`px-3 py-1 rounded-full border text-sm transition ${
                       selectedOptions[option.name] === val
-                        ? "bg-[#ff6b35] text-white border-[#ff6b35]"
-                        : "bg-white text-gray-700 border-gray-300 hover:border-orange-500"
+                        ? "bg-[#00a99d] text-white border-[#00a99d]"
+                        : "bg-white text-gray-700 border-gray-300 hover:border-teal-500"
                     }`}
                   >
                     {val}
@@ -109,7 +109,7 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
             ? "bg-gray-200 text-gray-400 cursor-not-allowed"
             : added
             ? "bg-green-500 text-white"
-            : "bg-[#ff6b35] text-white hover:bg-[#e55a2b]"
+            : "bg-[#00a99d] text-white hover:bg-[#00998f]"
         }`}
       >
         {isOutOfStock ? "Stok Habis" : added ? "✓ Ditambahkan!" : "Tambah ke Keranjang"}

@@ -70,8 +70,8 @@ export default function ReturnOrderModal({ orderId, isOpen, onClose }: Props) {
       >
         <div className="flex items-center justify-between p-5 border-b border-gray-100">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center">
-              <RotateCcw className="w-4 h-4 text-orange-500" />
+            <div className="w-8 h-8 rounded-full bg-teal-50 flex items-center justify-center">
+              <RotateCcw className="w-4 h-4 text-teal-500" />
             </div>
             <h2 className="text-lg font-bold text-gray-900">Ajukan Pengembalian</h2>
           </div>
@@ -92,7 +92,7 @@ export default function ReturnOrderModal({ orderId, isOpen, onClose }: Props) {
                 key={reason.id}
                 className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition ${
                   selectedReason === reason.id
-                    ? "border-orange-300 bg-orange-50"
+                    ? "border-teal-300 bg-teal-50"
                     : "border-gray-200 hover:border-gray-300"
                 }`}
               >
@@ -105,7 +105,7 @@ export default function ReturnOrderModal({ orderId, isOpen, onClose }: Props) {
                     setSelectedReason(e.target.value);
                     setError("");
                   }}
-                  className="w-4 h-4 accent-orange-500"
+                  className="w-4 h-4 accent-teal-500"
                 />
                 <span className="text-sm text-gray-700">{reason.label}</span>
               </label>
@@ -121,7 +121,7 @@ export default function ReturnOrderModal({ orderId, isOpen, onClose }: Props) {
                 setError("");
               }}
               placeholder="Jelaskan detail masalah..."
-              className="w-full border border-gray-200 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-400 resize-none"
+              className="w-full border border-gray-200 rounded-xl p-3 text-sm focus:outline-none focus:border-teal-400 resize-none"
               rows={3}
             />
           </div>
@@ -142,7 +142,7 @@ export default function ReturnOrderModal({ orderId, isOpen, onClose }: Props) {
           <button
             onClick={handleSubmit}
             disabled={submitting || !selectedReason}
-            className="flex-1 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm transition disabled:opacity-50 flex items-center justify-center gap-2"
+            className="flex-1 py-3 rounded-xl bg-teal-500 hover:bg-teal-600 text-white font-semibold text-sm transition disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {submitting ? (
               <>

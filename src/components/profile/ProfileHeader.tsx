@@ -33,7 +33,7 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
       case "moderator":
         return { icon: Shield, label: "Moderator", color: "bg-purple-500", textColor: "text-purple-700", bgColor: "bg-purple-50", borderColor: "border-purple-200" };
       case "vendor":
-        return { icon: Award, label: "Vendor", color: "bg-orange-500", textColor: "text-orange-700", bgColor: "bg-orange-50", borderColor: "border-orange-200" };
+        return { icon: Award, label: "Vendor", color: "bg-teal-500", textColor: "text-teal-700", bgColor: "bg-teal-50", borderColor: "border-teal-200" };
       default:
         return { icon: Star, label: "Member", color: "bg-blue-500", textColor: "text-blue-700", bgColor: "bg-blue-50", borderColor: "border-blue-200" };
     }
@@ -93,7 +93,7 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
                     {profile.plan_name && profile.plan_name !== "Free" && (
                       <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-semibold border ${
                         profile.plan_name === "Pro"
-                          ? "bg-orange-50 text-orange-700 border-orange-200"
+                          ? "bg-teal-50 text-teal-700 border-teal-200"
                           : "bg-purple-50 text-purple-700 border-purple-200"
                       }`}>
                         <Crown className="w-3.5 h-3.5" />

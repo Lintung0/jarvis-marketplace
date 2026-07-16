@@ -36,7 +36,7 @@ export function AdminProductActions({ productId, currentStatus }: { productId: s
       <select
         value={status}
         onChange={handleStatusChange}
-        className="bg-white border border-gray-200 text-gray-700 rounded-lg px-2 py-1 text-xs focus:border-orange-400 outline-none"
+        className="bg-white border border-gray-200 text-gray-700 rounded-lg px-2 py-1 text-xs focus:border-teal-400 outline-none"
       >
         {statuses.map((s) => (
           <option key={s} value={s}>{s}</option>
@@ -76,8 +76,8 @@ export function FeaturedToggle({ productId, isFeatured }: { productId: string; i
       title={featured ? "Remove from featured" : "Mark as featured"}
     >
       <svg
-        className={`w-5 h-5 ${featured ? "text-[#ff6b35]" : "text-gray-400"}`}
-        fill={featured ? "#ff6b35" : "none"}
+        className={`w-5 h-5 ${featured ? "text-[#00a99d]" : "text-gray-400"}`}
+        fill={featured ? "#00a99d" : "none"}
         viewBox="0 0 24 24"
         stroke="currentColor"
         strokeWidth={featured ? 0 : 1.5}

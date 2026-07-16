@@ -128,7 +128,7 @@ async function applyWatermarkToBuffer(buffer: Buffer, ext: string): Promise<Buff
       font-size="${fontSize}"
       font-weight="bold"
       fill="rgba(255,255,255,0.3)"
-    >JarvisMarketplace</text>
+    >Modesy</text>
   </svg>`
 
   return sharp(buffer)

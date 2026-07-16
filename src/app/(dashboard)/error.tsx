@@ -21,7 +21,7 @@ export default function DashboardError({
           <button
             onClick={reset}
             className="px-5 py-2.5 rounded-lg text-white font-semibold text-sm hover:opacity-90 transition"
-            style={{ background: "linear-gradient(135deg, #ff6b35, #f7931e)" }}
+            style={{ background: "linear-gradient(135deg, #00a99d, #00b3a1)" }}
           >
             Coba Lagi
           </button>

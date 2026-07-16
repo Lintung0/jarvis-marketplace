@@ -11,7 +11,7 @@ export default function SellPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-10">
-        <h1 className="text-3xl font-bold text-gray-900 mb-3">Jual di JarvisMarketplace</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-3">Jual di Modesy</h1>
         <p className="text-gray-500">Bergabung dengan ribuan vendor dan mulai hasilkan uang hari ini.</p>
       </div>
 
@@ -25,12 +25,12 @@ export default function SellPage() {
         ))}
       </div>
 
-      <div className="bg-[#ff6b35] rounded-2xl p-8 text-center text-white">
+      <div className="bg-[#00a99d] rounded-2xl p-8 text-center text-white">
         <h2 className="text-xl font-bold mb-2">Siap Mulai Berjualan?</h2>
-        <p className="text-orange-100 text-sm mb-6">Gratis daftar, komisi kompetitif, support 24/7.</p>
+        <p className="text-teal-100 text-sm mb-6">Gratis daftar, komisi kompetitif, support 24/7.</p>
         <Link
           href="/register"
-          className="inline-block bg-white text-orange-500 font-semibold px-6 py-3 rounded-full hover:bg-gray-100 transition"
+          className="inline-block bg-white text-teal-500 font-semibold px-6 py-3 rounded-full hover:bg-gray-100 transition"
         >
           Daftar Sekarang
         </Link>

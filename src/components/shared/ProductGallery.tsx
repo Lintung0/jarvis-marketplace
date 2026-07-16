@@ -48,7 +48,7 @@ export default function ProductGallery({ images, title}: Props) {
               onClick={() => setSelected(img.url)}
               className={`relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border-2 transition ${
                 (selected || primary.url) === img.url
-                  ? "border-orange-500"
+                  ? "border-teal-500"
                   : "border-transparent hover:border-gray-300"
               }`}
             >

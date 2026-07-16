@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return generateMeta({
     title: category.name,
-    description: category.description?.slice(0, 160) ?? `Produk di kategori ${category.name} | JarvisMarketplace`,
+    description: category.description?.slice(0, 160) ?? `Produk di kategori ${category.name} | Modesy`,
     image: category.image_url,
     path: `/categories/${slug}`,
   });
@@ -131,7 +131,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
             <a
               key={sub.id}
               href={`/categories/${sub.slug}`}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 text-sm text-gray-400 hover:border-orange-500 hover:text-orange-500 transition"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 text-sm text-gray-400 hover:border-teal-500 hover:text-teal-500 transition"
             >
               {sub.icon && <span>{sub.icon}</span>}
               {catFromDict(dict, sub.slug, sub.name)}
@@ -164,7 +164,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
               href={`/categories/${slug}?page=${p}${q ? `&q=${q}` : ""}${sort !== "newest" ? `&sort=${sort}` : ""}`}
               className={`px-3.5 py-1.5 rounded-xl text-sm font-medium transition ${
                 p === currentPage
-                  ? "bg-[#ff6b35] text-white"
+                  ? "bg-[#00a99d] text-white"
                   : "bg-white border border-gray-200 text-gray-400 hover:bg-gray-50"
               }`}
             >

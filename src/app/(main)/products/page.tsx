@@ -219,8 +219,8 @@ function Pagination({
               href={buildUrl(page)}
               className={`px-3.5 py-1.5 rounded-xl text-sm font-medium transition ${
                 page === current
-                  ? "bg-orange-500 text-white"
-                  : "bg-white border border-gray-200 text-gray-600 hover:bg-orange-50"
+                  ? "bg-teal-500 text-white"
+                  : "bg-white border border-gray-200 text-gray-600 hover:bg-teal-50"
               }`}
             >
               {page}

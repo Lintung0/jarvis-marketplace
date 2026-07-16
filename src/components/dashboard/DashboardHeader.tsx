@@ -21,7 +21,7 @@ export default function DashboardHeader({ userId, userEmail, userName, userAvata
         </div>
         <Avatar>
           <AvatarImage src={userAvatar} alt={userName} />
-          <AvatarFallback className="bg-orange-100 text-orange-600 font-semibold text-sm">
+          <AvatarFallback className="bg-teal-100 text-teal-600 font-semibold text-sm">
             {initial}
           </AvatarFallback>
         </Avatar>

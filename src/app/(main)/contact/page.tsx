@@ -12,7 +12,7 @@ export default function ContactPage() {
         <div className="bg-[#0a0a15] rounded-2xl p-4 border border-[#2a2a4a]">
           <p className="text-2xl mb-2">📧</p>
           <p className="font-medium text-gray-300">Email</p>
-          <p>support@jarvis-marketplace.com</p>
+          <p>support@modesy.com</p>
         </div>
         <div className="bg-[#0a0a15] rounded-2xl p-4 border border-[#2a2a4a]">
           <p className="text-2xl mb-2">💬</p>

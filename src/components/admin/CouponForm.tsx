@@ -63,7 +63,7 @@ export function CouponForm() {
             onChange={(e) => setCode(e.target.value.toUpperCase())}
             placeholder="DISKON50"
             required
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none uppercase"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none uppercase"
           />
         </div>
         <div>
@@ -71,7 +71,7 @@ export function CouponForm() {
           <select
             value={type}
             onChange={(e) => setType(e.target.value as "percentage" | "fixed")}
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
           >
             <option value="percentage">Percentage (%)</option>
             <option value="fixed">Fixed (Rp)</option>
@@ -88,7 +88,7 @@ export function CouponForm() {
             required
             type="number"
             min="0"
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
           />
         </div>
         <div>
@@ -98,7 +98,7 @@ export function CouponForm() {
             onChange={(e) => setMinOrder(e.target.value)}
             type="number"
             min="0"
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
           />
         </div>
         <div>
@@ -109,7 +109,7 @@ export function CouponForm() {
             type="number"
             min="0"
             placeholder="Unlimited"
-            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+            className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
           />
         </div>
         <div className="grid grid-cols-2 gap-3">
@@ -119,7 +119,7 @@ export function CouponForm() {
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
               type="date"
-              className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+              className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
             />
           </div>
           <div>
@@ -128,14 +128,14 @@ export function CouponForm() {
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
               type="date"
-              className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-orange-400 outline-none"
+              className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none"
             />
           </div>
         </div>
         <button
           type="submit"
           disabled={loading}
-          className="w-full px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:shadow-lg hover:shadow-teal-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Creating..." : "Create Coupon"}
         </button>

@@ -45,7 +45,7 @@ export function ContactForm() {
           onChange={(e) => setName(e.target.value)}
           required
           placeholder="Nama kamu"
-          className="w-full bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-500 transition-colors"
+          className="w-full bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal-500 transition-colors"
         />
       </div>
       <div>
@@ -56,7 +56,7 @@ export function ContactForm() {
           onChange={(e) => setEmail(e.target.value)}
           required
           placeholder="email@kamu.com"
-          className="w-full bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-500 transition-colors"
+          className="w-full bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal-500 transition-colors"
         />
       </div>
       <div>
@@ -67,12 +67,12 @@ export function ContactForm() {
           required
           rows={5}
           placeholder="Tulis pesanmu di sini..."
-          className="w-full bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-500 transition-colors resize-none"
+          className="w-full bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal-500 transition-colors resize-none"
         />
       </div>
       <button
         type="submit"
-        className="w-full py-3 rounded-xl font-semibold text-sm gradient-brand text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all"
+        className="w-full py-3 rounded-xl font-semibold text-sm gradient-brand text-white hover:shadow-lg hover:shadow-teal-500/25 transition-all"
       >
         Kirim Pesan
       </button>

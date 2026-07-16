@@ -13,7 +13,7 @@ export default function MarkReadButton({ notifId }: { notifId: string }) {
         await markAsRead(notifId)
         router.refresh()
       }}
-      className="p-1.5 rounded-full hover:bg-orange-100 transition text-orange-500"
+      className="p-1.5 rounded-full hover:bg-teal-100 transition text-teal-500"
       title="Mark as read"
     >
       <Check className="w-4 h-4" />

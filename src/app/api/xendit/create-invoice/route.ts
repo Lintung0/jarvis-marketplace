@@ -113,7 +113,7 @@ export async function POST(req: NextRequest) {
       external_id: order.id,
       amount: total,
       payer_email: user.email ?? "",
-      description: `Order #${order.id.slice(0, 8).toUpperCase()} - JarvisMarketplace`,
+      description: `Order #${order.id.slice(0, 8).toUpperCase()} - Modesy`,
       success_redirect_url: `${process.env.NEXT_PUBLIC_APP_URL}/orders/${order.id}?status=success`,
       failure_redirect_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout?status=failed`,
       currency: "IDR",

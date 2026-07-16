@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslation } from "@/lib/i18n";
 import { NewsletterForm } from "@/components/shared/SocialLogin";
 
@@ -18,7 +19,7 @@ export default function Footer() {
             <h3 className="text-white text-xl font-bold" style={{ fontFamily: "var(--font-heading)" }}>
               {t("footer.newsletter_title")}
             </h3>
-            <p className="text-orange-100 text-sm mt-1">{t("footer.newsletter_subtitle")}</p>
+            <p className="text-teal-100 text-sm mt-1">{t("footer.newsletter_subtitle")}</p>
           </div>
           <div className="flex w-full md:w-auto gap-2 max-w-md">
             <NewsletterForm />
@@ -30,21 +31,14 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-1.5 mb-4">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center gradient-brand">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M2 2h5v5H2zM9 2h5v5H9zM2 9h5v5H2zM9 9h5v5H9z" fill="white" fillOpacity="0.9" />
-                </svg>
-              </div>
-              <span className="text-xl font-bold text-white" style={{ fontFamily: "var(--font-heading)" }}>
-                Mode<span className="text-orange-500">sy</span>
-              </span>
+              <Image src="/logo.svg" alt="Modesy" width={120} height={38} className="h-8 w-auto brightness-0 invert" />
             </div>
             <p className="text-sm leading-relaxed mb-5 text-gray-500">
               {t("footer.brand_desc")}
             </p>
             <div className="flex gap-3">
               {["twitter", "facebook", "instagram", "youtube"].map((s) => (
-                <a key={s} href="#" className="w-8 h-8 rounded-lg bg-gray-800 hover:bg-orange-500 flex items-center justify-center transition-colors">
+                <a key={s} href="#" className="w-8 h-8 rounded-lg bg-gray-800 hover:bg-teal-500 flex items-center justify-center transition-colors">
                   <span className="text-gray-400 text-xs uppercase">{s.charAt(0)}</span>
                 </a>
               ))}
@@ -52,8 +46,8 @@ export default function Footer() {
             <div className="mt-4 pt-4 border-t border-gray-800">
               <h4 className="text-white font-semibold text-sm mb-3" style={{ fontFamily: "var(--font-heading)" }}>RSS Feeds</h4>
               <div className="flex gap-4">
-                <a href="/api/rss/products" className="text-xs text-gray-500 hover:text-orange-400 transition-colors" target="_blank" rel="noopener noreferrer">Products</a>
-                <a href="/api/rss/blog" className="text-xs text-gray-500 hover:text-orange-400 transition-colors" target="_blank" rel="noopener noreferrer">Blog</a>
+                <a href="/api/rss/products" className="text-xs text-gray-500 hover:text-teal-400 transition-colors" target="_blank" rel="noopener noreferrer">Products</a>
+                <a href="/api/rss/blog" className="text-xs text-gray-500 hover:text-teal-400 transition-colors" target="_blank" rel="noopener noreferrer">Blog</a>
               </div>
             </div>
           </div>
@@ -63,7 +57,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {[t("footer.browse_all"), t("footer.sell"), t("footer.how_it_works"), t("footer.pricing_plans"), t("footer.vendor_dashboard")].map((link) => (
                 <li key={link}>
-                  <a href="#" className="text-sm hover:text-orange-400 transition-colors">{link}</a>
+                  <a href="#" className="text-sm hover:text-teal-400 transition-colors">{link}</a>
                 </li>
               ))}
             </ul>
@@ -74,7 +68,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {[t("footer.help_center"), t("footer.contact_us"), t("footer.report_problem"), t("footer.refund_policy"), t("footer.shipping_info")].map((link) => (
                 <li key={link}>
-                  <a href="#" className="text-sm hover:text-orange-400 transition-colors">{link}</a>
+                  <a href="#" className="text-sm hover:text-teal-400 transition-colors">{link}</a>
                 </li>
               ))}
             </ul>
@@ -85,7 +79,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {[t("footer.about_us"), t("footer.careers"), t("footer.press"), t("footer.blog")].map((link) => (
                 <li key={link}>
-                  <a href="#" className="text-sm hover:text-orange-400 transition-colors">{link}</a>
+                  <a href="#" className="text-sm hover:text-teal-400 transition-colors">{link}</a>
                 </li>
               ))}
             </ul>
@@ -96,7 +90,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {[t("footer.privacy_policy"), t("footer.terms_of_service"), t("footer.cookie_policy"), t("footer.accessibility")].map((link) => (
                 <li key={link}>
-                  <a href="#" className="text-sm hover:text-orange-400 transition-colors">{link}</a>
+                  <a href="#" className="text-sm hover:text-teal-400 transition-colors">{link}</a>
                 </li>
               ))}
             </ul>

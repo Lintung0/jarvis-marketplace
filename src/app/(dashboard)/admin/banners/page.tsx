@@ -51,7 +51,7 @@ export default async function AdminBannersPage() {
                         {banner.title || "-"}
                       </td>
                       <td className="px-4 py-3">
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-orange-500/10 text-orange-500 border-orange-500/30 capitalize">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-teal-500/10 text-teal-500 border-teal-500/30 capitalize">
                           {banner.placement}
                         </span>
                       </td>

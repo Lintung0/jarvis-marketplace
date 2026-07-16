@@ -82,7 +82,7 @@ export default function EditProfileModal({ profile, isOpen, onClose }: EditProfi
               type="text"
               value={formData.full_name}
               onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-              className="w-full px-4 py-3 bg-[#0a0a15] border border-[#2a2a4a] rounded-xl text-gray-200 placeholder-gray-600 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 bg-[#0a0a15] border border-[#2a2a4a] rounded-xl text-gray-200 placeholder-gray-600 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
               placeholder="John Doe"
             />
           </div>
@@ -96,7 +96,7 @@ export default function EditProfileModal({ profile, isOpen, onClose }: EditProfi
               type="text"
               value={formData.username}
               onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-              className="w-full px-4 py-3 bg-[#0a0a15] border border-[#2a2a4a] rounded-xl text-gray-200 placeholder-gray-600 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 bg-[#0a0a15] border border-[#2a2a4a] rounded-xl text-gray-200 placeholder-gray-600 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
               placeholder="johndoe"
               required
             />
@@ -111,7 +111,7 @@ export default function EditProfileModal({ profile, isOpen, onClose }: EditProfi
               type="text"
               value={formData.location}
               onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-              className="w-full px-4 py-3 bg-[#0a0a15] border border-[#2a2a4a] rounded-xl text-gray-200 placeholder-gray-600 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 bg-[#0a0a15] border border-[#2a2a4a] rounded-xl text-gray-200 placeholder-gray-600 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
               placeholder="Jakarta, Indonesia"
             />
           </div>
@@ -125,7 +125,7 @@ export default function EditProfileModal({ profile, isOpen, onClose }: EditProfi
               value={formData.bio}
               onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
               rows={4}
-              className="w-full px-4 py-3 bg-[#0a0a15] border border-[#2a2a4a] rounded-xl text-gray-200 placeholder-gray-600 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition resize-none"
+              className="w-full px-4 py-3 bg-[#0a0a15] border border-[#2a2a4a] rounded-xl text-gray-200 placeholder-gray-600 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition resize-none"
               placeholder="Tell us about yourself..."
             />
           </div>
@@ -139,7 +139,7 @@ export default function EditProfileModal({ profile, isOpen, onClose }: EditProfi
               type="url"
               value={formData.website}
               onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-              className="w-full px-4 py-3 bg-[#0a0a15] border border-[#2a2a4a] rounded-xl text-gray-200 placeholder-gray-600 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 bg-[#0a0a15] border border-[#2a2a4a] rounded-xl text-gray-200 placeholder-gray-600 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
               placeholder="https://example.com"
             />
           </div>
@@ -158,7 +158,7 @@ export default function EditProfileModal({ profile, isOpen, onClose }: EditProfi
             <Button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-orange-500 hover:bg-orange-600 text-white"
+              className="flex-1 bg-teal-500 hover:bg-teal-600 text-white"
             >
               {loading ? (
                 <>

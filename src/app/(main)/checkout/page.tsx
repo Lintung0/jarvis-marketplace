@@ -79,7 +79,7 @@ export default function CheckoutPage() {
     return (
       <div className="max-w-2xl mx-auto px-4 py-20 text-center">
         <div className="bg-white rounded-2xl p-12 border border-gray-100 shadow-sm">
-          <div className="w-24 h-24 bg-gradient-to-br from-[#ff6b35] to-[#f7931e] rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-24 h-24 bg-gradient-to-br from-[#00a99d] to-[#00b3a1] rounded-full flex items-center justify-center mx-auto mb-6">
             <ShoppingCart className="w-12 h-12 text-white" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-3">Keranjang Kosong</h2>
@@ -115,7 +115,7 @@ export default function CheckoutPage() {
                 <div
                   className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
                     step.completed || step.id === currentStep
-                      ? "bg-gradient-to-br from-[#ff6b35] to-[#f7931e] text-white shadow-lg scale-110"
+                      ? "bg-gradient-to-br from-[#00a99d] to-[#00b3a1] text-white shadow-lg scale-110"
                       : "bg-gray-200 text-gray-400"
                   }`}
                 >
@@ -127,7 +127,7 @@ export default function CheckoutPage() {
                 </div>
                 <span
                   className={`mt-2 text-sm font-medium ${
-                    step.id === currentStep ? "text-orange-500" : "text-gray-500"
+                    step.id === currentStep ? "text-teal-500" : "text-gray-500"
                   }`}
                 >
                   {step.name}
@@ -153,8 +153,8 @@ export default function CheckoutPage() {
           {isStep2 && hasPhysical && (
             <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-                  <Package className="w-5 h-5 text-orange-500" />
+                <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center">
+                  <Package className="w-5 h-5 text-teal-500" />
                 </div>
                 <div>
                   <h2 className="text-xl font-bold text-gray-900">Alamat Pengiriman</h2>
@@ -166,9 +166,9 @@ export default function CheckoutPage() {
           )}
 
           {isStep2 && !hasPhysical && (
-            <div className="bg-gradient-to-br from-orange-50 to-white border border-orange-200 rounded-2xl p-6">
+            <div className="bg-gradient-to-br from-teal-50 to-white border border-teal-200 rounded-2xl p-6">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-[#ff6b35] rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-[#00a99d] rounded-full flex items-center justify-center flex-shrink-0">
                   <Package className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -182,7 +182,7 @@ export default function CheckoutPage() {
               <button
                 onClick={handleContinueToPayment}
                 className="mt-4 px-8 py-3 text-white rounded-full font-semibold hover:shadow-lg transition-all"
-                style={{ background: "linear-gradient(135deg, #ff6b35, #f7931e)" }}
+                style={{ background: "linear-gradient(135deg, #00a99d, #00b3a1)" }}
               >
                 Lanjut ke Pembayaran
               </button>

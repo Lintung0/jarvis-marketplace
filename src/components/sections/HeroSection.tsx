@@ -12,8 +12,8 @@ const defaultSlides = [
     subtitle: "hero.up_to_60_off",
     cta: "hero.shop_now",
     ctaLink: "/categories/clothing",
-    bg: "from-orange-50 to-amber-100",
-    accent: "#ff6b35",
+    bg: "from-teal-50 to-amber-100",
+    accent: "#00a99d",
     image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=700&h=500&fit=crop&auto=format",
   },
   {
@@ -51,7 +51,7 @@ interface SlideData {
 
 function bannerToSlide(banner: Banner, index: number): SlideData {
   const colors = [
-    { bg: "from-orange-50 to-amber-100", accent: "#ff6b35" },
+    { bg: "from-teal-50 to-amber-100", accent: "#00a99d" },
     { bg: "from-slate-50 to-blue-50", accent: "#3b82f6" },
     { bg: "from-green-50 to-teal-50", accent: "#10b981" },
     { bg: "from-purple-50 to-pink-50", accent: "#8b5cf6" },
@@ -155,10 +155,10 @@ export default function HeroSection() {
             className="flex-1 rounded-2xl p-5 hover:scale-[1.02] transition-transform flex flex-col justify-end"
             style={{ background: "#fff3e0", minHeight: 152 }}
           >
-            <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-orange-400 opacity-80">This Week</p>
-            <h3 className="text-lg font-bold leading-tight mb-1 text-orange-700">{t("hero.new_arrivals")}</h3>
-            <p className="text-xs text-orange-600 opacity-80">{t("hero.new_arrivals_desc")}</p>
-            <span className="mt-3 text-xs font-semibold text-orange-500">Shop →</span>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-teal-400 opacity-80">This Week</p>
+            <h3 className="text-lg font-bold leading-tight mb-1 text-teal-700">{t("hero.new_arrivals")}</h3>
+            <p className="text-xs text-teal-600 opacity-80">{t("hero.new_arrivals_desc")}</p>
+            <span className="mt-3 text-xs font-semibold text-teal-500">Shop →</span>
           </Link>
         </div>
       </div>

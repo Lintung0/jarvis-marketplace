@@ -5,12 +5,16 @@ import WishlistButton from "@/components/shared/WishlistButton";
 import PriceDisplay from "@/components/ui/PriceDisplay";
 import type { Product } from "@/types";
 import { ShoppingCart } from "lucide-react";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "sonner";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const { addItem } = useCartStore();
+
   const sorted = [...(product.images ?? [])].sort((a, b) => {
     if (a.is_primary !== b.is_primary) return a.is_primary ? -1 : 1;
     return (a.url || "").localeCompare(b.url || "");
@@ -24,7 +28,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const avgRating = product.avg_rating ?? 0;
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:border-orange-100">
+    <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:border-teal-100">
       <Link href={`/products/${product.slug}`}>
         <div className="relative overflow-hidden bg-gray-50" style={{ height: 220 }}>
           <img
@@ -54,7 +58,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           {product.location ?? "Indonesia"}
         </p>
         <Link href={`/products/${product.slug}`}>
-          <h3 className="text-sm font-semibold text-gray-800 leading-snug mb-2 line-clamp-2 hover:text-orange-500 transition-colors">
+          <h3 className="text-sm font-semibold text-gray-800 leading-snug mb-2 line-clamp-2 hover:text-teal-500 transition-colors">
             {product.title}
           </h3>
         </Link>
@@ -75,7 +79,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
         <div className="flex items-center justify-between mt-2">
           <div className="flex items-baseline gap-2">
-            <PriceDisplay amount={product.sale_price ?? product.price} className="text-lg font-bold text-orange-500" />
+            <PriceDisplay amount={product.sale_price ?? product.price} className="text-lg font-bold text-teal-500" />
             {product.sale_price && (
               <span className="text-sm text-gray-400 line-through">
                 <PriceDisplay amount={product.price} />
@@ -85,15 +89,32 @@ export default function ProductCard({ product }: ProductCardProps) {
           <button
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
+              const cartItem = {
+                id: `${product.id}-{}`,
+                product_id: product.id.toString(),
+                product_title: product.title,
+                product_slug: product.slug,
+                product_image: primaryImageUrl || "",
+                product_type: product.type,
+                vendor_id: product.vendor_id,
+                price: product.sale_price ?? product.price,
+                quantity: 1,
+                options: {},
+              };
+              addItem(cartItem);
+              toast.success("Ditambahkan ke keranjang!", {
+                description: product.title,
+              });
             }}
-            className="w-8 h-8 rounded-lg flex items-center justify-center text-white transition-all hover:scale-110 shadow-sm gradient-brand"
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-white transition-all hover:scale-110 shadow-sm gradient-brand cursor-pointer"
           >
             <ShoppingCart className="w-4 h-4" />
           </button>
         </div>
         <Link href={`/vendors/${product.vendor?.username}`} className="block mt-2">
           <p className="text-xs text-gray-400">
-            oleh <span className="text-orange-400 font-medium hover:underline">{product.vendor?.full_name ?? "Vendor"}</span>
+            oleh <span className="text-teal-400 font-medium hover:underline">{product.vendor?.full_name ?? "Vendor"}</span>
           </p>
         </Link>
       </div>

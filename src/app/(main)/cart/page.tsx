@@ -13,7 +13,7 @@ export default function CartPage() {
     return (
       <div className="max-w-2xl mx-auto px-4 py-20 text-center">
         <div className="bg-white rounded-2xl p-12 border border-gray-100 shadow-sm">
-          <div className="w-24 h-24 bg-gradient-to-br from-[#ff6b35] to-[#f7931e] rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-24 h-24 bg-gradient-to-br from-[#00a99d] to-[#00b3a1] rounded-full flex items-center justify-center mx-auto mb-6">
             <ShoppingBag className="w-12 h-12 text-white" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-3">Keranjang Kosong</h2>
@@ -36,7 +36,7 @@ export default function CartPage() {
       <div className="flex items-center gap-4 mb-8">
         <Link 
           href="/products" 
-          className="flex items-center gap-2 text-gray-400 hover:text-orange-500 transition-colors"
+          className="flex items-center gap-2 text-gray-400 hover:text-teal-500 transition-colors"
         >
           <ArrowLeft className="w-5 h-5" />
           <span className="text-sm font-medium">Lanjut Belanja</span>

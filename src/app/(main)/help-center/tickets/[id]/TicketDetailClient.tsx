@@ -8,7 +8,7 @@ import { Clock, User, Send, XCircle } from "lucide-react"
 const priorityColors: Record<string, string> = {
   low: "bg-gray-100 text-gray-600",
   medium: "bg-yellow-100 text-yellow-700",
-  high: "bg-orange-100 text-orange-700",
+  high: "bg-teal-100 text-teal-700",
   urgent: "bg-red-100 text-red-700",
 }
 
@@ -83,7 +83,7 @@ export function TicketDetailClient({ ticket, userId, isAdmin }: { ticket: any; u
             <div
               key={reply.id}
               className={`bg-white border border-gray-200 rounded-2xl p-5 ${
-                reply.user_id === userId ? "" : "border-orange-200 bg-orange-50/30"
+                reply.user_id === userId ? "" : "border-teal-200 bg-teal-50/30"
               }`}
             >
               <div className="flex items-center gap-2 mb-2">
@@ -93,7 +93,7 @@ export function TicketDetailClient({ ticket, userId, isAdmin }: { ticket: any; u
                 <span className="text-sm font-medium text-gray-900">
                   {reply.user_id === userId ? "Kamu" : (reply.user?.username || "Support")}
                   {reply.user?.role === "admin" && (
-                    <span className="ml-1.5 text-xs text-orange-600 font-medium">(Admin)</span>
+                    <span className="ml-1.5 text-xs text-teal-600 font-medium">(Admin)</span>
                   )}
                 </span>
                 <span className="text-xs text-gray-400">
@@ -122,14 +122,14 @@ export function TicketDetailClient({ ticket, userId, isAdmin }: { ticket: any; u
               required
               rows={4}
               placeholder="Tulis balasan kamu..."
-              className="w-full bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-500 transition-colors resize-none"
+              className="w-full bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal-500 transition-colors resize-none"
             />
           </div>
           <div className="flex items-center gap-3">
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm gradient-brand text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm gradient-brand text-white hover:shadow-lg hover:shadow-teal-500/25 transition-all disabled:opacity-50"
             >
               <Send className="w-4 h-4" />
               {loading ? "Mengirim..." : "Kirim Balasan"}

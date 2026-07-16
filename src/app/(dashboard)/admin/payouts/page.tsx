@@ -41,7 +41,7 @@ export default async function AdminPayoutsPage() {
                   <tr key={w.id} className="hover:bg-gray-50">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 flex items-center justify-center text-white text-xs font-bold">
+                        <div className="w-7 h-7 rounded-full bg-gradient-to-r from-teal-500 to-teal-600 flex items-center justify-center text-white text-xs font-bold">
                           {(w.vendor?.full_name ?? w.vendor?.username ?? "?").charAt(0)}
                         </div>
                         <div>

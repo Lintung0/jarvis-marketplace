@@ -14,9 +14,9 @@ export default async function KBCategoryPage(props: { params: Promise<{ slug: st
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-        <Link href="/help-center" className="hover:text-orange-600 transition">Pusat Bantuan</Link>
+        <Link href="/help-center" className="hover:text-teal-600 transition">Pusat Bantuan</Link>
         <ChevronRight className="w-3 h-3" />
-        <Link href="/help-center/kb" className="hover:text-orange-600 transition">Knowledge Base</Link>
+        <Link href="/help-center/kb" className="hover:text-teal-600 transition">Knowledge Base</Link>
         <ChevronRight className="w-3 h-3" />
         <span className="text-gray-900 font-medium">{category.name}</span>
       </div>
@@ -36,12 +36,12 @@ export default async function KBCategoryPage(props: { params: Promise<{ slug: st
           <Link
             key={article.id}
             href={`/help-center/kb/articles/${article.slug}`}
-            className="block bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-md hover:border-orange-200 transition"
+            className="block bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-md hover:border-teal-200 transition"
           >
             <div className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-orange-400 shrink-0 mt-0.5" />
+              <FileText className="w-5 h-5 text-teal-400 shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-semibold text-gray-900 hover:text-orange-600 transition">
+                <h3 className="font-semibold text-gray-900 hover:text-teal-600 transition">
                   {article.title}
                 </h3>
                 {article.excerpt && (
@@ -66,7 +66,7 @@ export default async function KBCategoryPage(props: { params: Promise<{ slug: st
       <div className="mt-8">
         <Link
           href="/help-center/kb"
-          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-orange-600 transition"
+          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-teal-600 transition"
         >
           <ArrowLeft className="w-4 h-4" />
           Kembali ke Knowledge Base

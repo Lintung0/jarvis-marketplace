@@ -63,9 +63,9 @@ export default function AffiliateDashboardClient({
           <h1 className="text-2xl font-bold text-gray-900">Affiliate Dashboard</h1>
           <p className="text-sm text-gray-500 mt-1">Earn commissions by sharing products with your network</p>
         </div>
-        <div className="flex items-center gap-2 bg-orange-50 border border-orange-200 rounded-2xl px-4 py-2">
-          <TrendingUp className="w-5 h-5 text-orange-500" />
-          <span className="text-sm font-semibold text-orange-600">{stats.commission_rate}% Commission</span>
+        <div className="flex items-center gap-2 bg-teal-50 border border-teal-200 rounded-2xl px-4 py-2">
+          <TrendingUp className="w-5 h-5 text-teal-500" />
+          <span className="text-sm font-semibold text-teal-600">{stats.commission_rate}% Commission</span>
         </div>
       </div>
 
@@ -73,7 +73,7 @@ export default function AffiliateDashboardClient({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white rounded-2xl border border-gray-200 p-5">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#ff6b35] to-[#f7931e] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#00a99d] to-[#00b3a1] flex items-center justify-center">
               <DollarSign className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -142,7 +142,7 @@ export default function AffiliateDashboardClient({
           <div>
             <p className="text-xs font-medium text-gray-500 mb-1">Your Referral Code</p>
             <div className="flex items-center gap-2">
-              <div className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 font-mono font-bold text-orange-600 text-sm">
+              <div className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 font-mono font-bold text-teal-600 text-sm">
                 {stats.referral_code}
               </div>
               <button

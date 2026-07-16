@@ -44,7 +44,7 @@ export default async function CategoriesPage() {
                 className="flex items-center gap-3 mb-3 group"
               >
                 {cat.icon && <span className="text-2xl">{cat.icon}</span>}
-                <h2 className="font-semibold text-gray-900 group-hover:text-orange-500 transition">
+                <h2 className="font-semibold text-gray-900 group-hover:text-teal-500 transition">
                   {catName(dict, cat.slug, cat.name)}
                 </h2>
               </Link>
@@ -55,7 +55,7 @@ export default async function CategoriesPage() {
                     <Link
                       key={sub.id}
                       href={`/categories/${sub.slug}`}
-                      className="text-xs px-2.5 py-1 rounded-full bg-gray-50 border border-gray-200 text-gray-400 hover:border-orange-300 hover:text-orange-500 transition"
+                      className="text-xs px-2.5 py-1 rounded-full bg-gray-50 border border-gray-200 text-gray-400 hover:border-teal-300 hover:text-teal-500 transition"
                     >
                       {sub.icon && <span className="mr-1">{sub.icon}</span>}
                       {catName(dict, sub.slug, sub.name)}

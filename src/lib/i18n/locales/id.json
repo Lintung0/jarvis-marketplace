@@ -1,7 +1,7 @@
 {
   "nav": {
     "topbar_free_shipping": "Gratis ongkir untuk pesanan di atas Rp500.000",
-    "sell": "Jual di JarvisMarketplace",
+    "sell": "Jual di Modesy",
     "help": "Bantuan",
     "sign_in": "Masuk",
     "search_placeholder": "Cari produk, brand, dan lainnya...",
@@ -248,7 +248,7 @@
     "subscribe": "Langganan",
     "marketplace": "Marketplace",
     "browse_all": "Jelajahi Semua",
-    "sell": "Jual di JarvisMarketplace",
+    "sell": "Jual di Modesy",
     "how_it_works": "Cara Kerja",
     "pricing_plans": "Paket Harga",
     "vendor_dashboard": "Dashboard Vendor",
@@ -269,7 +269,7 @@
     "accessibility": "Aksesibilitas",
     "accepted_payments": "Pembayaran diterima:",
     "brand_desc": "Marketplace dimana pembeli dan penjual terhubung. Temukan item unik atau mulai jualan hari ini.",
-    "copyright": "{year} JarvisMarketplace. Seluruh hak cipta dilindungi."
+    "copyright": "{year} Modesy. Seluruh hak cipta dilindungi."
   },
   "search": {
     "results_for": "Hasil pencarian untuk",

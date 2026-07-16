@@ -69,7 +69,7 @@ export default function VendorApplicationCard({ profile }: Props) {
         </div>
         <button
           onClick={() => setShowForm(true)}
-          className="text-sm font-medium text-orange-600 hover:text-orange-700"
+          className="text-sm font-medium text-teal-600 hover:text-teal-700"
         >
           Ajukan Ulang →
         </button>
@@ -81,7 +81,7 @@ export default function VendorApplicationCard({ profile }: Props) {
     return (
       <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-6">
         <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-          <Store className="w-5 h-5 text-orange-500" />
+          <Store className="w-5 h-5 text-teal-500" />
           Daftar Jadi Vendor
         </h3>
         <div className="space-y-4">
@@ -91,7 +91,7 @@ export default function VendorApplicationCard({ profile }: Props) {
               value={storeName}
               onChange={(e) => setStoreName(e.target.value)}
               placeholder="Contoh: Toko Elektronik Jaya"
-              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-orange-400 outline-none"
+              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-teal-400 outline-none"
             />
           </div>
           <div>
@@ -101,7 +101,7 @@ export default function VendorApplicationCard({ profile }: Props) {
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Ceritakan tentang toko kamu..."
               rows={3}
-              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-orange-400 outline-none"
+              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-teal-400 outline-none"
             />
           </div>
           <div>
@@ -109,9 +109,9 @@ export default function VendorApplicationCard({ profile }: Props) {
             <textarea
               value={reason}
               onChange={(e) => setReason(e.target.value)}
-              placeholder="Kenapa kamu ingin berjualan di JarvisMarketplace?"
+              placeholder="Kenapa kamu ingin berjualan di Modesy?"
               rows={2}
-              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-orange-400 outline-none"
+              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-teal-400 outline-none"
             />
           </div>
           {error && <p className="text-sm text-red-500">{error}</p>}
@@ -152,13 +152,13 @@ export default function VendorApplicationCard({ profile }: Props) {
   }
 
   return (
-    <div className="bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 rounded-2xl p-6 mb-6">
+    <div className="bg-gradient-to-r from-teal-50 to-amber-50 border border-teal-200 rounded-2xl p-6 mb-6">
       <div className="flex items-start gap-4">
-        <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
-          <Store className="w-6 h-6 text-orange-500" />
+        <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <Store className="w-6 h-6 text-teal-500" />
         </div>
         <div className="flex-1">
-          <h3 className="font-semibold text-gray-900 mb-1">Jualan di JarvisMarketplace?</h3>
+          <h3 className="font-semibold text-gray-900 mb-1">Jualan di Modesy?</h3>
           <p className="text-sm text-gray-600 mb-4">Daftar jadi vendor dan mulai jualan produk kamu! Proses cepat, komisi kompetitif.</p>
           <button
             onClick={() => setShowForm(true)}

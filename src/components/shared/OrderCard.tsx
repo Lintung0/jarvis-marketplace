@@ -38,7 +38,7 @@ export default function OrderCard({ order }: Props) {
 
       <div className="flex items-center justify-between">
         <p className="text-xs text-gray-400">{order.items?.length} item</p>
-        <p className="font-bold text-orange-500">{formatCurrency(order.total)}</p>
+        <p className="font-bold text-teal-500">{formatCurrency(order.total)}</p>
       </div>
     </Link>
     );

@@ -36,7 +36,7 @@ export default function FeaturedProductsClient({ products }: { products: Product
               className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all"
               style={
                 activeTab === i
-                  ? { background: "white", color: "#ff6b35", boxShadow: "0 1px 4px rgba(0,0,0,0.1)" }
+                  ? { background: "white", color: "#00a99d", boxShadow: "0 1px 4px rgba(0,0,0,0.1)" }
                   : { color: "#6b7280" }
               }
             >
@@ -55,8 +55,8 @@ export default function FeaturedProductsClient({ products }: { products: Product
       <div className="text-center mt-8">
         <Link
           href="/products"
-          className="inline-block px-8 py-3 rounded-xl border-2 font-semibold text-sm transition-all hover:shadow-lg hover:bg-orange-500 hover:text-white"
-          style={{ borderColor: "#ff6b35", color: "#ff6b35" }}
+          className="inline-block px-8 py-3 rounded-xl border-2 font-semibold text-sm transition-all hover:shadow-lg hover:bg-teal-500 hover:text-white"
+          style={{ borderColor: "#00a99d", color: "#00a99d" }}
         >
           {t("products.view_all")}
         </Link>

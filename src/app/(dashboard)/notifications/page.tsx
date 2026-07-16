@@ -31,10 +31,10 @@ export default async function NotificationsPage() {
             <div
               key={n.id}
               className={`px-5 py-4 border-b border-gray-50 flex items-start gap-3 ${
-                !n.is_read ? "bg-orange-50/30" : ""
+                !n.is_read ? "bg-teal-50/30" : ""
               }`}
             >
-              <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${!n.is_read ? "bg-orange-500" : "bg-transparent"}`} />
+              <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${!n.is_read ? "bg-teal-500" : "bg-transparent"}`} />
               <div className="flex-1 min-w-0">
                 <p className={`text-sm ${!n.is_read ? "font-medium text-gray-900" : "text-gray-600"}`}>
                   {n.message}
@@ -51,7 +51,7 @@ export default async function NotificationsPage() {
                 {n.order_id && (
                   <Link
                     href={`/orders/${n.order_id}`}
-                    className="text-xs text-orange-600 hover:text-orange-700 mt-1 inline-block"
+                    className="text-xs text-teal-600 hover:text-teal-700 mt-1 inline-block"
                   >
                     View Order →
                   </Link>

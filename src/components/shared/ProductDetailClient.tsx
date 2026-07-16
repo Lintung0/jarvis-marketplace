@@ -103,8 +103,8 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
         {/* Price */}
         <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
           <div className="flex items-end gap-3 mb-2">
-            <div className="text-4xl font-bold text-orange-500">
-              <PriceDisplay amount={product.sale_price ?? product.price} className="text-3xl font-bold text-orange-500" />
+            <div className="text-4xl font-bold text-teal-500">
+              <PriceDisplay amount={product.sale_price ?? product.price} className="text-3xl font-bold text-teal-500" />
             </div>
             {product.sale_price && (
               <>
@@ -118,7 +118,7 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
             )}
           </div>
           {product.type === "digital" && (
-            <div className="flex items-center gap-2 text-sm text-orange-500">
+            <div className="flex items-center gap-2 text-sm text-teal-500">
               <Package className="w-4 h-4" />
               <span>Produk Digital - Langsung Dapat Akses</span>
             </div>
@@ -128,7 +128,7 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
         {/* Vendor Info */}
         <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
           <Link href={`/vendors/${product.vendor?.username}`} className="flex items-center gap-3 hover:opacity-80 transition">
-            <div className="h-12 w-12 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#f7931e] flex items-center justify-center text-white font-bold relative">
+            <div className="h-12 w-12 rounded-full bg-gradient-to-br from-[#00a99d] to-[#00b3a1] flex items-center justify-center text-white font-bold relative">
               {product.vendor?.avatar_url ? (
                 <Image src={product.vendor.avatar_url} alt={product.vendor.full_name ?? "Vendor"} fill className="object-cover rounded-full" />
               ) : (
@@ -143,7 +143,7 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
                 )}
                 {(product.vendor as any)?.plan_name && (product.vendor as any).plan_name !== "Free" && (
                   <Crown className={`w-4 h-4 ${
-                    (product.vendor as any).plan_name === "Pro" ? "text-orange-500" : "text-purple-500"
+                    (product.vendor as any).plan_name === "Pro" ? "text-teal-500" : "text-purple-500"
                   }`} />
                 )}
               </div>
@@ -241,7 +241,7 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
                 onClick={() => setActiveTab(tab as any)}
                 className={`pb-4 px-2 font-semibold text-sm transition-all relative ${
                   activeTab === tab
-                    ? "text-orange-500"
+                    ? "text-teal-500"
                     : "text-gray-500 hover:text-gray-700"
                 }`}
               >
@@ -249,7 +249,7 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
                 {tab === "specs" && "Spesifikasi"}
                 {tab === "reviews" && `Ulasan (${product.reviews?.length ?? 0})`}
                 {activeTab === tab && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#ff6b35]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#00a99d]" />
                 )}
               </button>
             ))}
@@ -290,7 +290,7 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
                   (product.reviews as any[]).map((review) => (
                     <div key={review.id} className="border border-gray-200 rounded-xl p-4">
                       <div className="flex items-center gap-3 mb-2">
-                        <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#f7931e] flex items-center justify-center text-white font-bold text-sm">
+                        <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[#00a99d] to-[#00b3a1] flex items-center justify-center text-white font-bold text-sm">
                           {review.user?.full_name?.charAt(0) ?? "U"}
                         </div>
                         <div>
@@ -341,7 +341,7 @@ function ShareEarnSection({
   const [copied, setCopied] = useState(false)
   const baseUrl = typeof window !== "undefined" ? window.location.origin + "/products/" + productSlug : ""
   const referralLink = baseUrl ? `${baseUrl}?ref=${referralCode}` : ""
-  const shareText = encodeURIComponent(`Check out ${productTitle} on JarvisMarketplace!`)
+  const shareText = encodeURIComponent(`Check out ${productTitle} on Modesy!`)
 
   const handleCopy = async () => {
     try {
@@ -353,9 +353,9 @@ function ShareEarnSection({
   }
 
   return (
-    <div className="mt-6 p-5 bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-200 rounded-2xl">
+    <div className="mt-6 p-5 bg-gradient-to-br from-teal-50 to-amber-50 border border-teal-200 rounded-2xl">
       <div className="flex items-center gap-2 mb-3">
-        <TrendingUp className="w-5 h-5 text-orange-500" />
+        <TrendingUp className="w-5 h-5 text-teal-500" />
         <h3 className="font-bold text-gray-900">Share & Earn</h3>
       </div>
       <p className="text-sm text-gray-600 mb-3">

@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
       external_id: subscription_id,
       amount: plan.price,
       payer_email: user.email ?? "",
-      description: `Langganan ${plan.name} - JarvisMarketplace`,
+      description: `Langganan ${plan.name} - Modesy`,
       success_redirect_url: `${process.env.NEXT_PUBLIC_APP_URL}/api/membership/subscribe/callback?subscription_id=${subscription_id}&status=success`,
       failure_redirect_url: `${process.env.NEXT_PUBLIC_APP_URL}/membership?status=failed`,
       currency: "IDR",

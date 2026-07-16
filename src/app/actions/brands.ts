@@ -39,13 +39,7 @@ export async function getAllBrands(): Promise<Brand[]> {
   return (data as Brand[]) ?? []
 }
 
-export async function createBrand(data: {
-  name: string
-  slug: string
-  description?: string
-  logo_url?: string
-  website?: string
-}) {
+export async function createBrand(formData: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("Unauthorized")
@@ -54,22 +48,22 @@ export async function createBrand(data: {
     .from("profiles")
     .select("role")
     .eq("id", user.id)
-    .single()
+    .maybeSingle()
 
   if (profile?.role !== "admin") throw new Error("Unauthorized")
 
   const admin = createAdminClient()
   const { error } = await admin.from("brands").insert({
-    name: data.name,
-    slug: data.slug,
-    description: data.description || null,
-    logo_url: data.logo_url || null,
-    website: data.website || null,
+    name: formData.get("name") as string,
+    slug: formData.get("slug") as string,
+    description: (formData.get("description") as string) || null,
+    logo_url: (formData.get("logo_url") as string) || null,
+    website: (formData.get("website") as string) || null,
     is_active: true,
   })
 
   if (error) throw new Error(error.message)
-  // admin brands page removed
+  revalidatePath("/admin/brands")
 }
 
 export async function updateBrand(
@@ -102,7 +96,39 @@ export async function updateBrand(
     .eq("id", id)
 
   if (error) throw new Error(error.message)
-  // admin brands page removed
+  revalidatePath("/admin/brands")
+  revalidatePath(`/admin/brands/${id}/edit`)
+}
+
+export async function adminToggleBrandForm(formData: FormData) {
+  const id = formData.get("id") as string
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error("Unauthorized")
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .maybeSingle()
+
+  if (profile?.role !== "admin") throw new Error("Unauthorized")
+
+  const admin = createAdminClient()
+  const { data: brand } = await admin
+    .from("brands")
+    .select("is_active")
+    .eq("id", id)
+    .single()
+
+  if (!brand) throw new Error("Brand not found")
+
+  await admin
+    .from("brands")
+    .update({ is_active: !brand.is_active })
+    .eq("id", id)
+
+  revalidatePath("/admin/brands")
 }
 
 export async function deleteBrand(id: string) {
@@ -122,36 +148,5 @@ export async function deleteBrand(id: string) {
   const { error } = await admin.from("brands").delete().eq("id", id)
 
   if (error) throw new Error(error.message)
-  // admin brands page removed
-}
-
-export async function toggleBrand(id: string) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error("Unauthorized")
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", user.id)
-    .single()
-
-  if (profile?.role !== "admin") throw new Error("Unauthorized")
-
-  const admin = createAdminClient()
-  const { data: brand } = await admin
-    .from("brands")
-    .select("is_active")
-    .eq("id", id)
-    .single()
-
-  if (!brand) throw new Error("Brand not found")
-
-  const { error } = await admin
-    .from("brands")
-    .update({ is_active: !brand.is_active })
-    .eq("id", id)
-
-  if (error) throw new Error(error.message)
-  // admin brands page removed
+  revalidatePath("/admin/brands")
 }

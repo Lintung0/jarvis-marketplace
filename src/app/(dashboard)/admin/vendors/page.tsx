@@ -46,7 +46,7 @@ export default async function AdminVendorsPage() {
                   <tr key={v.id} className="hover:bg-gray-50">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 flex items-center justify-center text-white text-xs font-bold">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-teal-500 to-teal-600 flex items-center justify-center text-white text-xs font-bold">
                           {(v.full_name ?? v.username ?? "?").charAt(0)}
                         </div>
                         <span className="font-medium text-gray-900">{v.full_name ?? v.username}</span>

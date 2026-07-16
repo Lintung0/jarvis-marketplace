@@ -24,8 +24,8 @@ export default function WishlistButton({ productId }: Props) {
     >
       <Heart
         className="w-4 h-4"
-        fill={wishlisted ? "#ff6b35" : "none"}
-        stroke={wishlisted ? "#ff6b35" : "#9ca3af"}
+        fill={wishlisted ? "#00a99d" : "none"}
+        stroke={wishlisted ? "#00a99d" : "#9ca3af"}
         strokeWidth={2}
       />
     </button>

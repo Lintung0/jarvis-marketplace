@@ -21,8 +21,8 @@ export default function OfflinePage() {
           </svg>
         </div>
 
-        <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
-          <WifiOff className="w-8 h-8 text-orange-500" />
+        <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <WifiOff className="w-8 h-8 text-teal-500" />
         </div>
 
         <h1 className="text-2xl font-bold text-gray-900 mb-2">

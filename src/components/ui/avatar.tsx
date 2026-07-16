@@ -44,7 +44,7 @@ const indicatorVariants = cva("size-2 absolute rounded-full", {
     variant: {
       success: "bg-green-400",
       danger: "bg-red-400",
-      warning: "bg-orange-400"
+      warning: "bg-teal-400"
     },
     position: {
       "top-end": "end-0.5 top-0.5",

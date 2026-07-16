@@ -96,7 +96,7 @@ export default function ResetPasswordPage() {
             placeholder="Minimal 6 karakter"
             required
             minLength={6}
-            className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
+            className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-100"
           />
         </div>
 
@@ -108,7 +108,7 @@ export default function ResetPasswordPage() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Masukkan password lagi"
             required
-            className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
+            className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-100"
           />
         </div>
 
@@ -122,13 +122,13 @@ export default function ResetPasswordPage() {
           type="submit"
           disabled={loading}
           className="w-full py-2.5 rounded-lg text-white font-semibold text-sm hover:opacity-90 transition disabled:opacity-50"
-          style={{ background: "linear-gradient(135deg, #ff6b35, #f7931e)" }}
+          style={{ background: "linear-gradient(135deg, #00a99d, #00b3a1)" }}
         >
           {loading ? "Menyimpan..." : "Simpan Password Baru"}
         </button>
 
         <p className="text-sm text-center text-gray-500">
-          <Link href="/login" className="text-orange-500 hover:text-orange-600 underline underline-offset-4">
+          <Link href="/login" className="text-teal-500 hover:text-teal-600 underline underline-offset-4">
             Kembali ke Login
           </Link>
         </p>

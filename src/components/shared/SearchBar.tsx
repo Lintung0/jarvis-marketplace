@@ -33,7 +33,7 @@ export default function SearchBar({ defaultValue = ""}: { defaultValue?: string}
         name="q"
         defaultValue={defaultValue}
         placeholder="Cari produk..."
-        className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white"
+        className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white"
       />
       {isPending && (
         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">

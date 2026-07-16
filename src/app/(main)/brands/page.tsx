@@ -36,7 +36,7 @@ export default async function BrandsPage() {
           <Link
             key={brand.id}
             href={`/brands/${brand.slug}`}
-            className="bg-white rounded-2xl border border-gray-100 p-6 flex flex-col items-center justify-center text-center hover:shadow-lg hover:border-orange-200 transition-all group"
+            className="bg-white rounded-2xl border border-gray-100 p-6 flex flex-col items-center justify-center text-center hover:shadow-lg hover:border-teal-200 transition-all group"
           >
             {brand.logo_url ? (
               <div className="w-20 h-20 rounded-xl overflow-hidden bg-gray-50 mb-3 p-2">
@@ -53,7 +53,7 @@ export default async function BrandsPage() {
                 </span>
               </div>
             )}
-            <h3 className="font-semibold text-gray-900 group-hover:text-orange-500 transition-colors">
+            <h3 className="font-semibold text-gray-900 group-hover:text-teal-500 transition-colors">
               {brand.name}
             </h3>
             {brand.description && (
