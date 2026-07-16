@@ -77,11 +77,11 @@ export default function ProductCard({ product }: ProductCardProps) {
             </svg>
           ))}
         </div>
-        <div className="flex items-center justify-between mt-2">
-          <div className="flex items-baseline gap-2">
-            <PriceDisplay amount={product.sale_price ?? product.price} className="text-lg font-bold text-teal-500" />
+        <div className="flex items-center justify-between mt-3 gap-2">
+          <div className="flex flex-col min-w-0">
+            <PriceDisplay amount={product.sale_price ?? product.price} className="text-sm sm:text-base font-bold text-teal-600 truncate" />
             {product.sale_price && (
-              <span className="text-sm text-gray-400 line-through">
+              <span className="text-[10px] sm:text-xs text-gray-400 line-through truncate">
                 <PriceDisplay amount={product.price} />
               </span>
             )}
@@ -107,7 +107,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 description: product.title,
               });
             }}
-            className="w-8 h-8 rounded-lg flex items-center justify-center text-white transition-all hover:scale-110 shadow-sm gradient-brand cursor-pointer"
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-white transition-all hover:scale-110 shadow-sm gradient-brand cursor-pointer shrink-0"
           >
             <ShoppingCart className="w-4 h-4" />
           </button>
