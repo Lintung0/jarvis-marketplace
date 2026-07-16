@@ -21,6 +21,7 @@ export default function UserMenu() {
   const name = user?.full_name || user?.username || "User";
   const email = user?.email || "";
   const avatar = user?.avatar_url || "";
+  const isAdmin = user?.role === "admin" || user?.role === "moderator";
   const initials = name
     .split(" ")
     .map((n) => n.charAt(0).toUpperCase())
@@ -56,12 +57,14 @@ export default function UserMenu() {
               Account
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/settings/billing">
-              <CreditCard />
-              Billing
-            </Link>
-          </DropdownMenuItem>
+          {!isAdmin && (
+            <DropdownMenuItem asChild>
+              <Link href="/settings/billing">
+                <CreditCard />
+                Billing
+              </Link>
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem asChild>
             <Link href="/notifications">
               <Bell />
