@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getActiveVendorIds } from "@/lib/queries";
 import ProductGrid from "@/components/shared/ProductGrid";
 import FollowButton from "@/components/shared/FollowButton";
-import { MapPin, Calendar, Package, Star, BadgeCheck, Users, Crown } from "lucide-react";
+import { MapPin, Calendar, Package, BadgeCheck, Crown } from "lucide-react";
 import type { Product, Profile } from "@/types";
 import { getFollowStats, checkIsFollowing } from "@/app/actions/follows";
 import { generateMeta } from "@/lib/seo";
