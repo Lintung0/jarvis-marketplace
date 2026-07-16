@@ -1,7 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
-import Image from "next/image";
-import { ImageIcon } from "lucide-react";
+import BrandLogo from "@/components/shared/BrandLogo";
 import type { Brand } from "@/types";
 
 export default async function BrandCarousel() {
@@ -36,13 +35,7 @@ export default async function BrandCarousel() {
             className="flex items-center justify-center p-4 border border-gray-100 rounded-2xl bg-white hover:shadow-md hover:border-teal-100 transition-all w-32 h-20 relative overflow-hidden group cursor-pointer"
           >
             {brand.logo_url ? (
-              <Image
-                src={brand.logo_url}
-                alt={brand.name}
-                fill
-                className="object-contain p-3 group-hover:scale-105 transition-transform"
-                sizes="128px"
-              />
+              <BrandLogo name={brand.name} logo_url={brand.logo_url} />
             ) : (
                <span className="font-bold text-gray-800 text-lg uppercase">{brand.name.substring(0, 2)}</span>
             )}
