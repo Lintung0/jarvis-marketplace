@@ -14,7 +14,7 @@ export default async function BrandsPage() {
   if (!brands || brands.length === 0) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-2xl font-bold text-gray-200 mb-6">Brands</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-6">Brands</h1>
         <div className="text-center py-20">
           <p className="text-gray-500 text-sm">Belum ada brand terdaftar.</p>
         </div>
@@ -25,8 +25,8 @@ export default async function BrandsPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-200">Semua Brand</h1>
-        <p className="text-sm text-gray-400 mt-1">
+        <h1 className="text-2xl font-bold text-gray-900">Semua Brand</h1>
+        <p className="text-sm text-gray-600 mt-1">
           {brands.length} brand tersedia
         </p>
       </div>
