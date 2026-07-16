@@ -1,66 +1,46 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Loader2, Check } from "lucide-react";
+import { Loader2, Check, UserPlus } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
-import { isFollowing, toggleFollow } from "@/app/actions/follows";
+import { toggleFollow } from "@/app/actions/follows";
 import { cn } from "@/lib/utils";
 
 interface FollowButtonProps {
   vendorId: string;
   vendorName: string;
+  initialFollowing?: boolean;
 }
 
-export default function FollowButton({ vendorId, vendorName }: FollowButtonProps) {
-  const [following, setFollowing] = useState(false);
-  const [loading, setLoading] = useState(true);
+export default function FollowButton({ vendorId, vendorName, initialFollowing = false }: FollowButtonProps) {
+  const [following, setFollowing] = useState(initialFollowing);
+  const [loading, setLoading] = useState(false);
   const [toggling, setToggling] = useState(false);
-
-  useEffect(() => {
-    async function check() {
-      const supabase = createClient();
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        setLoading(false);
-        return;
-      }
-      const result = await isFollowing(user.id, vendorId);
-      setFollowing(result);
-      setLoading(false);
-    }
-    check();
-  }, [vendorId]);
 
   const handleToggle = useCallback(async () => {
     const supabase = createClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      window.location.href = "/login";
+      window.location.href = `/login?redirect=/vendors/${vendorName}`;
       return;
     }
 
+    if (user.id === vendorId) return;
+
     setToggling(true);
-    setFollowing((prev) => !prev);
+    const previousState = following;
 
     try {
-      await toggleFollow(user.id, vendorId);
-    } catch {
-      setFollowing((prev) => !prev);
+      setFollowing(!previousState);
+      await toggleFollow(vendorId);
+    } catch (error) {
+      console.error("Failed to toggle follow:", error);
+      setFollowing(previousState);
+      alert("Failed to update follow status. Please try again.");
     } finally {
       setToggling(false);
     }
-  }, [vendorId]);
-
-  if (loading) {
-    return (
-      <button
-        disabled
-        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-gray-600 text-sm font-semibold text-gray-400 cursor-not-allowed"
-      >
-        <Loader2 className="w-4 h-4 animate-spin" />
-      </button>
-    );
-  }
+  }, [vendorId, vendorName, following]);
 
   return (
     <button
@@ -69,8 +49,8 @@ export default function FollowButton({ vendorId, vendorName }: FollowButtonProps
       className={cn(
         "inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200",
         following
-          ? "bg-[#00a99d] text-white hover:bg-[#00998f] shadow-sm"
-          : "border-2 border-[#00a99d] text-[#00a99d] hover:bg-[#00a99d] hover:text-white"
+          ? "bg-teal-500 text-white hover:bg-teal-600 shadow-sm"
+          : "border-2 border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-white"
       )}
     >
       {toggling ? (
@@ -81,7 +61,10 @@ export default function FollowButton({ vendorId, vendorName }: FollowButtonProps
           Following
         </>
       ) : (
-        "Follow"
+        <>
+          <UserPlus className="w-4 h-4" />
+          Follow
+        </>
       )}
     </button>
   );

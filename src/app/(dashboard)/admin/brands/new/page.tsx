@@ -7,7 +7,7 @@ export default function NewBrandPage() {
       <div className="mb-8">
         <Link href="/admin/brands" className="text-sm text-teal-500 hover:text-teal-600 mb-2 inline-block">&larr; Back to Brands</Link>
         <h1 className="text-2xl font-bold text-gray-900">New Brand</h1>
-        <p className="text-sm text-gray-500 mt-1">Add a new brand</p>
+        <p className="text-sm text-gray-600 mt-1">Add a new brand</p>
       </div>
 
       <form action={createBrand} className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">

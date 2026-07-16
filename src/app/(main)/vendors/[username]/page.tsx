@@ -7,7 +7,7 @@ import ProductGrid from "@/components/shared/ProductGrid";
 import FollowButton from "@/components/shared/FollowButton";
 import { MapPin, Calendar, Package, Star, BadgeCheck, Users, Crown } from "lucide-react";
 import type { Product, Profile } from "@/types";
-import { getFollowCounts } from "@/app/actions/follows";
+import { getFollowStats, checkIsFollowing } from "@/app/actions/follows";
 import { generateMeta } from "@/lib/seo";
 
 interface PageProps {
@@ -103,7 +103,8 @@ export default async function VendorProfilePage({ params }: PageProps) {
 
   const { data: { user: currentUser } } = await supabase.auth.getUser();
   const isOwnProfile = currentUser?.id === vendor.id;
-  const followCounts = await getFollowCounts(vendor.id);
+  const followCounts = await getFollowStats(vendor.id);
+  const isFollowing = await checkIsFollowing(vendor.id);
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -157,7 +158,7 @@ export default async function VendorProfilePage({ params }: PageProps) {
                         </span>
                       )}
                       {currentUser && !isOwnProfile && (
-                        <FollowButton vendorId={vendor.id} vendorName={profile.full_name ?? profile.username} />
+                        <FollowButton vendorId={vendor.id} vendorName={profile.full_name ?? profile.username} initialFollowing={isFollowing} />
                       )}
                     </h1>
                     <p className="text-gray-500 mt-1">@{profile.username}</p>

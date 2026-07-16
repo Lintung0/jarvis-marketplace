@@ -44,7 +44,7 @@ export default async function BrandCarousel() {
                 sizes="128px"
               />
             ) : (
-              <span className="font-bold text-gray-400 text-lg uppercase">{brand.name.substring(0, 2)}</span>
+               <span className="font-bold text-gray-800 text-lg uppercase">{brand.name.substring(0, 2)}</span>
             )}
           </Link>
         ))}

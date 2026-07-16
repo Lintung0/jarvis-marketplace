@@ -5,6 +5,16 @@ export type OrderStatus = "pending" | "paid" | "processing" | "shipped" | "deliv
 export type WithdrawalStatus = "pending" | "approved" | "rejected" | "paid"
 export type BannerPlacement = "hero" | "top" | "middle" | "bottom" | "sidebar"
 
+export interface Follower {
+  id: string
+  follower_id: string
+  following_id: string
+  created_at: string
+  updated_at: string
+  follower?: Profile
+  following?: Profile
+}
+
 export interface Profile {
   id: string
   username: string
@@ -21,6 +31,9 @@ export interface Profile {
   plan_name: string | null
   created_at: string
   updated_at: string
+  follower_count?: number
+  following_count?: number
+  is_following?: boolean
 }
 
 export interface Category {

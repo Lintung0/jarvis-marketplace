@@ -60,7 +60,7 @@ export default async function AdminBrandsPage() {
                         </div>
                         <div>
                           <p className="font-medium text-gray-900">{brand.name}</p>
-                          {brand.description && <p className="text-xs text-gray-400">{brand.description}</p>}
+                          {brand.description && <p className="text-xs text-gray-600">{brand.description}</p>}
                         </div>
                       </div>
                     </td>

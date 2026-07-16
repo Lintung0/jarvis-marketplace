@@ -1,65 +1,105 @@
 "use server"
 
-import { createClient, createAdminClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/server"
+import { revalidatePath } from "next/cache"
 
-export async function isFollowing(followerId: string, followingId: string): Promise<boolean> {
+export async function toggleFollow(followingId: string) {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return false
+  
+  // Get current user
+  const { data: { user }, error: userError } = await supabase.auth.getUser()
+  if (userError || !user) {
+    throw new Error("Authentication required")
+  }
 
-  const admin = createAdminClient()
-  const { data } = await admin
-    .from("follows")
-    .select("follower_id")
-    .eq("follower_id", followerId)
+  // Check if already following
+  const { data: existingFollow, error: checkError } = await supabase
+    .from("followers")
+    .select("id")
+    .eq("follower_id", user.id)
     .eq("following_id", followingId)
-    .maybeSingle()
+    .single()
 
-  return !!data
+  if (checkError && checkError.code !== "PGRST116") {
+    throw new Error(`Failed to check follow status: ${checkError.message}`)
+  }
+
+  try {
+    if (existingFollow) {
+      // Unfollow
+      const { error: deleteError } = await supabase
+        .from("followers")
+        .delete()
+        .eq("follower_id", user.id)
+        .eq("following_id", followingId)
+
+      if (deleteError) throw deleteError
+      
+      revalidatePath(`/[username]`, "page")
+      return { action: "unfollowed", success: true }
+    } else {
+      // Follow
+      const { error: insertError } = await supabase
+        .from("followers")
+        .insert({
+          follower_id: user.id,
+          following_id: followingId
+        })
+
+      if (insertError) throw insertError
+      
+      revalidatePath(`/[username]`, "page")
+      return { action: "followed", success: true }
+    }
+  } catch (error: any) {
+    console.error("Toggle follow error:", error)
+    throw new Error(`Failed to toggle follow: ${error.message}`)
+  }
 }
 
-export async function getFollowCounts(profileId: string): Promise<{ followers: number; following: number }> {
-  const admin = createAdminClient()
-
-  const { count: followers } = await admin
-    .from("follows")
+export async function getFollowStats(profileId: string) {
+  const supabase = await createClient()
+  
+  const { count: followerCount, error: followerError } = await supabase
+    .from("followers")
     .select("*", { count: "exact", head: true })
     .eq("following_id", profileId)
 
-  const { count: following } = await admin
-    .from("follows")
+  const { count: followingCount, error: followingError } = await supabase
+    .from("followers")
     .select("*", { count: "exact", head: true })
     .eq("follower_id", profileId)
 
-  return { followers: followers ?? 0, following: following ?? 0 }
+  if (followerError || followingError) {
+    console.error("Error fetching follow stats:", followerError || followingError)
+    return { followers: 0, following: 0 }
+  }
+
+  return {
+    followers: followerCount ?? 0,
+    following: followingCount ?? 0
+  }
 }
 
-export async function toggleFollow(followerId: string, followingId: string): Promise<void> {
+export async function checkIsFollowing(profileId: string) {
   const supabase = await createClient()
+  
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error("Unauthorized")
-  if (followerId !== user.id) throw new Error("Forbidden")
+  if (!user) return false
 
-  const admin = createAdminClient()
+  if (user.id === profileId) return false
 
-  const { data: existing } = await admin
-    .from("follows")
-    .select("follower_id")
-    .eq("follower_id", followerId)
-    .eq("following_id", followingId)
-    .maybeSingle()
+  const { data, error } = await supabase
+    .from("followers")
+    .select("id")
+    .eq("follower_id", user.id)
+    .eq("following_id", profileId)
+    .single()
 
-  if (existing) {
-    const { error } = await admin
-      .from("follows")
-      .delete()
-      .eq("follower_id", followerId)
-      .eq("following_id", followingId)
-    if (error) throw new Error(error.message)
-  } else {
-    const { error } = await admin
-      .from("follows")
-      .insert({ follower_id: followerId, following_id: followingId })
-    if (error) throw new Error(error.message)
+  if (error && error.code !== "PGRST116") {
+    console.error("Error checking follow:", error)
+    return false
   }
+
+  return !!data
 }

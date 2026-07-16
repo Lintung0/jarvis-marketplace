@@ -57,7 +57,7 @@ export default async function BrandsPage() {
               {brand.name}
             </h3>
             {brand.description && (
-              <p className="text-xs text-gray-400 mt-1 line-clamp-2">
+              <p className="text-xs text-gray-600 mt-1 line-clamp-2">
                 {brand.description}
               </p>
             )}
