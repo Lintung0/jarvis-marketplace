@@ -80,6 +80,25 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
     .eq("is_active", true)
     .order("name");
 
+  // Dapatkan semua subkategori di bawah kategori ini (sampai level 3)
+  const { data: level2 } = await supabase
+    .from("categories")
+    .select("id")
+    .eq("parent_id", category.id);
+  
+  const level2Ids = level2?.map(c => c.id) ?? [];
+  
+  let level3Ids: string[] = [];
+  if (level2Ids.length > 0) {
+    const { data: level3 } = await supabase
+      .from("categories")
+      .select("id")
+      .in("parent_id", level2Ids);
+    level3Ids = level3?.map(c => c.id) ?? [];
+  }
+
+  const allCatIds = [category.id, ...level2Ids, ...level3Ids];
+
   // Build query produk
   let query = supabase
     .from("products")
@@ -90,7 +109,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
       { count: "exact" }
     )
     .eq("status", "active")
-    .eq("category_id", category.id)
+    .in("category_id", allCatIds)
     .in("vendor_id", activeVendorIds.length > 0 ? activeVendorIds : [null]);
 
   if (q) query = query.ilike("title", `%${q}%`);

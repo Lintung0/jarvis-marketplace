@@ -85,7 +85,25 @@ export default async function ProductsPage({ searchParams }: PageProps) {
       .eq("slug", category)
       .single();
     if (cat) {
-      query = query.eq("category_id", cat.id);
+      // Dapatkan semua subkategori di bawah kategori ini (sampai level 3)
+      const { data: level2 } = await supabase
+        .from("categories")
+        .select("id")
+        .eq("parent_id", cat.id);
+      
+      const level2Ids = level2?.map(c => c.id) ?? [];
+      
+      let level3Ids: string[] = [];
+      if (level2Ids.length > 0) {
+        const { data: level3 } = await supabase
+          .from("categories")
+          .select("id")
+          .in("parent_id", level2Ids);
+        level3Ids = level3?.map(c => c.id) ?? [];
+      }
+
+      const allCatIds = [cat.id, ...level2Ids, ...level3Ids];
+      query = query.in("category_id", allCatIds);
     }
   }
 
