@@ -108,127 +108,112 @@ export default async function VendorProfilePage({ params }: PageProps) {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Cover + Profile Header */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6">
-          {/* Cover Image */}
-          <div className="h-48 gradient-brand" />
-
-          {/* Profile Info */}
-          <div className="px-6 pb-6">
-            <div className="flex flex-col sm:flex-row items-start gap-6 -mt-16 relative">
-              {/* Avatar */}
-              <div className="relative">
-                <div className="w-32 h-32 rounded-full border-4 border-white bg-white shadow-lg overflow-hidden">
-                  {profile.avatar_url ? (
-                    <Image
-                      src={profile.avatar_url}
-                      alt={profile.full_name ?? profile.username}
-                      fill
-                      className="object-cover"
-                      sizes="128px"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center gradient-brand text-white text-5xl font-bold">
-                      {(profile.full_name ?? profile.username).charAt(0).toUpperCase()}
-                    </div>
-                  )}
-                </div>
-                {profile.is_verified && (
-                  <div className="absolute bottom-2 right-2 bg-blue-500 rounded-full p-1">
-                    <BadgeCheck className="w-5 h-5 text-white" />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* IG-style Profile Header */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6 p-6 sm:p-8">
+          <div className="flex flex-col sm:flex-row items-start gap-8">
+            {/* Avatar */}
+            <div className="relative shrink-0 mx-auto sm:mx-0">
+              <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 border-teal-400 overflow-hidden">
+                {profile.avatar_url ? (
+                  <Image
+                    src={profile.avatar_url}
+                    alt={profile.full_name ?? profile.username}
+                    fill
+                    className="object-cover"
+                    sizes="144px"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center gradient-brand text-white text-5xl font-bold">
+                    {(profile.full_name ?? profile.username).charAt(0).toUpperCase()}
                   </div>
                 )}
               </div>
-
-              {/* Info */}
-              <div className="flex-1 pt-6">
-                <div className="flex items-start justify-between flex-wrap gap-4">
-                  <div>
-                    <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3 flex-wrap">
-                      {profile.full_name ?? profile.username}
-                      {profile.plan_name && profile.plan_name !== "Free" && (
-                        <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold border ${
-                          profile.plan_name === "Pro"
-                            ? "bg-teal-50 text-teal-700 border-teal-200"
-                            : "bg-purple-50 text-purple-700 border-purple-200"
-                        }`}>
-                          <Crown className="w-3 h-3" />
-                          {profile.plan_name}
-                        </span>
-                      )}
-                      {currentUser && !isOwnProfile && (
-                        <FollowButton vendorId={vendor.id} vendorName={profile.full_name ?? profile.username} initialFollowing={isFollowing} />
-                      )}
-                    </h1>
-                    <p className="text-gray-500 mt-1">@{profile.username}</p>
-
-                    {/* Location & Join Date */}
-                    <div className="flex items-center gap-4 mt-3 text-sm text-gray-500">
-                      {profile.location && (
-                        <div className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4" />
-                          <span>{profile.location}</span>
-                        </div>
-                      )}
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        <span>Joined {new Date(profile.created_at).toLocaleDateString("en-US", { month: "short", year: "numeric" })}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Stats Cards */}
-                  <div className="flex gap-3">
-                    <div className="bg-teal-50 border border-teal-200 rounded-xl px-6 py-3 text-center">
-                      <div className="flex items-center gap-2 text-teal-600 mb-1">
-                        <Package className="w-4 h-4" />
-                        <span className="text-2xl font-bold">{count ?? 0}</span>
-                      </div>
-                      <p className="text-xs text-gray-500 font-medium">Products</p>
-                    </div>
-                    <div className="bg-purple-50 border border-purple-200 rounded-xl px-6 py-3 text-center">
-                      <div className="flex items-center gap-2 text-purple-600 mb-1">
-                        <Users className="w-4 h-4" />
-                        <span className="text-2xl font-bold">{followCounts.followers}</span>
-                      </div>
-                      <p className="text-xs text-gray-500 font-medium">Followers</p>
-                    </div>
-                    <div className="bg-blue-50 border border-blue-200 rounded-xl px-6 py-3 text-center">
-                      <div className="flex items-center gap-2 text-blue-600 mb-1">
-                        <Users className="w-4 h-4" />
-                        <span className="text-2xl font-bold">{followCounts.following}</span>
-                      </div>
-                      <p className="text-xs text-gray-500 font-medium">Following</p>
-                    </div>
-                    <div className="bg-amber-50 border border-amber-200 rounded-xl px-6 py-3 text-center">
-                      <div className="flex items-center gap-2 text-amber-600 mb-1">
-                        <Star className="w-4 h-4 fill-current" />
-                        <span className="text-2xl font-bold">{avgRating}</span>
-                      </div>
-                      <p className="text-xs text-gray-500 font-medium">Rating</p>
-                    </div>
-                  </div>
+              {profile.is_verified && (
+                <div className="absolute bottom-1 right-1 bg-blue-500 rounded-full p-1 border-2 border-white">
+                  <BadgeCheck className="w-4 h-4 text-white" />
                 </div>
+              )}
+            </div>
 
-                {/* Bio */}
-                {profile.bio && (
-                  <p className="text-gray-600 mt-4 max-w-3xl leading-relaxed">
-                    {profile.bio}
-                  </p>
+            {/* Info */}
+            <div className="flex-1 w-full">
+              {/* Name row + follow button */}
+              <div className="flex flex-wrap items-center gap-3 mb-3">
+                <h1 className="text-xl font-semibold text-gray-900">
+                  {profile.username}
+                </h1>
+                {profile.plan_name && profile.plan_name !== "Free" && (
+                  <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
+                    profile.plan_name === "Pro"
+                      ? "bg-teal-50 text-teal-700 border-teal-200"
+                      : "bg-purple-50 text-purple-700 border-purple-200"
+                  }`}>
+                    <Crown className="w-3 h-3" />
+                    {profile.plan_name}
+                  </span>
                 )}
+                {currentUser && !isOwnProfile && (
+                  <FollowButton vendorId={vendor.id} vendorName={profile.full_name ?? profile.username} initialFollowing={isFollowing} />
+                )}
+              </div>
 
-                {/* Website */}
-                {profile.website && (
-                  <a
-                    href={profile.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm text-teal-600 hover:text-teal-700 font-medium mt-3"
-                  >
-                    🔗 {profile.website}
-                  </a>
-                )}
+              {/* Stats row — IG style */}
+              <div className="flex items-center gap-6 mb-4 text-sm">
+                <div className="text-center sm:text-left">
+                  <span className="font-bold text-gray-900">{count ?? 0}</span>
+                  <span className="text-gray-600 ml-1">produk</span>
+                </div>
+                <div className="text-center sm:text-left">
+                  <span className="font-bold text-gray-900">{followCounts.followers}</span>
+                  <span className="text-gray-600 ml-1">followers</span>
+                </div>
+                <div className="text-center sm:text-left">
+                  <span className="font-bold text-gray-900">{followCounts.following}</span>
+                  <span className="text-gray-600 ml-1">following</span>
+                </div>
+                <div className="text-center sm:text-left">
+                  <span className="font-bold text-gray-900">{avgRating}</span>
+                  <span className="text-gray-600 ml-1">⭐ rating</span>
+                </div>
+              </div>
+
+              {/* Full name */}
+              {profile.full_name && (
+                <p className="font-semibold text-gray-900 text-sm mb-1">{profile.full_name}</p>
+              )}
+
+              {/* Bio */}
+              {profile.bio && (
+                <p className="text-gray-700 text-sm leading-relaxed mb-2 whitespace-pre-line">
+                  {profile.bio}
+                </p>
+              )}
+
+              {/* Location */}
+              {profile.location && (
+                <div className="flex items-center gap-1 text-sm text-gray-600 mb-1">
+                  <MapPin className="w-4 h-4" />
+                  <span>{profile.location}</span>
+                </div>
+              )}
+
+              {/* Website */}
+              {profile.website && (
+                <a
+                  href={profile.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-teal-600 hover:text-teal-700 font-medium"
+                >
+                  {profile.website}
+                </a>
+              )}
+
+              {/* Join date */}
+              <div className="flex items-center gap-1 text-xs text-gray-500 mt-2">
+                <Calendar className="w-3.5 h-3.5" />
+                <span>Bergabung {new Date(profile.created_at).toLocaleDateString("id-ID", { month: "long", year: "numeric" })}</span>
               </div>
             </div>
           </div>
@@ -237,14 +222,15 @@ export default async function VendorProfilePage({ params }: PageProps) {
         {/* Products Section */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">
-              Products by {profile.full_name ?? profile.username}
+            <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+              <Package className="w-5 h-5 text-teal-500" />
+              Produk
             </h2>
-            <span className="text-sm text-gray-500">{count ?? 0} items</span>
+            <span className="text-sm text-gray-500">{count ?? 0} item</span>
           </div>
           <ProductGrid
             products={(products ?? []) as unknown as Product[]}
-            emptyMessage="This vendor has no active products yet."
+            emptyMessage="Vendor ini belum punya produk aktif."
           />
         </div>
       </div>
