@@ -216,7 +216,7 @@ function CategoryNav({ categories }: { categories: Category[] }) {
           {rootCategories.map((root) => {
             const subs = getChildren(root.id);
             return (
-              <li key={root.id} className="group relative">
+              <li key={root.id} className="group">
                 <Link
                   href={`/products?category=${root.slug}`}
                   className="flex items-center gap-1 px-4 py-3 text-sm font-semibold text-gray-700 hover:text-teal-500 border-b-2 border-transparent hover:border-teal-500 transition-all"
@@ -226,8 +226,8 @@ function CategoryNav({ categories }: { categories: Category[] }) {
                 </Link>
 
                 {subs.length > 0 && (
-                  <div className="absolute left-0 top-full hidden group-hover:block w-[780px] bg-white border border-gray-100 shadow-xl rounded-b-2xl p-6 z-50 transition-all duration-300">
-                    <div className="grid grid-cols-4 gap-6">
+                  <div className="absolute left-0 right-0 w-full bg-white border-t border-gray-100 shadow-xl rounded-b-2xl p-6 z-50 transition-all duration-300 hidden group-hover:block">
+                    <div className="max-w-7xl mx-auto grid grid-cols-5 gap-6">
                       {subs.slice(0, 4).map((sub) => {
                         const subChildren = getChildren(sub.id);
                         return (
