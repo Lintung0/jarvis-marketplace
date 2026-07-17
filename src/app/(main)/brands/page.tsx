@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { createAdminClient } from "@/lib/supabase/server"
+import BrandLogo from "@/components/shared/BrandLogo"
 import type { Brand } from "@/types"
 
 export default async function BrandsPage() {
@@ -38,13 +39,9 @@ export default async function BrandsPage() {
             href={`/brands/${brand.slug}`}
             className="bg-white rounded-2xl border border-gray-100 p-6 flex flex-col items-center justify-center text-center hover:shadow-lg hover:border-teal-200 transition-all group"
           >
-            {brand.logo_url ? (
-              <div className="w-20 h-20 rounded-xl overflow-hidden bg-gray-50 mb-3 p-2">
-                <img
-                  src={brand.logo_url}
-                  alt={brand.name}
-                  className="w-full h-full object-contain"
-                />
+            {brand.logo_url || true ? (
+              <div className="w-20 h-20 relative flex items-center justify-center mb-3">
+                <BrandLogo name={brand.name} logo_url={brand.logo_url} slug={brand.slug} />
               </div>
             ) : (
               <div className="w-20 h-20 rounded-xl gradient-brand flex items-center justify-center mb-3">
