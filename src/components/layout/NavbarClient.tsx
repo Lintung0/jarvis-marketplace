@@ -84,19 +84,23 @@ function TopBar({ user, profile }: { user: any; profile: any }) {
                   <ChevronDown className="w-3 h-3" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-44">
+              <DropdownMenuContent align="end" className="w-48">
                 <DropdownMenuItem asChild>
-                  <Link href="/profile" className="cursor-pointer"><User className="w-4 h-4 mr-2" />Profile</Link>
+                  <Link href="/profile" className="cursor-pointer"><User className="w-4 h-4 mr-2" />My Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/profile?tab=orders" className="cursor-pointer"><Package className="w-4 h-4 mr-2" />Orders</Link>
+                  <Link href="/wallet" className="cursor-pointer"><Package className="w-4 h-4 mr-2" />Wallet</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/wishlist" className="cursor-pointer"><Heart className="w-4 h-4 mr-2" />Wishlist</Link>
+                  <Link href="/orders" className="cursor-pointer"><Package className="w-4 h-4 mr-2" />Orders</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/chat" className="cursor-pointer"><MessageCircle className="w-4 h-4 mr-2" />Messages</Link>
-                </DropdownMenuItem>
+                {(profile?.role === "vendor" || profile?.role === "admin" || profile?.role === "moderator") && (
+                  <DropdownMenuItem asChild>
+                    <Link href={profile?.role === "admin" ? "/admin" : profile?.role === "moderator" ? "/moderator" : "/vendor"} className="cursor-pointer">
+                      <Package className="w-4 h-4 mr-2" />Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout} disabled={loggingOut} className="text-red-500 focus:text-red-500 focus:bg-red-50 cursor-pointer">
                   {loggingOut ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <LogOut className="w-4 h-4 mr-2" />}
