@@ -84,7 +84,7 @@ function TopBar({ user, profile }: { user: any; profile: any }) {
                   <ChevronDown className="w-3 h-3" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuContent align="end" className="w-52">
                 {(profile?.role === "vendor" || profile?.role === "admin" || profile?.role === "moderator") && (
                   <>
                     <DropdownMenuItem asChild>
@@ -105,7 +105,13 @@ function TopBar({ user, profile }: { user: any; profile: any }) {
                   <Link href="/orders" className="cursor-pointer"><Package className="w-4 h-4 mr-2" />Orders</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/profile" className="cursor-pointer"><Package className="w-4 h-4 mr-2" />Profile Settings</Link>
+                  <Link href="/wishlist" className="cursor-pointer"><Heart className="w-4 h-4 mr-2" />Wishlist</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/chat" className="cursor-pointer"><MessageCircle className="w-4 h-4 mr-2" />Messages</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/profile?edit=true" className="cursor-pointer"><User className="w-4 h-4 mr-2" />Profile Settings</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout} disabled={loggingOut} className="text-red-500 focus:text-red-500 focus:bg-red-50 cursor-pointer">
@@ -165,30 +171,6 @@ function SearchHeader({ user, profile, categories, unreadMessages = 0 }: { user:
         </form>
 
         <div className="flex items-center gap-3 flex-shrink-0">
-          <Link href="/wishlist" className="hidden md:flex flex-col items-center gap-0.5 text-gray-600 hover:text-teal-500 transition-colors relative">
-            <Heart className="h-5 w-5" />
-            <span className="text-[10px]">{t("nav.wishlist") || "Wishlist"}</span>
-            {wishlistCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] rounded-full flex items-center justify-center text-white text-[10px] font-bold"
-                style={{ backgroundColor: "#00a99d" }}>
-                {wishlistCount > 9 ? "9+" : wishlistCount}
-              </span>
-            )}
-          </Link>
-
-          {user && (
-            <Link href="/chat" className="hidden md:flex flex-col items-center gap-0.5 text-gray-600 hover:text-teal-500 transition-colors relative">
-              <MessageCircle className="h-5 w-5" />
-              <span className="text-[10px]">{t("nav.messages") || "Messages"}</span>
-              {unreadMessages > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] rounded-full flex items-center justify-center text-white text-[10px] font-bold"
-                  style={{ backgroundColor: "#00a99d" }}>
-                  {unreadMessages > 9 ? "9+" : unreadMessages}
-                </span>
-              )}
-            </Link>
-          )}
-
           <Link href="/cart" className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-teal-500 transition-colors relative">
             <ShoppingCart className="h-5 w-5" />
             <span className="text-[10px]">{t("nav.cart") || "Cart"}</span>
