@@ -26,7 +26,10 @@ export default function EditProfileModal({ profile, isOpen, onClose }: EditProfi
     location: profile.location ?? "",
     bio: profile.bio ?? "",
     website: profile.website ?? "",
+    shop_policies: profile.shop_policies ?? "",
   });
+
+  const isVendor = profile.role === "vendor";
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -100,6 +103,7 @@ export default function EditProfileModal({ profile, isOpen, onClose }: EditProfi
           location: formData.location,
           bio: formData.bio,
           website: formData.website,
+          shop_policies: formData.shop_policies || null,
           avatar_url: avatarUrl,
           updated_at: new Date().toISOString(),
         })
@@ -259,6 +263,28 @@ export default function EditProfileModal({ profile, isOpen, onClose }: EditProfi
               placeholder="https://example.com"
             />
           </div>
+
+          {/* Shop Policies (Vendor only) */}
+          {isVendor && (
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Shop Policies
+              </label>
+              <textarea
+                value={formData.shop_policies}
+                onChange={(e) => setFormData({ ...formData, shop_policies: e.target.value })}
+                rows={6}
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition resize-y"
+                placeholder={`Contoh:
+• Pengembangan: 14 hari setelah barang diterima
+• Pengiriman: 1-3 hari kerja
+• Pembayaran: Transfer bank / E-Wallet`}
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Aturan toko kamu — akan tampil di halaman profil vendor.
+              </p>
+            </div>
+          )}
 
           {/* Actions */}
           <div className="flex gap-3 pt-4">

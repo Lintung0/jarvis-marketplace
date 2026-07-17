@@ -103,3 +103,43 @@ export async function checkIsFollowing(profileId: string) {
 
   return !!data
 }
+
+export async function getFollowers(profileId: string) {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+    .from("followers")
+    .select("follower_id, created_at, follower:profiles!follower_id(id, username, full_name, avatar_url, bio, is_verified)")
+    .eq("following_id", profileId)
+    .order("created_at", { ascending: false })
+
+  if (error) {
+    console.error("Error fetching followers:", error)
+    return []
+  }
+
+  return data.map((item: any) => ({
+    ...item.follower,
+    followed_at: item.created_at,
+  }))
+}
+
+export async function getFollowing(profileId: string) {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+    .from("followers")
+    .select("following_id, created_at, following:profiles!following_id(id, username, full_name, avatar_url, bio, is_verified)")
+    .eq("follower_id", profileId)
+    .order("created_at", { ascending: false })
+
+  if (error) {
+    console.error("Error fetching following:", error)
+    return []
+  }
+
+  return data.map((item: any) => ({
+    ...item.following,
+    followed_at: item.created_at,
+  }))
+}

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { approvePayout, rejectPayout, markPayoutAsPaid } from "@/app/actions/payouts"
+import { approvePayout, rejectPayout } from "@/app/actions/payouts"
 import { Loader2 } from "lucide-react"
 
 type Payout = {
@@ -40,18 +40,6 @@ export function AdminPayoutActions({ payout }: { payout: Payout }) {
     setLoading(null)
   }
 
-  async function handleMarkPaid() {
-    setLoading("paid")
-    setError(null)
-    try {
-      await markPayoutAsPaid(payout.id)
-      router.refresh()
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to mark as paid")
-    }
-    setLoading(null)
-  }
-
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-center gap-1">
@@ -74,15 +62,9 @@ export function AdminPayoutActions({ payout }: { payout: Payout }) {
           </>
         )}
         {payout.status === "approved" && (
-          <button
-            onClick={handleMarkPaid}
-            disabled={loading !== null}
-            className="px-2.5 py-1 text-xs font-medium rounded-md bg-blue-500/10 text-blue-600 border border-blue-500/30 hover:bg-blue-500/20 transition disabled:opacity-50"
-          >
-            {loading === "paid" ? <Loader2 className="w-3 h-3 animate-spin" /> : "Mark as Paid"}
-          </button>
+          <span className="text-xs text-blue-600 font-medium">Approved</span>
         )}
-        {payout.status === "paid" && (
+        {payout.status === "completed" && (
           <span className="text-xs text-green-600 font-medium">Paid</span>
         )}
         {payout.status === "rejected" && (

@@ -8,6 +8,9 @@ import type { SupabaseClient } from "@supabase/supabase-js"
 const VALID_TRANSITIONS: Record<string, string[]> = {
   paid: ["processing"],
   processing: ["shipped"],
+}
+
+const BUYER_TRANSITIONS: Record<string, string[]> = {
   shipped: ["delivered"],
 }
 
@@ -250,4 +253,42 @@ async function createNotification(
     message,
     order_id: orderId,
   })
+}
+
+export async function buyerConfirmReceived(orderId: string) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error("Unauthorized")
+
+  const admin = createAdminClient()
+  const { data: order } = await admin
+    .from("orders")
+    .select("status, buyer_id")
+    .eq("id", orderId)
+    .single()
+
+  if (!order) throw new Error("Order not found")
+  if (order.buyer_id !== user.id) throw new Error("Not your order")
+
+  const allowed = BUYER_TRANSITIONS[order.status]
+  if (!allowed?.includes("delivered")) {
+    throw new Error(`Cannot confirm received for order with status ${order.status}`)
+  }
+
+  const { error } = await admin
+    .from("orders")
+    .update({ status: "delivered", updated_at: new Date().toISOString() })
+    .eq("id", orderId)
+
+  if (error) throw new Error(error.message)
+
+  await createNotification(
+    admin,
+    orderId,
+    "delivered",
+    `Your order #${orderId.slice(0, 8)} has been marked as delivered. Thank you for shopping at Modesy!`
+  )
+
+  revalidatePath(`/orders/${orderId}`)
+  revalidatePath("/orders")
 }

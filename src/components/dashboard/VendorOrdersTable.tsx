@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { StatusBadge } from "@/components/dashboard/StatsCard"
 import { formatCurrency } from "@/lib/utils"
@@ -15,7 +14,6 @@ import {
 } from "@/components/ui/table"
 import { Card } from "@/components/ui/card"
 import { useRealtimeSubscription } from "@/hooks/useRealtime"
-import { vendorUpdateOrderStatus } from "@/app/actions/orders"
 
 export interface OrderItemData {
   id: string
@@ -42,26 +40,6 @@ const actionableStatuses = new Set(["paid", "processing"])
 
 export default function VendorOrdersTable({ initialData: data, vendorId }: VendorOrdersTableProps) {
   const router = useRouter()
-  const timers = useRef<Map<string, NodeJS.Timeout>>(new Map())
-
-  useEffect(() => {
-    for (const item of data) {
-      if (item.order?.status === "shipped" && !timers.current.has(item.order_id)) {
-        const timer = setTimeout(async () => {
-          try {
-            await vendorUpdateOrderStatus(item.order_id, "delivered")
-          } catch {}
-          timers.current.delete(item.order_id)
-          router.refresh()
-        }, 5000)
-        timers.current.set(item.order_id, timer)
-      }
-    }
-    return () => {
-      for (const timer of timers.current.values()) clearTimeout(timer)
-      timers.current.clear()
-    }
-  }, [data, router])
 
   useRealtimeSubscription({
     table: "order_items",

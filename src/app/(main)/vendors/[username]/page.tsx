@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveVendorIds } from "@/lib/queries";
 import ProductGrid from "@/components/shared/ProductGrid";
 import FollowButton from "@/components/shared/FollowButton";
-import { MapPin, Calendar, Package, BadgeCheck, Crown } from "lucide-react";
+import { MapPin, Calendar, Package, BadgeCheck, Crown, ShieldCheck } from "lucide-react";
 import type { Product, Profile } from "@/types";
 import { getFollowStats, checkIsFollowing } from "@/app/actions/follows";
 import { generateMeta } from "@/lib/seo";
@@ -164,14 +165,14 @@ export default async function VendorProfilePage({ params }: PageProps) {
                   <span className="font-bold text-gray-900">{count ?? 0}</span>
                   <span className="text-gray-600 ml-1">produk</span>
                 </div>
-                <div className="text-center sm:text-left">
+                <Link href={`/vendors/${profile.username}/followers`} className="text-center sm:text-left hover:opacity-70 transition">
                   <span className="font-bold text-gray-900">{followCounts.followers}</span>
                   <span className="text-gray-600 ml-1">followers</span>
-                </div>
-                <div className="text-center sm:text-left">
+                </Link>
+                <Link href={`/vendors/${profile.username}/following`} className="text-center sm:text-left hover:opacity-70 transition">
                   <span className="font-bold text-gray-900">{followCounts.following}</span>
                   <span className="text-gray-600 ml-1">following</span>
-                </div>
+                </Link>
                 <div className="text-center sm:text-left">
                   <span className="font-bold text-gray-900">{avgRating}</span>
                   <span className="text-gray-600 ml-1">⭐ rating</span>
@@ -218,6 +219,19 @@ export default async function VendorProfilePage({ params }: PageProps) {
             </div>
           </div>
         </div>
+
+        {/* Shop Policies */}
+        {profile.shop_policies && (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+            <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2 mb-4">
+              <ShieldCheck className="w-5 h-5 text-teal-500" />
+              Kebijakan Toko
+            </h2>
+            <div className="text-sm text-gray-700 whitespace-pre-line leading-relaxed">
+              {profile.shop_policies}
+            </div>
+          </div>
+        )}
 
         {/* Products Section */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">

@@ -23,6 +23,11 @@ CREATE INDEX IF NOT EXISTS idx_followers_following_id ON public.followers(follow
 -- Enable Row Level Security
 ALTER TABLE public.followers ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policies first to avoid conflicts
+DROP POLICY IF EXISTS "Users can view followers of any profile" ON public.followers;
+DROP POLICY IF EXISTS "Users can follow other profiles" ON public.followers;
+DROP POLICY IF EXISTS "Users can unfollow (delete their own follows)" ON public.followers;
+
 -- Create policies
 CREATE POLICY "Users can view followers of any profile"
     ON public.followers FOR SELECT
@@ -44,6 +49,10 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+-- Drop trigger and view if they exist
+DROP TRIGGER IF EXISTS update_followers_updated_at ON public.followers;
+DROP VIEW IF EXISTS public.follower_stats;
 
 -- Create trigger for updated_at
 CREATE TRIGGER update_followers_updated_at

@@ -29,6 +29,12 @@ VALUES (
 )
 ON CONFLICT (id) DO NOTHING;
 
+-- Drop existing policies to avoid conflicts
+DROP POLICY IF EXISTS "Admin can upload brand logos" ON storage.objects;
+DROP POLICY IF EXISTS "Admin can update brand logos" ON storage.objects;
+DROP POLICY IF EXISTS "Public can view brand logos" ON storage.objects;
+DROP POLICY IF EXISTS "Admin can delete brand logos" ON storage.objects;
+
 CREATE POLICY "Admin can upload brand logos"
 ON storage.objects FOR INSERT
 TO authenticated

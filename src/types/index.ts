@@ -24,6 +24,7 @@ export interface Profile {
   bio: string | null
   location: string | null
   website: string | null
+  shop_policies: string | null
   role: Role
   is_verified: boolean
   is_banned: boolean
@@ -177,6 +178,18 @@ export interface Review {
   is_approved: boolean
   created_at: string
   user?: Profile
+}
+
+export interface ProductComment {
+  id: string
+  product_id: string
+  user_id: string
+  content: string
+  parent_id: string | null
+  created_at: string
+  updated_at: string
+  user?: Profile
+  replies?: ProductComment[]
 }
 
 export interface Wishlist {

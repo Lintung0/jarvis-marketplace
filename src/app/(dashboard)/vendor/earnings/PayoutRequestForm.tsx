@@ -21,17 +21,23 @@ export function PayoutRequestForm({ maxAmount }: { maxAmount: number }) {
     const numAmount = parseFloat(amount);
     if (!numAmount || numAmount <= 0) { setError("Invalid amount"); return; }
     if (numAmount > maxAmount) { setError(`Maximum payout is ${maxAmount}`); return; }
+    if (method === "bank_transfer" && (!accountBank || !accountName || !accountNumber)) {
+      setError("Lengkapi data bank");
+      return;
+    }
+    if (method === "ewallet" && !accountDetails) {
+      setError("Lengkapi detail e-wallet");
+      return;
+    }
 
     try {
-      const formData = new FormData();
-      formData.set("amount", amount);
-      formData.set("method", method);
-      if (method === "bank_transfer") {
-        formData.set("account_details", JSON.stringify({ bank: accountBank, name: accountName, number: accountNumber }));
-      } else {
-        formData.set("account_details", accountDetails);
-      }
-      await requestPayout(formData);
+      const payload = {
+        amount: numAmount,
+        bank_name: method === "bank_transfer" ? accountBank : "E-Wallet",
+        account_number: method === "bank_transfer" ? accountNumber : accountDetails,
+        account_holder: method === "bank_transfer" ? accountName : "E-Wallet",
+      };
+      await requestPayout(payload);
       setSuccess(true);
       setAmount("");
       setAccountBank("");

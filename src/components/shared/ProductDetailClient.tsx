@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import type { Product } from "@/types";
 import ProductGalleryZoom from "./ProductGalleryZoom";
 import ReviewForm from "./ReviewForm";
+import ProductComments from "./ProductComments";
 
 interface Props {
   product: Product;
@@ -20,7 +21,7 @@ interface Props {
 export default function ProductDetailClient({ product, userReferralCode }: Props) {
   const [quantity, setQuantity] = useState(1);
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
-  const [activeTab, setActiveTab] = useState<"description" | "specs" | "reviews">("description");
+  const [activeTab, setActiveTab] = useState<"description" | "specs" | "reviews" | "comments">("description");
   const addItem = useCartStore((state) => state.addItem);
 
   const handleAddToCart = () => {
@@ -235,7 +236,7 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
       <div className="md:col-span-2 mt-8">
         <div className="border-b border-gray-200 mb-6">
           <div className="flex gap-8">
-            {["description", "specs", "reviews"].map((tab) => (
+            {["description", "specs", "reviews", "comments"].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab as any)}
@@ -248,6 +249,7 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
                 {tab === "description" && "Deskripsi"}
                 {tab === "specs" && "Spesifikasi"}
                 {tab === "reviews" && `Ulasan (${product.reviews?.length ?? 0})`}
+                {tab === "comments" && "Diskusi"}
                 {activeTab === tab && (
                   <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#00a99d]" />
                 )}
@@ -324,6 +326,10 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
                 )}
               </div>
             </div>
+          )}
+
+          {activeTab === "comments" && (
+            <ProductComments productId={product.id} />
           )}
         </div>
       </div>
