@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   User,
   LayoutDashboard,
-  MessageSquare,
   Bell,
   Settings,
   CreditCard,
@@ -125,12 +124,6 @@ export function NavUser() {
                 <Link href="/wallet" className="flex items-center gap-3">
                   <Wallet className="w-4 h-4" />
                   <span>Wallet</span>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/chat" className="flex items-center gap-3">
-                  <MessageSquare className="w-4 h-4" />
-                  <span>Messages</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
