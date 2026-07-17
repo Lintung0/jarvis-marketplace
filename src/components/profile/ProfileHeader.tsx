@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { MapPin, Calendar, Mail, BadgeCheck, Shield, Star, Crown, Award, LogOut, Loader2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
@@ -15,8 +15,15 @@ interface ProfileHeaderProps {
 
 export default function ProfileHeader({ profile }: ProfileHeaderProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get("edit") === "true") {
+      setIsEditOpen(true);
+    }
+  }, [searchParams]);
 
   async function handleLogout() {
     setLoggingOut(true);
