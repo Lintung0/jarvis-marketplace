@@ -35,7 +35,7 @@ export default async function BrandCarousel() {
             className="flex flex-col items-center justify-center p-4 border border-gray-100 rounded-2xl bg-white hover:shadow-md hover:border-teal-100 transition-all w-32 group cursor-pointer"
           >
             <div className="w-16 h-16 relative flex items-center justify-center mb-2">
-              <BrandLogo name={brand.name} logo_url={brand.logo_url} slug={brand.slug} />
+              <BrandLogo name={brand.name} logo_url={brand.logo_url} />
             </div>
             <span className="text-xs font-semibold text-gray-800 group-hover:text-teal-600 transition-colors text-center leading-tight">
               {brand.name}

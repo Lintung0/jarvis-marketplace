@@ -1,7 +1,12 @@
+"use client"
+
 import { createBrand } from "@/app/actions/brands"
 import Link from "next/link"
+import { useState } from "react"
 
 export default function NewBrandPage() {
+  const [logoPreview, setLogoPreview] = useState<string | null>(null)
+
   return (
     <div className="max-w-2xl">
       <div className="mb-8">
@@ -27,12 +32,31 @@ export default function NewBrandPage() {
           <input name="description" className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none" />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">Logo URL</label>
-            <input name="logo_url" className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none" placeholder="https://logo.clearbit.com/example.com" />
-            <p className="text-xs text-gray-400">Gunakan https://logo.clearbit.com/namaperusahaan.com untuk logo otomatis</p>
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700">Logo</label>
+          <div className="flex items-center gap-4">
+            {logoPreview && (
+              <div className="w-16 h-16 rounded-xl overflow-hidden bg-gray-50 border border-gray-200 p-2">
+                <img src={logoPreview} alt="Logo preview" className="w-full h-full object-contain" />
+              </div>
+            )}
+            <div className="flex-1">
+              <input
+                type="file"
+                name="logo_file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) setLogoPreview(URL.createObjectURL(file))
+                }}
+                className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-teal-50 file:text-teal-600 hover:file:bg-teal-100"
+              />
+              <p className="text-xs text-gray-400 mt-1">Upload logo brand. Format: PNG, JPG, SVG. Maks 5MB.</p>
+            </div>
           </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">Website</label>
             <input name="website" className="w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-2 text-sm focus:border-teal-400 outline-none" placeholder="https://example.com" />

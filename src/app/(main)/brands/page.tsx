@@ -41,7 +41,7 @@ export default async function BrandsPage() {
           >
             {brand.logo_url || true ? (
               <div className="w-20 h-20 relative flex items-center justify-center mb-3">
-                <BrandLogo name={brand.name} logo_url={brand.logo_url} slug={brand.slug} />
+                <BrandLogo name={brand.name} logo_url={brand.logo_url} />
               </div>
             ) : (
               <div className="w-20 h-20 rounded-xl gradient-brand flex items-center justify-center mb-3">

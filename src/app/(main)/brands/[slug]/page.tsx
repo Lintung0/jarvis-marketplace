@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import { getActiveVendorIds } from "@/lib/queries"
 import ProductGrid from "@/components/shared/ProductGrid"
+import BrandLogo from "@/components/shared/BrandLogo"
 import { ProductGridSkeleton } from "@/components/shared/ProductCardSkeleton"
 import { Suspense } from "react"
 import type { Product } from "@/types"
@@ -86,21 +87,9 @@ export default async function BrandDetailPage({ params }: PageProps) {
       {/* Brand Header */}
       <div className="bg-white rounded-2xl border border-gray-100 p-8 mb-6">
         <div className="flex items-center gap-6 mb-6">
-          {brand.logo_url ? (
-            <div className="w-24 h-24 rounded-xl overflow-hidden bg-gray-50 p-3 flex-shrink-0 border border-gray-100">
-              <img
-                src={brand.logo_url}
-                alt={brand.name}
-                className="w-full h-full object-contain"
-              />
-            </div>
-          ) : (
-            <div className="w-24 h-24 rounded-xl gradient-brand flex items-center justify-center flex-shrink-0">
-              <span className="text-4xl font-bold text-white">
-                {brand.name.charAt(0)}
-              </span>
-            </div>
-          )}
+          <div className="w-24 h-24 relative flex items-center justify-center flex-shrink-0">
+            <BrandLogo name={brand.name} logo_url={brand.logo_url} />
+          </div>
           <div>
             <h1 className="text-3xl font-bold text-gray-900">{brand.name}</h1>
             {bio && (

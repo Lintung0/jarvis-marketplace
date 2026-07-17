@@ -52,12 +52,33 @@ export async function createBrand(formData: FormData) {
 
   if (profile?.role !== "admin") throw new Error("Unauthorized")
 
+  let logoUrl = formData.get("logo_url") as string || null
+  const logoFile = formData.get("logo_file") as File | null
+
+  // Upload logo file if provided
+  if (logoFile && logoFile.size > 0) {
+    const fileExt = logoFile.name.split(".").pop()
+    const fileName = `${formData.get("slug")}-${Date.now()}.${fileExt}`
+    const filePath = `brand-logos/${fileName}`
+
+    const { error: uploadError } = await supabase.storage
+      .from("brand-logos")
+      .upload(filePath, logoFile, { upsert: true })
+
+    if (!uploadError) {
+      const { data: { publicUrl } } = supabase.storage
+        .from("brand-logos")
+        .getPublicUrl(filePath)
+      logoUrl = publicUrl
+    }
+  }
+
   const admin = createAdminClient()
   const { error } = await admin.from("brands").insert({
     name: formData.get("name") as string,
     slug: formData.get("slug") as string,
     description: (formData.get("description") as string) || null,
-    logo_url: (formData.get("logo_url") as string) || null,
+    logo_url: logoUrl,
     website: (formData.get("website") as string) || null,
     is_active: true,
   })
