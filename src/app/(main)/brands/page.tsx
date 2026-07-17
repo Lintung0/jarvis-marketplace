@@ -53,14 +53,9 @@ export default async function BrandsPage() {
                 </span>
               </div>
             )}
-            <h3 className="font-semibold text-gray-900 group-hover:text-teal-500 transition-colors">
+            <h3 className="font-semibold text-gray-900 group-hover:text-teal-500 transition-colors text-sm">
               {brand.name}
             </h3>
-            {brand.description && (
-              <p className="text-xs text-gray-600 mt-1 line-clamp-2">
-                {brand.description}
-              </p>
-            )}
           </Link>
         ))}
       </div>
