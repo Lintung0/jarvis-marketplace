@@ -1,21 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { StatusBadge } from "@/components/dashboard/StatsCard"
 import { formatCurrency } from "@/lib/utils"
+import { StatusBadge } from "@/components/dashboard/StatsCard"
 import { VendorOrderActions } from "@/components/dashboard/VendorOrderActions"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import { Card } from "@/components/ui/card"
-import { useRealtimeSubscription } from "@/hooks/useRealtime"
-import { Package, MapPin, CreditCard, Check, X, Loader2, Truck } from "lucide-react"
+import { MapPin, CreditCard, Package, Check, X, Loader2, Truck } from "lucide-react"
 
 export interface OrderItemData {
   id: string
@@ -45,74 +34,46 @@ export interface VendorOrdersTableProps {
 const actionableStatuses = new Set(["paid", "processing"])
 
 export default function VendorOrdersTable({ initialData: data, vendorId }: VendorOrdersTableProps) {
-  const router = useRouter()
   const [isDetailOpen, setIsDetailOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState<OrderItemData | null>(null)
-
-  useRealtimeSubscription({
-    table: "order_items",
-    filter: `vendor_id=eq.${vendorId}`,
-    callback: () => {
-      router.refresh()
-    },
-  })
-
-  useRealtimeSubscription({
-    table: "orders",
-    event: "UPDATE",
-    callback: () => {
-      router.refresh()
-    },
-  })
 
   const openDetail = (item: OrderItemData) => {
     setSelectedItem(item)
     setIsDetailOpen(true)
   }
 
-  return (
-    <>
-      <Card>
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Product</TableHead>
-                <TableHead>Qty</TableHead>
-                <TableHead>Total</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Action</TableHead>
-                <TableHead>Date</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.map((item) => (
-                <TableRow key={item.id} onClick={() => openDetail(item)} className="cursor-pointer hover:bg-gray-50">
-                  <TableCell className="font-medium">{item.title}</TableCell>
-                  <TableCell className="text-muted-foreground">{item.quantity}</TableCell>
-                  <TableCell className="font-semibold">
-                    {formatCurrency(item.price * item.quantity)}
-                  </TableCell>
-                  <TableCell>
-                    <StatusBadge status={item.order?.status ?? "pending"} />
-                  </TableCell>
-                  <TableCell>
-                    {item.order && actionableStatuses.has(item.order.status) ? (
-                      <VendorOrderActions orderId={item.order_id} currentStatus={item.order.status} />
-                    ) : (
-                      <span className="text-xs text-muted-foreground">&mdash;</span>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {new Date(item.created_at).toLocaleDateString("id-ID")}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-      </Card>
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case "paid":
+        return <Check className="w-4 h-4 text-green-600" />
+      case "processing":
+        return <Package className="w-4 h-4 text-blue-600" />
+      case "shipped":
+        return <Truck className="w-4 h-4 text-purple-600" />
+      case "delivered":
+        return <Check className="w-4 h-4 text-teal-600" />
+      case "cancelled":
+        return <X className="w-4 h-4 text-red-600" />
+      default:
+        return <Loader2 className="w-4 h-4 text-yellow-600" />
+    }
+  }
 
+  const getStatusLabel = (status: string) => {
+    const labels: Record<string, string> = {
+      pending: "Menunggu Pembayaran",
+      paid: "Dibayar",
+      processing: "Diproses",
+      shipped: "Dikirim",
+      delivered: "Selesai",
+      cancelled: "Dibatalkan",
+      refunded: "Dikembalikan",
+    }
+    return labels[status] || status
+  }
+
+  return (
+    <div>
       {isDetailOpen && selectedItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
@@ -258,19 +219,6 @@ export default function VendorOrdersTable({ initialData: data, vendorId }: Vendo
           </div>
         </div>
       )}
-    </>
+    </div>
   )
-}
-
-function getStatusLabel(status: string) {
-  const labels: Record<string, string> = {
-    pending: "Menunggu Pembayaran",
-    paid: "Dibayar",
-    processing: "Diproses",
-    shipped: "Dikirim",
-    delivered: "Selesai",
-    cancelled: "Dibatalkan",
-    refunded: "Dikembalikan",
-  }
-  return labels[status] || status
 }
