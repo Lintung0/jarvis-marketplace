@@ -172,7 +172,14 @@ export async function POST(req: NextRequest) {
       order_id: order.id,
     });
   } catch (err) {
-    logger.error("Create invoice error:", err);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    console.error("Create invoice error:", err);
+    const errorMessage = err instanceof Error ? err.message : String(err);
+    const errorStack = err instanceof Error ? err.stack : undefined;
+    console.error("Error stack:", errorStack);
+    return NextResponse.json({ 
+      error: "Internal server error", 
+      details: errorMessage,
+      stack: errorStack 
+    }, { status: 500 });
   }
 }
