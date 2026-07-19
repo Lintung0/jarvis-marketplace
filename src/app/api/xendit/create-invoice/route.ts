@@ -109,6 +109,9 @@ export async function POST(req: NextRequest) {
     }
 
     // Buat Xendit Invoice
+    console.log("[Xendit] Creating invoice for order:", order.id);
+    console.log("[Xendit] XENDIT_SECRET_KEY exists:", !!process.env.XENDIT_SECRET_KEY);
+    console.log("[Xendit] NEXT_PUBLIC_APP_URL:", process.env.NEXT_PUBLIC_APP_URL);
     const xenditPayload = {
       external_id: order.id,
       amount: total,
@@ -140,16 +143,20 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify(xenditPayload),
     });
 
+    console.log("[Xendit] Response status:", xenditRes.status, xenditRes.statusText);
+    
     if (!xenditRes.ok) {
       const xenditError = await xenditRes.json();
+      console.error("[Xendit] Error response:", xenditError);
       logger.error("Xendit error: ", xenditError);
       return NextResponse.json(
-        { error: "Gagal membuat invoice Xendit"},
-        { status: 500}
+        { error: "Gagal membuat invoice Xendit", details: xenditError },
+        { status: 500 }
       );
     }
 
     const invoice = await xenditRes.json();
+    console.log("[Xendit] Invoice created:", invoice.id, invoice.invoice_url);
 
     // Simpan payment_id & payment_url ke order
     await supabase
