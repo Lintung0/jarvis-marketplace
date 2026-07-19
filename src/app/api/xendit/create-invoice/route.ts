@@ -3,11 +3,25 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 
 export async function POST(req: NextRequest) {
-  console.log("[Xendit API] Request received");
+  // GUARD: Cek env vars PALING AWAL
+  if (!process.env.XENDIT_SECRET_KEY) {
+    return NextResponse.json({ 
+      error: "XENDIT_SECRET_KEY tidak di-set di Vercel Environment Variables",
+      fix: "Vercel Dashboard → Settings → Environment Variables → Add XENDIT_SECRET_KEY"
+    }, { status: 500 });
+  }
+  if (!process.env.NEXT_PUBLIC_APP_URL) {
+    return NextResponse.json({ 
+      error: "NEXT_PUBLIC_APP_URL tidak di-set",
+      fix: "Vercel Dashboard → Settings → Environment Variables → Add NEXT_PUBLIC_APP_URL=https://jarvis-marketplace.vercel.app"
+    }, { status: 500 });
+  }
+
+  console.log("[Xendit] Request received");
   console.log("[Xendit] XENDIT_SECRET_KEY exists:", !!process.env.XENDIT_SECRET_KEY);
   console.log("[Xendit] XENDIT_SECRET_KEY length:", process.env.XENDIT_SECRET_KEY?.length || 0);
   console.log("[Xendit] NEXT_PUBLIC_APP_URL:", process.env.NEXT_PUBLIC_APP_URL);
-  
+
   try {
     const supabase = await createClient();
 
