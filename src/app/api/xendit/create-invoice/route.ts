@@ -69,7 +69,13 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (orderError || !order) {
-      return NextResponse.json({ error: "Gagal buat order" }, { status: 500 });
+      console.error("[ORDER ERROR]", orderError);
+      return NextResponse.json({ 
+        error: "Gagal buat order", 
+        details: orderError?.message || orderError,
+        code: orderError?.code,
+        hint: orderError?.hint
+      }, { status: 500 });
     }
 
     // Insert order items — pake admin client bypass RLS
