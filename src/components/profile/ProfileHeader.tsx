@@ -134,9 +134,6 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <Button onClick={() => setIsEditOpen(true)} className="text-sm">
-                    Edit Profile
-                  </Button>
                   <Button
                     onClick={handleLogout}
                     disabled={loggingOut}
