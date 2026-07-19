@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Search, Menu, Heart, LogOut, Loader2, User, Store, HelpCircle, MessageCircle, Tag, ChevronDown, Package } from "lucide-react";
+import { ShoppingCart, Search, Menu, Heart, LogOut, Loader2, User, MessageCircle, ChevronDown, Package, Wallet, Settings, ShoppingBag, Tag, Store, HelpCircle } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
@@ -99,10 +99,10 @@ function TopBar({ user, profile }: { user: any; profile: any }) {
                   <Link href="/profile" className="cursor-pointer"><User className="w-4 h-4 mr-2" />My Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/wallet" className="cursor-pointer"><Heart className="w-4 h-4 mr-2" />Wallet</Link>
+                  <Link href="/wallet" className="cursor-pointer"><Wallet className="w-4 h-4 mr-2" />Wallet</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/orders" className="cursor-pointer"><Package className="w-4 h-4 mr-2" />Orders</Link>
+                  <Link href="/orders" className="cursor-pointer"><ShoppingBag className="w-4 h-4 mr-2" />Orders</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/wishlist" className="cursor-pointer"><Heart className="w-4 h-4 mr-2" />Wishlist</Link>
@@ -111,7 +111,7 @@ function TopBar({ user, profile }: { user: any; profile: any }) {
                   <Link href="/chat" className="cursor-pointer"><MessageCircle className="w-4 h-4 mr-2" />Messages</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/profile?edit=true" className="cursor-pointer"><User className="w-4 h-4 mr-2" />Profile Settings</Link>
+                  <Link href="/profile?edit=true" className="cursor-pointer"><Settings className="w-4 h-4 mr-2" />Profile Settings</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout} disabled={loggingOut} className="text-red-500 focus:text-red-500 focus:bg-red-50 cursor-pointer">
