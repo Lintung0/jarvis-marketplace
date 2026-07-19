@@ -3,6 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 
 export async function POST(req: NextRequest) {
+  console.log("[Xendit API] Request received");
+  console.log("[Xendit] XENDIT_SECRET_KEY exists:", !!process.env.XENDIT_SECRET_KEY);
+  console.log("[Xendit] XENDIT_SECRET_KEY length:", process.env.XENDIT_SECRET_KEY?.length || 0);
+  console.log("[Xendit] NEXT_PUBLIC_APP_URL:", process.env.NEXT_PUBLIC_APP_URL);
+  
   try {
     const supabase = await createClient();
 
