@@ -4,14 +4,17 @@ import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { formatCurrency } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Loader2, ArrowUp, ArrowDown, Check, X } from "lucide-react"
+import { Loader2, ArrowUp, ArrowDown, Check, X, Eye, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react"
 import { toast } from "sonner"
+import { Card } from "@/components/ui/card"
 
 interface Transaction {
   id: string
   amount: number
   type: string
   status: string
+  payment_id: string | null
+  notes: string | null
   created_at: string
 }
 
@@ -26,12 +29,13 @@ export default function WalletClient({ balance: initialBalance, transactions: in
   const [topupAmount, setTopupAmount] = useState("")
   const [loading, setLoading] = useState(false)
   const [transactions, setTransactions] = useState(initialTransactions)
+  const [selectedTx, setSelectedTx] = useState<Transaction | null>(null)
+  const [isDetailOpen, setIsDetailOpen] = useState(false)
 
   useEffect(() => {
     const status = searchParams.get("status")
     if (status === "success") {
       toast.success("Top up berhasil! Saldo Anda sudah diperbarui.")
-      // Refresh halaman
       setTimeout(() => router.refresh(), 2000)
     } else if (status === "failed") {
       toast.error("Top up gagal. Silakan coba lagi.")
@@ -61,7 +65,6 @@ export default function WalletClient({ balance: initialBalance, transactions: in
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
 
-      // Redirect ke Xendit payment
       window.location.href = data.payment_url
     } catch (error: any) {
       toast.error(error.message || "Gagal buat top up")
@@ -69,12 +72,17 @@ export default function WalletClient({ balance: initialBalance, transactions: in
     }
   }
 
+  const openDetail = (tx: Transaction) => {
+    setSelectedTx(tx)
+    setIsDetailOpen(true)
+  }
+
   const getTypeLabel = (type: string) => {
     const labels: Record<string, string> = {
-      topup: "Top Up",
-      payment: "Pembayaran",
+      topup: "Top Up Wallet",
+      payment: "Pembayaran Pesanan",
       refund: "Pengembalian Dana",
-      withdrawal: "Penarikan",
+      withdrawal: "Penarikan Dana",
     }
     return labels[type] || type
   }
@@ -82,13 +90,52 @@ export default function WalletClient({ balance: initialBalance, transactions: in
   const getTypeColor = (type: string) => {
     switch (type) {
       case "topup":
+      case "refund":
         return "text-green-600"
       case "payment":
+      case "withdrawal":
         return "text-red-600"
-      case "refund":
-        return "text-blue-600"
       default:
         return "text-gray-600"
+    }
+  }
+
+  const getBgColor = (type: string) => {
+    switch (type) {
+      case "topup":
+      case "refund":
+        return "bg-green-100"
+      case "payment":
+      case "withdrawal":
+        return "bg-red-100"
+      default:
+        return "bg-gray-100"
+    }
+  }
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "success":
+        return "bg-green-100 text-green-700"
+      case "pending":
+        return "bg-yellow-100 text-yellow-700"
+      case "failed":
+        return "bg-red-100 text-red-700"
+      default:
+        return "bg-gray-100 text-gray-700"
+    }
+  }
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case "success":
+        return "Berhasil"
+      case "pending":
+        return "Menunggu"
+      case "failed":
+        return "Gagal"
+      default:
+        return status
     }
   }
 
@@ -103,6 +150,16 @@ export default function WalletClient({ balance: initialBalance, transactions: in
       default:
         return null
     }
+  }
+
+  const formatDate = (dateStr: string) => {
+    return new Date(dateStr).toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
   }
 
   return (
@@ -141,9 +198,13 @@ export default function WalletClient({ balance: initialBalance, transactions: in
         ) : (
           <div className="space-y-2">
             {transactions.map((tx) => (
-              <div key={tx.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
+              <div
+                key={tx.id}
+                onClick={() => openDetail(tx)}
+                className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition cursor-pointer"
+              >
                 <div className="flex items-center gap-3 flex-1">
-                  <div className={`${tx.type === "topup" || tx.type === "refund" ? "bg-green-100" : "bg-red-100"} p-2 rounded-lg`}>
+                  <div className={`${getBgColor(tx.type)} p-2 rounded-lg`}>
                     {tx.type === "topup" || tx.type === "refund" ? (
                       <ArrowUp className={`w-4 h-4 ${getTypeColor(tx.type)}`} />
                     ) : (
@@ -155,13 +216,7 @@ export default function WalletClient({ balance: initialBalance, transactions: in
                       {getTypeLabel(tx.type)}
                     </p>
                     <p className="text-xs text-gray-500">
-                      {new Date(tx.created_at).toLocaleDateString("id-ID", {
-                        day: "numeric",
-                        month: "short",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+                      {formatDate(tx.created_at)}
                     </p>
                   </div>
                 </div>
@@ -171,12 +226,111 @@ export default function WalletClient({ balance: initialBalance, transactions: in
                     {formatCurrency(tx.amount)}
                   </p>
                   {getStatusIcon(tx.status)}
+                  <Eye className="w-4 h-4 text-gray-400 hover:text-teal-500 transition" />
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
+
+      {/* Transaction Detail Modal */}
+      {isDetailOpen && selectedTx && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
+            <div className="p-6 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10 rounded-t-2xl">
+              <h2 className="text-xl font-bold text-gray-900">Detail Transaksi</h2>
+              <button
+                onClick={() => setIsDetailOpen(false)}
+                className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-6 space-y-5">
+              <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
+                <div className={`${getBgColor(selectedTx.type)} p-3 rounded-xl`}>
+                  {selectedTx.type === "topup" || selectedTx.type === "refund" ? (
+                    <ArrowUp className={`w-6 h-6 ${getTypeColor(selectedTx.type)}`} />
+                  ) : (
+                    <ArrowDown className="w-6 h-6 text-red-600" />
+                  )}
+                </div>
+                <div className="flex-1">
+                  <p className={`text-lg font-bold ${getTypeColor(selectedTx.type)}`}>
+                    {getTypeLabel(selectedTx.type)}
+                  </p>
+                  <p className="text-sm text-gray-500">{formatDate(selectedTx.created_at)}</p>
+                </div>
+                <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(selectedTx.status)}`}>
+                  {getStatusLabel(selectedTx.status)}
+                </span>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex justify-between py-2 border-b border-gray-100">
+                  <span className="text-gray-500">Nominal</span>
+                  <span className={`font-bold ${selectedTx.type === "topup" || selectedTx.type === "refund" ? "text-green-600" : "text-red-600"}`}>
+                    {selectedTx.type === "topup" || selectedTx.type === "refund" ? "+" : "-"}
+                    {formatCurrency(selectedTx.amount)}
+                  </span>
+                </div>
+
+                <div className="flex justify-between py-2 border-b border-gray-100">
+                  <span className="text-gray-500">Status</span>
+                  <span className={`font-medium ${getStatusColor(selectedTx.status)} px-2 py-0.5 rounded text-xs`}>
+                    {getStatusIcon(selectedTx.status)}
+                    {getStatusLabel(selectedTx.status)}
+                  </span>
+                </div>
+
+                <div className="flex justify-between py-2 border-b border-gray-100">
+                  <span className="text-gray-500">Waktu</span>
+                  <span className="font-medium text-gray-900">{formatDate(selectedTx.created_at)}</span>
+                </div>
+
+                {selectedTx.payment_id && (
+                  <div className="flex justify-between py-2 border-b border-gray-100">
+                    <span className="text-gray-500">Payment ID</span>
+                    <span className="font-mono text-sm text-gray-900 break-all">{selectedTx.payment_id}</span>
+                  </div>
+                )}
+
+                {selectedTx.notes && (
+                  <div className="flex justify-between py-2 border-b border-gray-100">
+                    <span className="text-gray-500">Catatan</span>
+                    <span className="font-medium text-gray-900 text-right max-w-[60%] break-words">{selectedTx.notes}</span>
+                  </div>
+                )}
+
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-500">Transaction ID</span>
+                  <span className="font-mono text-sm text-gray-900 break-all">{selectedTx.id}</span>
+                </div>
+              </div>
+
+              <div className="p-6 pt-0 border-t border-gray-100 rounded-b-2xl">
+                <button
+                  onClick={() => setIsDetailOpen(false)}
+                  className="w-full bg-teal-500 hover:bg-teal-600 text-white py-3 rounded-xl font-semibold transition"
+                >
+                  Tutup
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
+}
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  })
 }
