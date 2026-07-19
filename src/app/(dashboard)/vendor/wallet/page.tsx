@@ -4,6 +4,7 @@ import StatsCard from "@/components/dashboard/StatsCard"
 import { formatCurrency } from "@/lib/utils"
 import { PayoutRequestForm } from "../earnings/PayoutRequestForm"
 import Link from "next/link"
+import VendorTransactionList from "@/components/vendor/VendorTransactionList"
 
 export default async function VendorWalletPage() {
   const supabase = await createClient()
@@ -134,60 +135,7 @@ export default async function VendorWalletPage() {
         </div>
         <p className="text-xs text-gray-400 mb-4">Transaksi terbaru</p>
 
-        {transactions.length === 0 ? (
-          <div className="text-center py-12">
-            <Wallet className="w-12 h-12 mx-auto text-gray-300 mb-3" />
-            <p className="text-gray-400 text-sm">Belum ada transaksi</p>
-            <p className="text-gray-300 text-xs mt-1">Mulai jualan untuk melihat pemasukan</p>
-          </div>
-        ) : (
-          <div className="space-y-1">
-            {transactions.slice(0, 30).map((tx, i) => (
-              <div key={i} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
-                <div className="flex items-center gap-3">
-                  <div className={`w-9 h-9 rounded-full flex items-center justify-center ${
-                    tx.type === "earning"
-                      ? "bg-emerald-100"
-                      : tx.status === "paid"
-                      ? "bg-blue-100"
-                      : "bg-yellow-100"
-                  }`}>
-                    {tx.type === "earning" ? (
-                      <ArrowDownLeft className={`w-4 h-4 ${tx.type === "earning" ? "text-emerald-600" : ""}`} />
-                    ) : (
-                      <ArrowUpRight className={`w-4 h-4 ${
-                        tx.status === "paid" ? "text-blue-600" :
-                        tx.status === "rejected" ? "text-red-600" :
-                        "text-yellow-600"
-                      }`} />
-                    )}
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">{tx.desc}</p>
-                    <div className="flex items-center gap-2">
-                      <p className="text-xs text-gray-400">{new Date(tx.date).toLocaleDateString("id-ID")}</p>
-                      {tx.type === "withdrawal" && tx.status && (
-                        <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium ${
-                          tx.status === "paid" ? "bg-blue-100 text-blue-700" :
-                          tx.status === "rejected" ? "bg-red-100 text-red-700" :
-                          tx.status === "approved" ? "bg-teal-100 text-teal-700" :
-                          "bg-yellow-100 text-yellow-700"
-                        }`}>
-                          {tx.status}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <span className={`text-sm font-semibold ${
-                  tx.type === "earning" ? "text-emerald-600" : "text-red-500"
-                }`}>
-                  {tx.type === "earning" ? "+" : "-"}{formatCurrency(tx.amount)}
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
+        <VendorTransactionList transactions={transactions} />
       </div>
     </div>
   )
