@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Star, ShoppingCart, Heart, Package, Shield, TrendingUp, Store, BadgeCheck, MessageCircle, Crown } from "lucide-react";
+import { Star, ShoppingCart, Heart, Package, Shield, TrendingUp, Store, BadgeCheck, MessageCircle, Crown, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/stores/cartStore";
 import PriceDisplay from "@/components/ui/PriceDisplay";
@@ -22,6 +23,9 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
   const [quantity, setQuantity] = useState(1);
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
   const [activeTab, setActiveTab] = useState<"description" | "specs" | "reviews" | "comments">("description");
+  const addItem = useCartStore((state) => state.addItem);
+
+  const router = useRouter();
   const addItem = useCartStore((state) => state.addItem);
 
   const handleAddToCart = () => {
@@ -46,6 +50,24 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
         onClick: () => window.location.href = "/cart",
       },
     });
+  };
+
+  const handleBuyNow = () => {
+    const cartItem = {
+      id: `${product.id}-${JSON.stringify(selectedOptions)}`,
+      product_id: product.id.toString(),
+      product_title: product.title,
+      product_slug: product.slug,
+      product_image: product.images?.find((img) => img.is_primary)?.url ?? "",
+      product_type: product.type,
+      vendor_id: product.vendor_id,
+      price: product.sale_price ?? product.price,
+      quantity,
+      options: selectedOptions,
+    };
+    
+    addItem(cartItem);
+    router.push("/checkout");
   };
 
   const avgRating = product.reviews && product.reviews.length > 0
@@ -197,16 +219,23 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
         {/* Actions */}
         <div className="flex gap-3">
           <Button
+            onClick={handleBuyNow}
+            size="lg"
+            className="flex-1 h-12 text-base bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white border-0"
+            disabled={product.stock === 0}
+          >
+            <Zap className="w-5 h-5 mr-2" />
+            Beli Sekarang
+          </Button>
+          <Button
             onClick={handleAddToCart}
             size="lg"
-            className="flex-1 h-12 text-base"
+            variant="outline"
+            className="h-12 text-base"
             disabled={product.stock === 0}
           >
             <ShoppingCart className="w-5 h-5 mr-2" />
-            Tambah ke Keranjang
-          </Button>
-          <Button variant="outline" size="lg" className="h-12">
-            <Heart className="w-5 h-5" />
+            Keranjang
           </Button>
         </div>
 
