@@ -23,7 +23,6 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
   const [quantity, setQuantity] = useState(1);
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
   const [activeTab, setActiveTab] = useState<"description" | "specs" | "reviews" | "comments">("description");
-  const addItem = useCartStore((state) => state.addItem);
 
   const router = useRouter();
   const addItem = useCartStore((state) => state.addItem);
