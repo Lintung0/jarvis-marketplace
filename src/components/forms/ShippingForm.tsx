@@ -63,13 +63,20 @@ export function LocationAutocomplete({
     if (text.length < 2) { setSuggestions([]); setOpen(false); return; }
     setLoading(true);
     try {
-      const apiKey = process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY
       const res = await fetch(
-        `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(text)}&apiKey=${apiKey}&limit=7&format=json&lang=id${queryType ? `&type=${queryType}` : ''}`
+        `https://photon.komoot.io/api/?q=${encodeURIComponent(text)}&limit=7`
       );
       const data = await res.json();
-      if (data.results) {
-        setSuggestions(data.results);
+      if (data.features) {
+        const results = data.features.map((f: any) => ({
+          formatted: [f.properties.name, f.properties.street, f.properties.city || f.properties.town || f.properties.county, f.properties.state, f.properties.country].filter(Boolean).join(", "),
+          city: f.properties.city || f.properties.town || f.properties.county || "",
+          state: f.properties.state || "",
+          postcode: f.properties.postcode || "",
+          country: f.properties.country || "",
+          address_line1: f.properties.street ? `${f.properties.street} ${f.properties.housenumber || ''}`.trim() : (f.properties.name || ""),
+        }));
+        setSuggestions(results);
         setOpen(true);
       }
     } catch {}

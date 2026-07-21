@@ -47,12 +47,20 @@ export default function LocationPicker() {
     if (text.length < 2) { setSuggestions([]); return }
     setLoading(true)
     try {
-      const apiKey = process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY
-      const res = await fetch(
-        `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(text)}&apiKey=${apiKey}&limit=7&format=json&lang=id`
-      )
+      const res = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(text)}&limit=7`)
       const data = await res.json()
-      if (data.results) setSuggestions(data.results)
+      if (data.features) {
+        const results = data.features.map((f: any) => ({
+          name: f.properties.name,
+          city: f.properties.city || f.properties.town || f.properties.county,
+          state: f.properties.state,
+          country: f.properties.country,
+          formatted: [f.properties.name, f.properties.city || f.properties.town || f.properties.county, f.properties.state, f.properties.country].filter(Boolean).join(", "),
+          lat: f.geometry.coordinates[1],
+          lon: f.geometry.coordinates[0],
+        }))
+        setSuggestions(results)
+      }
     } catch {}
     setLoading(false)
   }
