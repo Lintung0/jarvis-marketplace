@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/stores/cartStore";
+import { useAuthStore } from "@/stores/authStore";
 import ShippingForm from "@/components/forms/ShippingForm";
+import SavedAddresses from "@/components/checkout/SavedAddresses";
 import OrderSummary from "@/components/checkout/OrderSummary";
-import { ShoppingCart, MapPin, CreditCard, CheckCircle, Package } from "lucide-react";
+import { ShoppingCart, MapPin, CreditCard, CheckCircle, Package, Wallet } from "lucide-react";
+import { formatCurrency } from "@/lib/utils";
 
 interface ShippingAddress {
   full_name: string; address: string; city: string;
@@ -14,6 +17,7 @@ interface ShippingAddress {
 
 export default function CheckoutPage() {
   const { items, total, clearCart } = useCartStore();
+  const user = useAuthStore((s) => s.user);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,15 +26,30 @@ export default function CheckoutPage() {
   const [discountAmount, setDiscountAmount] = useState(0);
   const [couponError, setCouponError] = useState<string | null>(null);
   const [couponLoading, setCouponLoading] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<"xendit" | "wallet">("xendit");
+  const [walletBalance, setWalletBalance] = useState(0);
   const [form, setForm] = useState<ShippingAddress>({
     full_name: "", address: "", city: "", state: "",
     postal_code: "", country: "Indonesia", phone: "",
   });
 
   const hasPhysical = items.some((item) => item.product_type === "physical");
+  const finalTotal = total() - discountAmount;
+
+  useEffect(() => {
+    if (!user) return;
+    fetch("/api/wallet/balance")
+      .then((r) => r.json())
+      .then((d) => setWalletBalance(d.balance ?? 0))
+      .catch(() => {});
+  }, [user]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleAddressChange = (updates: Partial<ShippingAddress>) => {
+    setForm((prev) => ({ ...prev, ...updates }));
   };
 
   const handleContinueToPayment = () => {
@@ -42,7 +61,43 @@ export default function CheckoutPage() {
     setCurrentStep(3);
   };
 
-  const handleCheckout = async () => {
+  const handleWalletCheckout = async () => {
+    if (walletBalance < finalTotal) {
+      setError(`Saldo wallet tidak cukup. Saldo: ${formatCurrency(walletBalance)}, Perlu: ${formatCurrency(finalTotal)}`);
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/wallet/pay", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((item) => ({
+            product_id: item.product_id,
+            vendor_id: item.vendor_id,
+            title: item.product_title,
+            price: item.price,
+            quantity: item.quantity,
+            options: item.options,
+          })),
+          shippingAddress: hasPhysical ? form : null,
+          coupon_code: couponCode,
+          discount_amount: discountAmount,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) { setError(data.error ?? "Gagal bayar dengan wallet"); return; }
+      clearCart();
+      router.push(`/orders/${data.order_id}?status=success`);
+    } catch {
+      setError("Terjadi kesalahan, coba lagi.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleXenditCheckout = async () => {
     if (items.length === 0) return;
     setLoading(true);
     setError(null);
@@ -75,6 +130,11 @@ export default function CheckoutPage() {
     }
   };
 
+  const handleCheckout = () => {
+    if (paymentMethod === "wallet") return handleWalletCheckout();
+    return handleXenditCheckout();
+  };
+
   if (items.length === 0) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-20 text-center">
@@ -84,8 +144,8 @@ export default function CheckoutPage() {
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-3">Keranjang Kosong</h2>
           <p className="text-gray-400 mb-8">Tambahkan produk dulu sebelum checkout</p>
-          <button 
-            onClick={() => router.push("/products")} 
+          <button
+            onClick={() => router.push("/products")}
             className="gradient-brand text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all"
           >
             Belanja Sekarang
@@ -101,9 +161,6 @@ export default function CheckoutPage() {
     { id: 3, name: "Pembayaran", icon: CreditCard, completed: false },
   ];
 
-  const isStep2 = currentStep === 2;
-  const isStep3 = currentStep === 3;
-
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Progress Steps */}
@@ -112,33 +169,19 @@ export default function CheckoutPage() {
           {steps.map((step, index) => (
             <div key={step.id} className="flex items-center flex-1">
               <div className="flex flex-col items-center flex-1">
-                <div
-                  className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
-                    step.completed || step.id === currentStep
-                      ? "bg-gradient-to-br from-[#00a99d] to-[#00b3a1] text-white shadow-lg scale-110"
-                      : "bg-gray-200 text-gray-400"
-                  }`}
-                >
-                  {step.completed ? (
-                    <CheckCircle className="w-6 h-6" />
-                  ) : (
-                    <step.icon className="w-6 h-6" />
-                  )}
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+                  step.completed || step.id === currentStep
+                    ? "bg-gradient-to-br from-[#00a99d] to-[#00b3a1] text-white shadow-lg scale-110"
+                    : "bg-gray-200 text-gray-400"
+                }`}>
+                  {step.completed ? <CheckCircle className="w-6 h-6" /> : <step.icon className="w-6 h-6" />}
                 </div>
-                <span
-                  className={`mt-2 text-sm font-medium ${
-                    step.id === currentStep ? "text-teal-500" : "text-gray-500"
-                  }`}
-                >
+                <span className={`mt-2 text-sm font-medium ${step.id === currentStep ? "text-teal-500" : "text-gray-500"}`}>
                   {step.name}
                 </span>
               </div>
               {index < steps.length - 1 && (
-                <div
-                  className={`flex-1 h-1 mx-4 rounded transition-all ${
-                    step.completed ? "gradient-brand" : "bg-gray-200"
-                  }`}
-                />
+                <div className={`flex-1 h-1 mx-4 rounded transition-all ${step.completed ? "gradient-brand" : "bg-gray-200"}`} />
               )}
             </div>
           ))}
@@ -150,7 +193,7 @@ export default function CheckoutPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
-          {isStep2 && hasPhysical && (
+          {currentStep === 2 && hasPhysical && (
             <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center">
@@ -161,11 +204,22 @@ export default function CheckoutPage() {
                   <p className="text-sm text-gray-500">Isi alamat untuk pengiriman produk fisik</p>
                 </div>
               </div>
-              <ShippingForm value={form} onChange={handleChange} />
+              <SavedAddresses onSelect={(addr) => setForm({
+                full_name: addr.full_name,
+                phone: addr.phone,
+                address: addr.address,
+                city: addr.city,
+                state: addr.state,
+                postal_code: addr.postal_code,
+                country: addr.country,
+              })} />
+              <div className="border-t border-gray-100 pt-4 mt-4">
+                <ShippingForm value={form} onChange={handleChange} onAddressChange={handleAddressChange} />
+              </div>
             </div>
           )}
 
-          {isStep2 && !hasPhysical && (
+          {currentStep === 2 && !hasPhysical && (
             <div className="bg-gradient-to-br from-teal-50 to-white border border-teal-200 rounded-2xl p-6">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-[#00a99d] rounded-full flex items-center justify-center flex-shrink-0">
@@ -174,7 +228,7 @@ export default function CheckoutPage() {
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Produk Digital</h3>
                   <p className="text-sm text-gray-600">
-                    Semua produk kamu adalah digital. Tidak perlu alamat pengiriman. 
+                    Semua produk kamu adalah digital. Tidak perlu alamat pengiriman.
                     Akses produk akan langsung tersedia setelah pembayaran berhasil.
                   </p>
                 </div>
@@ -189,19 +243,60 @@ export default function CheckoutPage() {
             </div>
           )}
 
-          {isStep3 && (
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-              <div className="flex items-center gap-3 mb-4">
+          {currentStep === 3 && (
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm space-y-5">
+              <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
                   <CheckCircle className="w-5 h-5 text-green-500" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">Konfirmasi Pembayaran</h2>
-                  <p className="text-sm text-gray-500">Klik tombol di bawah untuk melanjutkan ke pembayaran</p>
+                  <h2 className="text-xl font-bold text-gray-900">Pilih Metode Pembayaran</h2>
+                  <p className="text-sm text-gray-500">Pilih cara bayar yang kamu inginkan</p>
                 </div>
               </div>
+
+              {/* Payment Method Selection */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button
+                  onClick={() => setPaymentMethod("xendit")}
+                  className={`p-4 rounded-xl border-2 text-left transition-all ${
+                    paymentMethod === "xendit"
+                      ? "border-teal-500 bg-teal-50"
+                      : "border-gray-200 hover:border-gray-300"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <CreditCard className={`w-5 h-5 ${paymentMethod === "xendit" ? "text-teal-500" : "text-gray-400"}`} />
+                    <div>
+                      <p className="font-semibold text-gray-900 text-sm">Xendit</p>
+                      <p className="text-xs text-gray-500">Transfer Bank, E-Wallet, Kartu Kredit</p>
+                    </div>
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => setPaymentMethod("wallet")}
+                  className={`p-4 rounded-xl border-2 text-left transition-all ${
+                    paymentMethod === "wallet"
+                      ? "border-teal-500 bg-teal-50"
+                      : "border-gray-200 hover:border-gray-300"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Wallet className={`w-5 h-5 ${paymentMethod === "wallet" ? "text-teal-500" : "text-gray-400"}`} />
+                    <div>
+                      <p className="font-semibold text-gray-900 text-sm">Wallet</p>
+                      <p className={`text-xs font-medium ${walletBalance >= finalTotal ? "text-green-600" : "text-red-500"}`}>
+                        Saldo: {formatCurrency(walletBalance)}
+                        {walletBalance < finalTotal && " (tidak cukup)"}
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              </div>
+
               {hasPhysical && form.full_name && (
-                <div className="bg-gray-50 rounded-xl p-4 text-sm text-gray-600 space-y-1 mb-4">
+                <div className="bg-gray-50 rounded-xl p-4 text-sm text-gray-600 space-y-1">
                   <p className="font-semibold text-gray-800">Alamat Pengiriman</p>
                   <p>{form.full_name}</p>
                   <p>{form.address}, {form.city}</p>
@@ -212,7 +307,7 @@ export default function CheckoutPage() {
             </div>
           )}
         </div>
-        
+
         <div className="lg:col-span-1">
           <OrderSummary
             items={items}
@@ -223,8 +318,8 @@ export default function CheckoutPage() {
             discountAmount={discountAmount}
             couponError={couponError}
             couponLoading={couponLoading}
-            onCheckout={isStep3 ? handleCheckout : undefined}
-            onContinue={isStep2 ? handleContinueToPayment : undefined}
+            onCheckout={currentStep === 3 ? handleCheckout : undefined}
+            onContinue={currentStep === 2 ? handleContinueToPayment : undefined}
             onApplyCoupon={async (code) => {
               setCouponLoading(true);
               setCouponError(null);

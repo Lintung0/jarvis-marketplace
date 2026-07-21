@@ -96,7 +96,7 @@ export default function VendorOrdersTable({ initialData: data, vendorId }: Vendo
                   <TableCell>
                     <StatusBadge status={item.order?.status ?? "pending"} />
                   </TableCell>
-                  <TableCell>
+                  <TableCell onClick={(e) => e.stopPropagation()}>
                     {item.order && actionableStatuses.has(item.order.status) ? (
                       <VendorOrderActions orderId={item.order_id} currentStatus={item.order.status} />
                     ) : (
