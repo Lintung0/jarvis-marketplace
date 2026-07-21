@@ -28,7 +28,7 @@ interface GeoSuggestion {
   address_line1: string;
 }
 
-function LocationAutocomplete({
+export function LocationAutocomplete({
   label,
   value,
   onChange,
@@ -65,7 +65,7 @@ function LocationAutocomplete({
     try {
       const apiKey = process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY
       const res = await fetch(
-        `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(text)}&apiKey=${apiKey}&limit=7&filter=countrycode:id&format=json&lang=id`
+        `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(text)}&apiKey=${apiKey}&limit=7&filter=countrycode:id&format=json&lang=id${queryType ? `&type=${queryType}` : ''}`
       );
       const data = await res.json();
       if (data.results) {

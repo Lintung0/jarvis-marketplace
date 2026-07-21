@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { MapPin, Plus, Home, Briefcase, Building, Star, Trash2, Pencil } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { LocationAutocomplete } from "@/components/forms/ShippingForm"
 import { toast } from "sonner"
 
 interface Address {
@@ -50,6 +50,35 @@ export default function SavedAddresses({ onSelect }: Props) {
   })
   const [customLabel, setCustomLabel] = useState("")
   const [submitting, setSubmitting] = useState(false)
+
+  const handleAddressSelect = (s: any) => {
+    setFormData(prev => ({
+      ...prev,
+      city: s.city || prev.city,
+      state: s.state || prev.state,
+      postal_code: s.postcode || prev.postal_code,
+      country: s.country || "Indonesia",
+      address: s.address_line1 || prev.address,
+    }))
+  }
+
+  const handleCitySelect = (s: any) => {
+    setFormData(prev => ({
+      ...prev,
+      city: s.city || s.formatted?.split(",")[0] || "",
+      state: s.state || prev.state,
+      postal_code: s.postcode || prev.postal_code,
+      country: s.country || "Indonesia",
+    }))
+  }
+
+  const handleStateSelect = (s: any) => {
+    setFormData(prev => ({
+      ...prev,
+      state: s.state || s.formatted?.split(",")[0] || "",
+      country: s.country || "Indonesia",
+    }))
+  }
 
   useEffect(() => {
     loadAddresses()
@@ -249,10 +278,33 @@ export default function SavedAddresses({ onSelect }: Props) {
 
               <input type="text" value={formData.full_name} onChange={(e) => setFormData({ ...formData, full_name: e.target.value })} placeholder="Nama Lengkap *" className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none" />
               <input type="text" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder="No. HP *" className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none" />
-              <input type="text" value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} placeholder="Alamat *" className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none" />
-              <div className="grid grid-cols-2 gap-3">
-                <input type="text" value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} placeholder="Kota *" className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none" />
-                <input type="text" value={formData.state} onChange={(e) => setFormData({ ...formData, state: e.target.value })} placeholder="Provinsi" className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none" />
+              <div className="sm:col-span-2">
+                <LocationAutocomplete
+                  label="Alamat"
+                  value={formData.address}
+                  onChange={(val) => setFormData(prev => ({ ...prev, address: val }))}
+                  onSelect={handleAddressSelect}
+                  placeholder="Cari alamat..."
+                  queryType="street"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3 sm:col-span-2">
+                <LocationAutocomplete
+                  label="Kota"
+                  value={formData.city}
+                  onChange={(val) => setFormData(prev => ({ ...prev, city: val }))}
+                  onSelect={handleCitySelect}
+                  placeholder="Cari kota..."
+                  queryType="city"
+                />
+                <LocationAutocomplete
+                  label="Provinsi"
+                  value={formData.state}
+                  onChange={(val) => setFormData(prev => ({ ...prev, state: val }))}
+                  onSelect={handleStateSelect}
+                  placeholder="Cari provinsi..."
+                  queryType="state"
+                />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <input type="text" value={formData.postal_code} onChange={(e) => setFormData({ ...formData, postal_code: e.target.value })} placeholder="Kode Pos" className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none" />

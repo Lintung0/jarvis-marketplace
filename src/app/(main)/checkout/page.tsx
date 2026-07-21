@@ -7,7 +7,7 @@ import { useAuthStore } from "@/stores/authStore";
 import ShippingForm from "@/components/forms/ShippingForm";
 import SavedAddresses from "@/components/checkout/SavedAddresses";
 import OrderSummary from "@/components/checkout/OrderSummary";
-import { ShoppingCart, MapPin, CreditCard, CheckCircle, Package, Wallet } from "lucide-react";
+import { ShoppingCart, MapPin, CreditCard, CheckCircle, Package, Wallet, Pencil } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 
 interface ShippingAddress {
@@ -28,6 +28,7 @@ export default function CheckoutPage() {
   const [couponLoading, setCouponLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<"xendit" | "wallet">("xendit");
   const [walletBalance, setWalletBalance] = useState(0);
+  const [selectedAddr, setSelectedAddr] = useState<ShippingAddress | null>(null);
   const [form, setForm] = useState<ShippingAddress>({
     full_name: "", address: "", city: "", state: "",
     postal_code: "", country: "Indonesia", phone: "",
@@ -46,10 +47,21 @@ export default function CheckoutPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setSelectedAddr(null);
   };
 
   const handleAddressChange = (updates: Partial<ShippingAddress>) => {
     setForm((prev) => ({ ...prev, ...updates }));
+    setSelectedAddr(null);
+  };
+
+  const handleSelectAddress = (addr: ShippingAddress) => {
+    setForm({ ...addr });
+    setSelectedAddr(addr);
+  };
+
+  const handleEditAddress = () => {
+    setSelectedAddr(null);
   };
 
   const handleContinueToPayment = () => {
@@ -204,7 +216,7 @@ export default function CheckoutPage() {
                   <p className="text-sm text-gray-500">Isi alamat untuk pengiriman produk fisik</p>
                 </div>
               </div>
-              <SavedAddresses onSelect={(addr) => setForm({
+              <SavedAddresses onSelect={(addr) => handleSelectAddress({
                 full_name: addr.full_name,
                 phone: addr.phone,
                 address: addr.address,
@@ -213,9 +225,31 @@ export default function CheckoutPage() {
                 postal_code: addr.postal_code,
                 country: addr.country,
               })} />
-              <div className="border-t border-gray-100 pt-4 mt-4">
-                <ShippingForm value={form} onChange={handleChange} onAddressChange={handleAddressChange} />
-              </div>
+              {selectedAddr ? (
+                <div className="border-t border-gray-100 pt-4 mt-4">
+                  <div className="bg-teal-50 border border-teal-200 rounded-xl p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-sm font-semibold text-teal-700">Alamat terpilih</p>
+                      <button
+                        onClick={handleEditAddress}
+                        className="text-xs text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1"
+                      >
+                        <Pencil className="w-3 h-3" />
+                        Ubah
+                      </button>
+                    </div>
+                    <p className="text-sm text-gray-700">{selectedAddr.full_name} - {selectedAddr.phone}</p>
+                    <p className="text-sm text-gray-500">{selectedAddr.address}</p>
+                    <p className="text-sm text-gray-500">{selectedAddr.city}, {selectedAddr.state} {selectedAddr.postal_code}</p>
+                    <p className="text-sm text-gray-500">{selectedAddr.country}</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="border-t border-gray-100 pt-4 mt-4">
+                  <p className="text-xs text-gray-400 mb-3">Atau isi manual:</p>
+                  <ShippingForm value={form} onChange={handleChange} onAddressChange={handleAddressChange} />
+                </div>
+              )}
             </div>
           )}
 
