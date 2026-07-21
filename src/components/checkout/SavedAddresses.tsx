@@ -91,7 +91,12 @@ export default function SavedAddresses({ onSelect }: Props) {
       .select("*")
       .order("is_default", { ascending: false })
       .order("created_at", { ascending: false })
-    if (data) setAddresses(data as Address[])
+    if (data && data.length > 0) {
+      setAddresses(data as Address[])
+      onSelect(data[0] as Address)
+    } else {
+      setAddresses([])
+    }
     setLoading(false)
   }
 

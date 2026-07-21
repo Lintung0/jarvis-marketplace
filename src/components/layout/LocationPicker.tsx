@@ -12,9 +12,9 @@ interface Location {
 const STORAGE_KEY = "jarvis-location"
 
 const popularLocations = [
-  { name: "Jakarta" }, { name: "Bandung" }, { name: "Surabaya" },
-  { name: "Yogyakarta" }, { name: "Malang" }, { name: "Semarang" },
-  { name: "Medan" }, { name: "Makassar" }, { name: "Bali" }, { name: "Palembang" },
+  { name: "New York" }, { name: "London" }, { name: "Tokyo" },
+  { name: "Paris" }, { name: "Jakarta" }, { name: "Dubai" },
+  { name: "Singapore" }, { name: "Sydney" }, { name: "Seoul" }, { name: "Berlin" },
 ]
 
 export default function LocationPicker() {
@@ -22,7 +22,7 @@ export default function LocationPicker() {
   const [query, setQuery] = useState("")
   const [suggestions, setSuggestions] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
-  const [currentLocation, setCurrentLocation] = useState<Location>({ name: "Indonesia" })
+  const [currentLocation, setCurrentLocation] = useState<Location>({ name: "Worldwide" })
   const wrapperRef = useRef<HTMLDivElement>(null)
   const debounceRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -49,7 +49,7 @@ export default function LocationPicker() {
     try {
       const apiKey = process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY
       const res = await fetch(
-        `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(text)}&apiKey=${apiKey}&limit=7&filter=countrycode:id&format=json&lang=id`
+        `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(text)}&apiKey=${apiKey}&limit=7&format=json&lang=en`
       )
       const data = await res.json()
       if (data.results) setSuggestions(data.results)
@@ -146,11 +146,11 @@ export default function LocationPicker() {
                   </button>
                 ))}
                 <button
-                  onClick={() => selectLocation({ name: "Indonesia" })}
+                  onClick={() => selectLocation({ name: "Worldwide" })}
                   className="w-full text-left px-3 py-2 text-xs hover:bg-gray-50 text-gray-400 transition flex items-center gap-2 border-t border-gray-100 mt-1"
                 >
                   <MapPin className="w-3.5 h-3.5 shrink-0" />
-                  Semua Lokasi (Indonesia)
+                  Semua Lokasi (Worldwide)
                 </button>
               </>
             ) : null}

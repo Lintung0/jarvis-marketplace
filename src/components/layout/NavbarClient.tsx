@@ -105,9 +105,6 @@ function TopBar({ user, profile }: { user: any; profile: any }) {
                   <Link href="/orders" className="cursor-pointer"><ShoppingBag className="w-4 h-4 mr-2" />Orders</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/wishlist" className="cursor-pointer"><Heart className="w-4 h-4 mr-2" />Wishlist</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
                   <Link href="/chat" className="cursor-pointer"><MessageCircle className="w-4 h-4 mr-2" />Messages</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
