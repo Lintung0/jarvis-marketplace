@@ -41,7 +41,7 @@ export default function CheckoutPage() {
     if (!user) return;
     try {
       const { getWalletBalance } = await import("@/app/actions/wallet");
-      const bal = await getWalletBalance();
+      const bal = await getWalletBalance(user.id);
       setWalletBalance(bal);
     } catch (e) {
       console.error("Failed to fetch wallet balance:", e);
