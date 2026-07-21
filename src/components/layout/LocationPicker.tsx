@@ -49,7 +49,7 @@ export default function LocationPicker() {
     try {
       const apiKey = process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY
       const res = await fetch(
-        `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(text)}&apiKey=${apiKey}&limit=7&format=json&lang=en`
+        `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(text)}&apiKey=${apiKey}&limit=7&format=json&lang=id`
       )
       const data = await res.json()
       if (data.results) setSuggestions(data.results)
