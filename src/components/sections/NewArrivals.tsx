@@ -18,7 +18,7 @@ export default async function NewArrivals() {
     .eq("status", "active")
     .in("vendor_id", activeVendorIds.length > 0 ? activeVendorIds : [null])
     .order("created_at", { ascending: false })
-    .limit(8);
+    .limit(12);
 
   if (!products || products.length === 0) return null;
 
@@ -34,7 +34,7 @@ export default async function NewArrivals() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {(products as unknown as Product[]).map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

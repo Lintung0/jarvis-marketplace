@@ -7,6 +7,7 @@ import FeaturedProducts from "@/components/sections/FeaturedProducts";
 import NewArrivals from "@/components/sections/NewArrivals";
 import BrandCarousel from "@/components/sections/BrandCarousel";
 import LatestBlog from "@/components/sections/LatestBlog";
+import TrustBadgesSection from "@/components/sections/TrustBadgesSection";
 import { ProductGridSkeleton } from "@/components/shared/ProductCardSkeleton";
 
 export default function HomePage() {
@@ -38,7 +39,10 @@ export default function HomePage() {
         <NewArrivals />
       </Suspense>
 
-      {/* 7. Brand Carousel */}
+      {/* 7. Trust Badges */}
+      <TrustBadgesSection />
+
+      {/* 8. Brand Carousel */}
       <Suspense fallback={null}>
         <BrandCarousel />
       </Suspense>

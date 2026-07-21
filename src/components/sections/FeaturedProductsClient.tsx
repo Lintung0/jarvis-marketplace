@@ -46,8 +46,8 @@ export default function FeaturedProductsClient({ products }: { products: Product
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-        {displayProducts.slice(0, 8).map((product) => (
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {displayProducts.slice(0, 12).map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>

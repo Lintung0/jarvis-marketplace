@@ -131,18 +131,45 @@ function TopBar({ user, profile }: { user: any; profile: any }) {
 
 function SearchHeader({ user, profile, categories, unreadMessages = 0 }: { user: any; profile: any; categories: Category[]; unreadMessages?: number }) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [, setMobileMenuOpen] = useState(false);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [showSearchDropdown, setShowSearchDropdown] = useState(false);
+  const searchRef = useState<any>(null)[0];
   const { t } = useTranslation();
   const router = useRouter();
   const items = useCartStore((s) => s.items);
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
-  const wishlistCount = 0;
+
+  const handleSearchChange = async (val: string) => {
+    setSearchQuery(val);
+    if (val.trim().length >= 2) {
+      setIsSearching(true);
+      setShowSearchDropdown(true);
+      try {
+        const supabase = createClient();
+        const { data } = await supabase
+          .from("products")
+          .select("id, title, slug, price, currency, product_images(url)")
+          .ilike("title", `%${val.trim()}%`)
+          .eq("status", "active")
+          .limit(5);
+        setSearchResults(data || []);
+      } catch {
+        setSearchResults([]);
+      } finally {
+        setIsSearching(false);
+      }
+    } else {
+      setSearchResults([]);
+      setShowSearchDropdown(false);
+    }
+  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
+      setShowSearchDropdown(false);
       router.push(`/products?q=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchQuery("");
     }
   };
 
@@ -150,27 +177,72 @@ function SearchHeader({ user, profile, categories, unreadMessages = 0 }: { user:
     <div className="border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
         <Link href="/" className="flex-shrink-0 flex items-center gap-1.5">
-          <Image src="/logo.svg" alt="Modesy" width={140} height={44} className="h-11 w-auto" priority />
+          <Image src="/logo.svg" alt="Modesy" width={160} height={44} className="h-11 w-auto" priority />
         </Link>
 
-        <form onSubmit={handleSearch} className="flex-1 flex max-w-2xl mx-auto">
-          <input
-            type="text"
-            placeholder={t("nav.search_placeholder")}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 border border-gray-200 rounded-l-lg px-4 py-2.5 text-sm focus:outline-none focus:border-teal-400"
-          />
-          <button
-            type="submit"
-            className="px-5 py-2.5 text-white rounded-r-lg flex items-center gap-2 text-sm font-medium"
-            style={{ backgroundColor: "#00a99d" }}
-          >
-            <Search className="h-4 w-4" />
-          </button>
-        </form>
+        <div className="flex-1 max-w-2xl mx-auto relative">
+          <form onSubmit={handleSearch} className="flex">
+            <input
+              type="text"
+              placeholder={t("nav.search_placeholder") || "Search for products, categories or brands"}
+              value={searchQuery}
+              onChange={(e) => handleSearchChange(e.target.value)}
+              onFocus={() => searchQuery.trim().length >= 2 && setShowSearchDropdown(true)}
+              onBlur={() => setTimeout(() => setShowSearchDropdown(false), 200)}
+              className="flex-1 border border-gray-200 rounded-l-lg px-4 py-2.5 text-sm focus:outline-none focus:border-teal-400"
+            />
+            <button
+              type="submit"
+              className="px-5 py-2.5 text-white rounded-r-lg flex items-center justify-center gap-2 text-sm font-medium hover:opacity-90 transition-opacity"
+              style={{ backgroundColor: "#00a99d" }}
+              aria-label="search"
+            >
+              <Search className="h-4 w-4" />
+            </button>
+          </form>
 
-        <div className="flex items-center gap-3 flex-shrink-0">
+          {/* Live Search Dropdown */}
+          {showSearchDropdown && (
+            <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded-xl shadow-xl z-50 overflow-hidden max-h-80 overflow-y-auto">
+              {isSearching ? (
+                <div className="p-4 text-center text-xs text-gray-500 flex items-center justify-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin text-teal-600" />
+                  <span>Searching...</span>
+                </div>
+              ) : searchResults.length > 0 ? (
+                <div className="divide-y divide-gray-100">
+                  {searchResults.map((item) => {
+                    const imgUrl = item.product_images?.[0]?.url || "/placeholder.png";
+                    return (
+                      <Link
+                        key={item.id}
+                        href={`/products/${item.slug}`}
+                        onClick={() => setShowSearchDropdown(false)}
+                        className="flex items-center gap-3 p-3 hover:bg-teal-50/60 transition-colors"
+                      >
+                        <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-100 shrink-0 relative">
+                          <img src={imgUrl} alt={item.title} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-semibold text-gray-800 truncate">{item.title}</p>
+                          <p className="text-xs font-bold text-teal-600">
+                            {item.currency || "Rp"} {item.price?.toLocaleString()}
+                          </p>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="p-4 text-center text-xs text-gray-400">
+                  No results found for "{searchQuery}"
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="flex items-center gap-4 flex-shrink-0">
           <Link href="/cart" className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-teal-500 transition-colors relative">
             <ShoppingCart className="h-5 w-5" />
             <span className="text-[10px]">{t("nav.cart") || "Cart"}</span>
@@ -180,6 +252,19 @@ function SearchHeader({ user, profile, categories, unreadMessages = 0 }: { user:
                 {totalItems > 9 ? "9+" : totalItems}
               </span>
             )}
+          </Link>
+
+          <Link href="/wishlist" className="hidden sm:flex flex-col items-center gap-0.5 text-gray-600 hover:text-teal-500 transition-colors">
+            <Heart className="h-5 w-5" />
+            <span className="text-[10px]">{t("nav.wishlist") || "Wishlist"}</span>
+          </Link>
+
+          <Link
+            href="/sell"
+            className="hidden sm:inline-flex items-center justify-center px-4 py-2 text-xs font-bold text-white rounded-lg transition-all shadow-sm hover:shadow hover:opacity-90"
+            style={{ backgroundColor: "#00a99d" }}
+          >
+            Sell Now
           </Link>
 
           <MobileMenu user={user} profile={profile} />
