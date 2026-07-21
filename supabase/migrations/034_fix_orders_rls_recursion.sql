@@ -133,6 +133,7 @@ CREATE POLICY "Buyers can create orders"
 -- for the complex queries, keeping RLS simple
 
 DROP POLICY IF EXISTS "Vendors can see order items for their products" ON public.order_items;
+DROP POLICY IF EXISTS "Vendors can see their order items" ON public.order_items;
 DROP POLICY IF EXISTS "Admins can see all order items" ON public.order_items;
 
 -- Recreate simple policies that don't cause recursion
