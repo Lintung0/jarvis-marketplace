@@ -37,12 +37,18 @@ export default function CheckoutPage() {
   const hasPhysical = items.some((item) => item.product_type === "physical");
   const finalTotal = total() - discountAmount;
 
-  useEffect(() => {
+  const fetchBalance = () => {
     if (!user) return;
-    fetch("/api/wallet/balance", { cache: "no-store" })
+    fetch(`/api/wallet/balance?_t=${Date.now()}`, { cache: "no-store" })
       .then((r) => r.json())
       .then((d) => setWalletBalance(d.balance ?? 0))
-      .catch(() => {});
+      .catch((e) => console.error("Failed to fetch wallet balance:", e));
+  };
+
+  useEffect(() => {
+    fetchBalance();
+    window.addEventListener("focus", fetchBalance);
+    return () => window.removeEventListener("focus", fetchBalance);
   }, [user]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
