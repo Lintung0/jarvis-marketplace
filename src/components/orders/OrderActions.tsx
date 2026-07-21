@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import CancelOrderModal from "./CancelOrderModal";
 import ReturnOrderModal from "./ReturnOrderModal";
@@ -16,27 +16,62 @@ export default function OrderActions({ orderId, status }: Props) {
   const [showCancel, setShowCancel] = useState(false);
   const [showReturn, setShowReturn] = useState(false);
   const [confirming, setConfirming] = useState(false);
+  const [countdown, setCountdown] = useState(7);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const hasConfirmed = useRef(false);
+
+  useEffect(() => {
+    if (status === "shipped" && countdown > 0) {
+      timerRef.current = setTimeout(() => {
+        setCountdown(countdown - 1);
+      }, 1000);
+    }
+
+    if (status === "shipped" && countdown === 0 && !hasConfirmed.current) {
+      hasConfirmed.current = true;
+      setConfirming(true);
+      buyerConfirmReceived(orderId)
+        .then(() => router.refresh())
+        .catch(() => {})
+        .finally(() => setConfirming(false));
+    }
+
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [status, countdown, orderId, router]);
+
+  const handleConfirm = async () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    hasConfirmed.current = true;
+    setConfirming(true);
+    try {
+      await buyerConfirmReceived(orderId);
+      router.refresh();
+    } catch {
+      alert("Gagal konfirmasi penerimaan");
+    } finally {
+      setConfirming(false);
+    }
+  };
 
   if (status === "shipped") {
     return (
-      <button
-        onClick={async () => {
-          setConfirming(true);
-          try {
-            await buyerConfirmReceived(orderId);
-            router.refresh();
-          } catch (e) {
-            alert("Gagal konfirmasi penerimaan");
-          } finally {
-            setConfirming(false);
-          }
-        }}
-        disabled={confirming}
-        className="flex-1 min-w-[200px] text-center py-3 rounded-xl font-semibold text-sm transition text-white shadow-md"
-        style={{ background: "linear-gradient(135deg, #00a99d, #00897b)" }}
-      >
-        {confirming ? "Memproses..." : "Konfirmasi Diterima"}
-      </button>
+      <div className="flex flex-col gap-2 w-full">
+        <button
+          onClick={handleConfirm}
+          disabled={confirming}
+          className="flex-1 min-w-[200px] text-center py-3 rounded-xl font-semibold text-sm transition text-white shadow-md"
+          style={{ background: confirming ? "gray" : "linear-gradient(135deg, #00a99d, #00897b)" }}
+        >
+          {confirming ? "Mengkonfirmasi..." : countdown > 0 ? `Konfirmasi Diterima (${countdown}s)` : "Mengkonfirmasi otomatis..."}
+        </button>
+        {countdown > 0 && !hasConfirmed.current && (
+          <p className="text-xs text-gray-500 text-center">
+            Barang akan otomatis dikonfirmasi dalam {countdown} detik
+          </p>
+        )}
+      </div>
     );
   }
 
