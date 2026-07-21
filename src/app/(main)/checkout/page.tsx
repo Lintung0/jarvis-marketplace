@@ -39,7 +39,7 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (!user) return;
-    fetch("/api/wallet/balance")
+    fetch("/api/wallet/balance", { cache: "no-store" })
       .then((r) => r.json())
       .then((d) => setWalletBalance(d.balance ?? 0))
       .catch(() => {});
