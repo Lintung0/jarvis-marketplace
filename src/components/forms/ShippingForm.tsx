@@ -63,9 +63,9 @@ function LocationAutocomplete({
     if (text.length < 2) { setSuggestions([]); setOpen(false); return; }
     setLoading(true);
     try {
-      const apiKey = process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY;
+      const apiKey = process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY
       const res = await fetch(
-        `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(text)}&apiKey=${apiKey}&limit=5&type=${queryType}&format=json&lang=id`
+        `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(text)}&apiKey=${apiKey}&limit=7&filter=countrycode:id&format=json&lang=id`
       );
       const data = await res.json();
       if (data.results) {
