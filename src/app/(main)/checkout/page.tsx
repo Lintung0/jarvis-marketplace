@@ -40,10 +40,9 @@ export default function CheckoutPage() {
   const fetchBalance = async () => {
     if (!user) return;
     try {
-      const { createClient } = await import("@/lib/supabase/client");
-      const supabase = createClient();
-      const { data } = await supabase.from("profiles").select("balance").eq("id", user.id).single();
-      setWalletBalance(data?.balance ?? 0);
+      const { getWalletBalance } = await import("@/app/actions/wallet");
+      const bal = await getWalletBalance();
+      setWalletBalance(bal);
     } catch (e) {
       console.error("Failed to fetch wallet balance:", e);
     }
