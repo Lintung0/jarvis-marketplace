@@ -37,12 +37,16 @@ export default function CheckoutPage() {
   const hasPhysical = items.some((item) => item.product_type === "physical");
   const finalTotal = total() - discountAmount;
 
-  const fetchBalance = () => {
+  const fetchBalance = async () => {
     if (!user) return;
-    fetch(`/api/wallet/balance?_t=${Date.now()}`, { cache: "no-store" })
-      .then((r) => r.json())
-      .then((d) => setWalletBalance(d.balance ?? 0))
-      .catch((e) => console.error("Failed to fetch wallet balance:", e));
+    try {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      const { data } = await supabase.from("profiles").select("balance").eq("id", user.id).single();
+      setWalletBalance(data?.balance ?? 0);
+    } catch (e) {
+      console.error("Failed to fetch wallet balance:", e);
+    }
   };
 
   useEffect(() => {
