@@ -109,20 +109,32 @@ export default function SavedAddresses({ onSelect }: Props) {
 
     setSubmitting(true)
     const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    
+    if (!user) {
+      toast.error("Sesi tidak valid, silakan login ulang")
+      setSubmitting(false)
+      return
+    }
 
-      const payload = { ...formData }
-      if (editingId) {
-        await supabase
-          .from("user_addresses")
-          .update({ ...payload, updated_at: new Date().toISOString() })
-          .eq("id", editingId)
-        toast.success("Alamat diupdate")
-      } else {
-        await supabase
-          .from("user_addresses")
-          .insert([{ ...payload }])
-        toast.success("Alamat ditambahkan")
-      }
+    const payload = { ...formData, user_id: user.id }
+    
+    if (editingId) {
+      const { error } = await supabase
+        .from("user_addresses")
+        .update({ ...payload, updated_at: new Date().toISOString() })
+        .eq("id", editingId)
+      
+      if (error) toast.error("Gagal update alamat")
+      else toast.success("Alamat diupdate")
+    } else {
+      const { error } = await supabase
+        .from("user_addresses")
+        .insert([{ ...payload }])
+        
+      if (error) toast.error("Gagal menambah alamat")
+      else toast.success("Alamat ditambahkan")
+    }
 
     setSubmitting(false)
     setShowForm(false)
