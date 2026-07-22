@@ -9,6 +9,7 @@ import SavedAddresses from "@/components/checkout/SavedAddresses";
 import OrderSummary from "@/components/checkout/OrderSummary";
 import { ShoppingCart, MapPin, CreditCard, CheckCircle, Package, Wallet, Pencil } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { getWalletBalance } from "@/app/actions/wallet";
 
 interface ShippingAddress {
   full_name: string; address: string; city: string;
@@ -40,7 +41,6 @@ export default function CheckoutPage() {
   const fetchBalance = async () => {
     if (!user) return;
     try {
-      const { getWalletBalance } = await import("@/app/actions/wallet");
       const bal = await getWalletBalance(user.id);
       setWalletBalance(bal);
     } catch (e) {
