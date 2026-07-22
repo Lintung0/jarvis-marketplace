@@ -18,7 +18,7 @@ interface ShippingAddress {
 
 export default function CheckoutPage() {
   const { items, total, clearCart } = useCartStore();
-  const user = useAuthStore((s) => s.user);
+  const [user, setUser] = useState<any>(null);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -38,10 +38,9 @@ export default function CheckoutPage() {
   const hasPhysical = items.some((item) => item.product_type === "physical");
   const finalTotal = total() - discountAmount;
 
-  const fetchBalance = async () => {
-    if (!user) return;
+  const fetchBalance = async (userId: string) => {
     try {
-      const bal = await getWalletBalance(user.id);
+      const bal = await getWalletBalance(userId);
       setWalletBalance(bal);
     } catch (e) {
       console.error("Failed to fetch wallet balance:", e);
@@ -49,10 +48,26 @@ export default function CheckoutPage() {
   };
 
   useEffect(() => {
-    fetchBalance();
-    window.addEventListener("focus", fetchBalance);
-    return () => window.removeEventListener("focus", fetchBalance);
-  }, [user]);
+    let currentUser: any = null;
+    const initUserAndBalance = async () => {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      const { data } = await supabase.auth.getUser();
+      if (data?.user) {
+        setUser(data.user);
+        currentUser = data.user;
+        fetchBalance(data.user.id);
+      }
+    };
+    initUserAndBalance();
+
+    const handleFocus = () => {
+      if (currentUser) fetchBalance(currentUser.id);
+    };
+
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
