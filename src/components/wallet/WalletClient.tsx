@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Loader2, ArrowUp, ArrowDown, Check, X, Eye, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react"
 import { toast } from "sonner"
 import { Card } from "@/components/ui/card"
+import { useTranslation } from "@/lib/i18n"
 
 interface Transaction {
   id: string
@@ -26,6 +27,7 @@ interface Props {
 export default function WalletClient({ balance: initialBalance, transactions: initialTransactions }: Props) {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const { t } = useTranslation()
   const [topupAmount, setTopupAmount] = useState("")
   const [loading, setLoading] = useState(false)
   const [transactions, setTransactions] = useState(initialTransactions)
@@ -35,22 +37,22 @@ export default function WalletClient({ balance: initialBalance, transactions: in
   useEffect(() => {
     const status = searchParams.get("status")
     if (status === "success") {
-      toast.success("Top up berhasil! Saldo Anda sudah diperbarui.")
+      toast.success(t("wallet.top_up_success"))
       setTimeout(() => router.refresh(), 2000)
     } else if (status === "failed") {
-      toast.error("Top up gagal. Silakan coba lagi.")
+      toast.error(t("wallet.top_up_failed"))
     }
-  }, [searchParams, router])
+  }, [searchParams, router, t])
 
   const handleTopup = async () => {
     if (!topupAmount || isNaN(Number(topupAmount))) {
-      toast.error("Masukkan nominal yang valid")
+      toast.error(t("wallet.invalid_amount"))
       return
     }
 
     const amount = Number(topupAmount)
     if (amount < 10000) {
-      toast.error("Minimum top up Rp 10.000")
+      toast.error(t("wallet.min_top_up"))
       return
     }
 
@@ -67,7 +69,7 @@ export default function WalletClient({ balance: initialBalance, transactions: in
 
       window.location.href = data.payment_url
     } catch (error: any) {
-      toast.error(error.message || "Gagal buat top up")
+      toast.error(error.message || t("wallet.create_top_up_failed"))
       setLoading(false)
     }
   }
@@ -79,10 +81,10 @@ export default function WalletClient({ balance: initialBalance, transactions: in
 
   const getTypeLabel = (type: string) => {
     const labels: Record<string, string> = {
-      topup: "Top Up Wallet",
-      payment: "Pembayaran Pesanan",
-      refund: "Pengembalian Dana",
-      withdrawal: "Penarikan Dana",
+      topup: t("wallet.tx_type_topup"),
+      payment: t("wallet.tx_type_payment"),
+      refund: t("wallet.tx_type_refund"),
+      withdrawal: t("wallet.tx_type_withdrawal"),
     }
     return labels[type] || type
   }
@@ -129,11 +131,11 @@ export default function WalletClient({ balance: initialBalance, transactions: in
   const getStatusLabel = (status: string) => {
     switch (status) {
       case "success":
-        return "Berhasil"
+        return t("wallet.status_success")
       case "pending":
-        return "Menunggu"
+        return t("wallet.status_pending")
       case "failed":
-        return "Gagal"
+        return t("wallet.status_failed")
       default:
         return status
     }
@@ -163,16 +165,25 @@ export default function WalletClient({ balance: initialBalance, transactions: in
   }
 
   return (
-    <div className="space-y-8">
-      {/* Top Up Section */}
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-teal-500 to-teal-600 p-8 text-white">
+        <p className="text-sm opacity-90 mb-2">{t("wallet.balance_title")}</p>
+        <h1 className="text-4xl font-bold mb-6">{formatCurrency(initialBalance)}</h1>
+        <p className="text-sm opacity-75">{t("wallet.balance_subtitle")}</p>
+      </div>
+
+      {/* Main Content */}
+      <div className="p-6 space-y-8">
+        {/* Top Up Section */}
       <div className="border-b border-gray-200 pb-8">
-        <h2 className="text-lg font-bold text-gray-900 mb-4">Top Up Wallet</h2>
+        <h2 className="text-lg font-bold text-gray-900 mb-4">{t("wallet.top_up")}</h2>
         <div className="flex gap-3">
           <input
             type="number"
             value={topupAmount}
             onChange={(e) => setTopupAmount(e.target.value)}
-            placeholder="Masukkan nominal (min. Rp 10.000)"
+            placeholder={t("wallet.enter_amount")}
             className="flex-1 px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
           />
           <Button
@@ -180,20 +191,20 @@ export default function WalletClient({ balance: initialBalance, transactions: in
             disabled={loading || !topupAmount}
             className="bg-teal-500 hover:bg-teal-600 text-white px-6"
           >
-            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Top Up"}
+            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : t("wallet.top_up_button")}
           </Button>
         </div>
         <p className="text-xs text-gray-500 mt-2">
-          Metode pembayaran: Transfer Bank, E-Wallet, Kartu Kredit (via Xendit)
+          {t("wallet.payment_method_info")}
         </p>
       </div>
 
       {/* Transaction History */}
       <div>
-        <h2 className="text-lg font-bold text-gray-900 mb-4">Riwayat Transaksi</h2>
+        <h2 className="text-lg font-bold text-gray-900 mb-4">{t("wallet.transaction_history")}</h2>
         {transactions.length === 0 ? (
           <div className="text-center py-8 text-gray-400">
-            <p className="text-sm">Belum ada transaksi</p>
+            <p className="text-sm">{t("wallet.no_transactions")}</p>
           </div>
         ) : (
           <div className="space-y-2">
@@ -239,7 +250,7 @@ export default function WalletClient({ balance: initialBalance, transactions: in
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
             <div className="p-6 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10 rounded-t-2xl">
-              <h2 className="text-xl font-bold text-gray-900">Detail Transaksi</h2>
+              <h2 className="text-xl font-bold text-gray-900">{t("wallet.detail_title")}</h2>
               <button
                 onClick={() => setIsDetailOpen(false)}
                 className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition"
@@ -269,7 +280,7 @@ export default function WalletClient({ balance: initialBalance, transactions: in
 
               <div className="space-y-4">
                 <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-500">Nominal</span>
+                  <span className="text-gray-500">{t("wallet.detail_amount")}</span>
                   <span className={`font-bold ${selectedTx.type === "topup" || selectedTx.type === "refund" ? "text-green-600" : "text-red-600"}`}>
                     {selectedTx.type === "topup" || selectedTx.type === "refund" ? "+" : "-"}
                     {formatCurrency(selectedTx.amount)}
@@ -277,7 +288,7 @@ export default function WalletClient({ balance: initialBalance, transactions: in
                 </div>
 
                 <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-500">Status</span>
+                  <span className="text-gray-500">{t("wallet.detail_status")}</span>
                   <span className={`font-medium ${getStatusColor(selectedTx.status)} px-2 py-0.5 rounded text-xs`}>
                     {getStatusIcon(selectedTx.status)}
                     {getStatusLabel(selectedTx.status)}
@@ -285,20 +296,20 @@ export default function WalletClient({ balance: initialBalance, transactions: in
                 </div>
 
                 <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-500">Waktu</span>
+                  <span className="text-gray-500">{t("wallet.detail_date")}</span>
                   <span className="font-medium text-gray-900">{formatDate(selectedTx.created_at)}</span>
                 </div>
 
                 {selectedTx.payment_id && (
                   <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-500">Payment ID</span>
+                    <span className="text-gray-500">{t("wallet.detail_payment_id")}</span>
                     <span className="font-mono text-sm text-gray-900 break-all">{selectedTx.payment_id}</span>
                   </div>
                 )}
 
                 {selectedTx.notes && (
                   <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-500">Catatan</span>
+                    <span className="text-gray-500">{t("wallet.detail_notes")}</span>
                     <span className="font-medium text-gray-900 text-right max-w-[60%] break-words">{selectedTx.notes}</span>
                   </div>
                 )}
@@ -314,13 +325,14 @@ export default function WalletClient({ balance: initialBalance, transactions: in
                   onClick={() => setIsDetailOpen(false)}
                   className="w-full bg-teal-500 hover:bg-teal-600 text-white py-3 rounded-xl font-semibold transition"
                 >
-                  Tutup
+                  {t("common.close")}
                 </button>
               </div>
             </div>
           </div>
         </div>
       )}
+      </div>
     </div>
   )
 }

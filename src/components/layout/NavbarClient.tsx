@@ -96,24 +96,24 @@ function TopBar({ user, profile }: { user: any; profile: any }) {
                   </>
                 )}
                 <DropdownMenuItem asChild>
-                  <Link href="/profile" className="cursor-pointer"><User className="w-4 h-4 mr-2" />My Profile</Link>
+                  <Link href="/profile" className="cursor-pointer"><User className="w-4 h-4 mr-2" />{t("nav.my_profile")}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/wallet" className="cursor-pointer"><Wallet className="w-4 h-4 mr-2" />Wallet</Link>
+                  <Link href="/wallet" className="cursor-pointer"><Wallet className="w-4 h-4 mr-2" />{t("nav.wallet")}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/orders" className="cursor-pointer"><ShoppingBag className="w-4 h-4 mr-2" />Orders</Link>
+                  <Link href="/orders" className="cursor-pointer"><ShoppingBag className="w-4 h-4 mr-2" />{t("nav.orders")}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/chat" className="cursor-pointer"><MessageCircle className="w-4 h-4 mr-2" />Messages</Link>
+                  <Link href="/chat" className="cursor-pointer"><MessageCircle className="w-4 h-4 mr-2" />{t("nav.messages")}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/profile?edit=true" className="cursor-pointer"><Settings className="w-4 h-4 mr-2" />Profile Settings</Link>
+                  <Link href="/profile?edit=true" className="cursor-pointer"><Settings className="w-4 h-4 mr-2" />{t("nav.profile_settings")}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout} disabled={loggingOut} className="text-red-500 focus:text-red-500 focus:bg-red-50 cursor-pointer">
                   {loggingOut ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <LogOut className="w-4 h-4 mr-2" />}
-                  {loggingOut ? "Logging out..." : "Logout"}
+                  {loggingOut ? t("nav.logging_out") : t("nav.logout")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -204,7 +204,7 @@ function SearchHeader({ user, profile, categories, unreadMessages = 0 }: { user:
               {isSearching ? (
                 <div className="p-4 text-center text-xs text-gray-500 flex items-center justify-center gap-2">
                   <Loader2 className="w-4 h-4 animate-spin text-teal-600" />
-                  <span>Searching...</span>
+                  <span>{t("nav.searching") || "Searching..."}</span>
                 </div>
               ) : searchResults.length > 0 ? (
                 <div className="divide-y divide-gray-100">
@@ -232,7 +232,7 @@ function SearchHeader({ user, profile, categories, unreadMessages = 0 }: { user:
                 </div>
               ) : (
                 <div className="p-4 text-center text-xs text-gray-400">
-                  No results found for "{searchQuery}"
+                  {t("nav.no_results") || "No results found for"} "{searchQuery}"
                 </div>
               )}
             </div>
@@ -261,7 +261,7 @@ function SearchHeader({ user, profile, categories, unreadMessages = 0 }: { user:
             className="hidden sm:inline-flex items-center justify-center px-4 py-2 text-xs font-bold text-white rounded-lg transition-all shadow-sm hover:shadow hover:opacity-90"
             style={{ backgroundColor: "#00a99d" }}
           >
-            Sell Now
+            {t("nav.sell") || "Sell Now"}
           </Link>
 
           <MobileMenu user={user} profile={profile} />
@@ -332,15 +332,15 @@ function CategoryNav({ categories }: { categories: Category[] }) {
                       {/* Featured image box like the original */}
                       <div className="bg-gradient-to-br from-teal-50 to-teal-100/50 rounded-xl p-4 flex flex-col justify-between h-full border border-teal-50">
                         <div>
-                          <p className="text-xs font-bold text-teal-600 uppercase tracking-widest">Featured</p>
+                          <p className="text-xs font-bold text-teal-600 uppercase tracking-widest">{t("nav.featured") || "Featured"}</p>
                           <h4 className="font-bold text-gray-900 text-sm mt-1">{root.name}</h4>
-                          <p className="text-xs text-gray-500 mt-1">Explore trending collections and top seller picks.</p>
+                          <p className="text-xs text-gray-500 mt-1">{t("nav.featured_desc") || "Explore trending collections and top seller picks."}</p>
                         </div>
                         <Link
                           href={`/products?category=${root.slug}`}
                           className="inline-flex items-center gap-1 text-xs font-semibold text-teal-600 hover:text-teal-700 mt-4"
                         >
-                          View Collection &rarr;
+                          {t("nav.view_collection") || "View Collection"} &rarr;
                         </Link>
                       </div>
                     </div>
@@ -403,7 +403,7 @@ function MobileMenu({ user, profile }: { user: any; profile: any }) {
               <p className="font-semibold text-gray-800">{profile?.full_name ?? profile?.username ?? "Guest"}</p>
               {user && (
                 <Link href="/profile?tab=orders" className="text-sm text-gray-500 hover:text-teal-500 transition-colors" onClick={() => setIsOpen(false)}>
-                  {t("account.orders")}
+                  {t("nav.orders")}
                 </Link>
               )}
             </div>
@@ -412,7 +412,7 @@ function MobileMenu({ user, profile }: { user: any; profile: any }) {
           <nav className="flex flex-col gap-1 flex-1">
             <Link href="/profile" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-teal-50 transition-colors text-gray-600 hover:text-teal-500" onClick={() => setIsOpen(false)}>
               <User className="h-4 w-4" />
-              {t("account.profile")}
+              {t("nav.my_profile")}
             </Link>
             <Link href="/products" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-teal-50 transition-colors text-gray-600 hover:text-teal-500" onClick={() => setIsOpen(false)}>
               <Search className="h-4 w-4" />
@@ -449,7 +449,7 @@ function MobileMenu({ user, profile }: { user: any; profile: any }) {
               <button onClick={handleLogout} disabled={loggingOut}
                 className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-50 text-red-500 hover:text-red-600 transition-colors">
                 {loggingOut ? <Loader2 className="h-4 w-4 animate-spin" /> : <LogOut className="h-4 w-4" />}
-                {loggingOut ? t("common.logging_out") : t("common.logout")}
+                {loggingOut ? t("nav.logging_out") : t("nav.logout")}
               </button>
             )}
             {!user && (

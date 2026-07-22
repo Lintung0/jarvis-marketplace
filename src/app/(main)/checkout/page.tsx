@@ -10,6 +10,7 @@ import OrderSummary from "@/components/checkout/OrderSummary";
 import { ShoppingCart, MapPin, CreditCard, CheckCircle, Package, Wallet, Pencil } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import { getWalletBalance } from "@/app/actions/wallet";
+import { useTranslation } from "@/lib/i18n";
 
 interface ShippingAddress {
   full_name: string; address: string; city: string;
@@ -18,6 +19,7 @@ interface ShippingAddress {
 
 export default function CheckoutPage() {
   const { items, total, clearCart } = useCartStore();
+  const { t } = useTranslation();
   const [user, setUser] = useState<any>(null);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -90,7 +92,7 @@ export default function CheckoutPage() {
 
   const handleContinueToPayment = () => {
     if (hasPhysical && !form.full_name) {
-      setError("Isi alamat pengiriman dulu ya!");
+      setError(t("checkout_steps.fill_address_first"));
       return;
     }
     setError(null);
@@ -99,7 +101,7 @@ export default function CheckoutPage() {
 
   const handleWalletCheckout = async () => {
     if (walletBalance < finalTotal) {
-      setError(`Saldo wallet tidak cukup. Saldo: ${formatCurrency(walletBalance)}, Perlu: ${formatCurrency(finalTotal)}`);
+      setError(t("checkout_steps.wallet_balance_insufficient", { balance: formatCurrency(walletBalance), need: formatCurrency(finalTotal) }));
       return;
     }
     setLoading(true);
@@ -123,11 +125,11 @@ export default function CheckoutPage() {
         }),
       });
       const data = await res.json();
-      if (!res.ok) { setError(data.error ?? "Gagal bayar dengan wallet"); return; }
+      if (!res.ok) { setError(data.error ?? t("common.error")); return; }
       clearCart();
       router.push(`/orders/${data.order_id}?status=success`);
     } catch {
-      setError("Terjadi kesalahan, coba lagi.");
+      setError(t("common.error"));
     } finally {
       setLoading(false);
     }
@@ -156,11 +158,11 @@ export default function CheckoutPage() {
         }),
       });
       const data = await res.json();
-      if (!res.ok) { setError(data.error ?? "Gagal membuat invoice"); return; }
+      if (!res.ok) { setError(data.error ?? t("common.error")); return; }
       clearCart();
       window.location.href = data.invoice_url;
     } catch {
-      setError("Terjadi kesalahan, coba lagi.");
+      setError(t("common.error"));
     } finally {
       setLoading(false);
     }
@@ -178,13 +180,13 @@ export default function CheckoutPage() {
           <div className="w-24 h-24 bg-gradient-to-br from-[#00a99d] to-[#00b3a1] rounded-full flex items-center justify-center mx-auto mb-6">
             <ShoppingCart className="w-12 h-12 text-white" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">Keranjang Kosong</h2>
-          <p className="text-gray-400 mb-8">Tambahkan produk dulu sebelum checkout</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">{t("checkout_steps.empty_cart")}</h2>
+          <p className="text-gray-400 mb-8">{t("checkout_steps.add_products_first")}</p>
           <button
             onClick={() => router.push("/products")}
             className="gradient-brand text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all"
           >
-            Belanja Sekarang
+            {t("checkout_steps.shop_now")}
           </button>
         </div>
       </div>
@@ -192,9 +194,9 @@ export default function CheckoutPage() {
   }
 
   const steps = [
-    { id: 1, name: "Keranjang", icon: ShoppingCart, completed: true },
-    { id: 2, name: "Pengiriman", icon: MapPin, completed: currentStep > 2 },
-    { id: 3, name: "Pembayaran", icon: CreditCard, completed: false },
+    { id: 1, name: t("checkout_steps.cart"), icon: ShoppingCart, completed: true },
+    { id: 2, name: t("checkout_steps.shipping"), icon: MapPin, completed: currentStep > 2 },
+    { id: 3, name: t("checkout_steps.payment"), icon: CreditCard, completed: false },
   ];
 
   return (
@@ -224,8 +226,8 @@ export default function CheckoutPage() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold text-gray-900 mb-2">Checkout</h1>
-      <p className="text-gray-400 mb-8">Lengkapi data untuk menyelesaikan pembelian</p>
+      <h1 className="text-3xl font-bold text-gray-900 mb-2">{t("checkout_steps.title")}</h1>
+      <p className="text-gray-400 mb-8">{t("checkout_steps.subtitle")}</p>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
@@ -236,8 +238,8 @@ export default function CheckoutPage() {
                   <Package className="w-5 h-5 text-teal-500" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">Alamat Pengiriman</h2>
-                  <p className="text-sm text-gray-500">Isi alamat untuk pengiriman produk fisik</p>
+                  <h2 className="text-xl font-bold text-gray-900">{t("checkout_steps.shipping_address")}</h2>
+                  <p className="text-sm text-gray-500">{t("checkout_steps.shipping_address_desc")}</p>
                 </div>
               </div>
               {user ? (
@@ -255,13 +257,13 @@ export default function CheckoutPage() {
                     <div className="border-t border-gray-100 pt-4 mt-4">
                       <div className="bg-teal-50 border border-teal-200 rounded-xl p-4">
                         <div className="flex items-center justify-between mb-2">
-                          <p className="text-sm font-semibold text-teal-700">Alamat terpilih</p>
+                          <p className="text-sm font-semibold text-teal-700">{t("checkout_steps.selected_address")}</p>
                           <button
                             onClick={handleEditAddress}
                             className="text-xs text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1"
                           >
                             <Pencil className="w-3 h-3" />
-                            Ganti
+                            {t("checkout_steps.change")}
                           </button>
                         </div>
                         <p className="text-sm text-gray-700">{selectedAddr.full_name} - {selectedAddr.phone}</p>
@@ -274,7 +276,7 @@ export default function CheckoutPage() {
                 </>
               ) : (
                 <div className="mt-4">
-                  <p className="text-xs text-gray-400 mb-3">Isi alamat pengiriman:</p>
+                  <p className="text-xs text-gray-400 mb-3">{t("checkout_steps.shipping_address")}:</p>
                   <ShippingForm value={form} onChange={handleChange} onAddressChange={handleAddressChange} />
                 </div>
               )}
@@ -288,10 +290,9 @@ export default function CheckoutPage() {
                   <Package className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-1">Produk Digital</h3>
+                  <h3 className="font-semibold text-gray-900 mb-1">{t("checkout_steps.digital_product")}</h3>
                   <p className="text-sm text-gray-600">
-                    Semua produk kamu adalah digital. Tidak perlu alamat pengiriman.
-                    Akses produk akan langsung tersedia setelah pembayaran berhasil.
+                    {t("checkout_steps.digital_product_desc")}
                   </p>
                 </div>
               </div>
@@ -300,7 +301,7 @@ export default function CheckoutPage() {
                 className="mt-4 px-8 py-3 text-white rounded-full font-semibold hover:shadow-lg transition-all"
                 style={{ background: "linear-gradient(135deg, #00a99d, #00b3a1)" }}
               >
-                Lanjut ke Pembayaran
+                {t("checkout.continue_to_payment")}
               </button>
             </div>
           )}
@@ -312,8 +313,8 @@ export default function CheckoutPage() {
                   <CheckCircle className="w-5 h-5 text-green-500" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">Pilih Metode Pembayaran</h2>
-                  <p className="text-sm text-gray-500">Pilih cara bayar yang kamu inginkan</p>
+                  <h2 className="text-xl font-bold text-gray-900">{t("checkout_steps.choose_payment")}</h2>
+                  <p className="text-sm text-gray-500">{t("checkout_steps.choose_payment_desc")}</p>
                 </div>
               </div>
 
@@ -331,7 +332,7 @@ export default function CheckoutPage() {
                     <CreditCard className={`w-5 h-5 ${paymentMethod === "xendit" ? "text-teal-500" : "text-gray-400"}`} />
                     <div>
                       <p className="font-semibold text-gray-900 text-sm">Xendit</p>
-                      <p className="text-xs text-gray-500">Transfer Bank, E-Wallet, Kartu Kredit</p>
+                      <p className="text-xs text-gray-500">{t("checkout_steps.xendit_desc") || "Bank Transfer, E-Wallet, Card"}</p>
                     </div>
                   </div>
                 </button>
@@ -349,8 +350,7 @@ export default function CheckoutPage() {
                     <div>
                       <p className="font-semibold text-gray-900 text-sm">Wallet</p>
                       <p className={`text-xs font-medium ${walletBalance >= finalTotal ? "text-green-600" : "text-red-500"}`}>
-                        Saldo: {formatCurrency(walletBalance)}
-                        {walletBalance < finalTotal && " (tidak cukup)"}
+                        {formatCurrency(walletBalance)}
                       </p>
                     </div>
                   </div>
@@ -359,7 +359,7 @@ export default function CheckoutPage() {
 
               {hasPhysical && form.full_name && (
                 <div className="bg-gray-50 rounded-xl p-4 text-sm text-gray-600 space-y-1">
-                  <p className="font-semibold text-gray-800">Alamat Pengiriman</p>
+                  <p className="font-semibold text-gray-800">{t("checkout_steps.shipping_address")}</p>
                   <p>{form.full_name}</p>
                   <p>{form.address}, {form.city}</p>
                   <p>{form.state} {form.postal_code}</p>
@@ -393,13 +393,13 @@ export default function CheckoutPage() {
                 });
                 const data = await res.json();
                 if (!res.ok || data.valid === false) {
-                  setCouponError(data.error ?? "Invalid coupon");
+                  setCouponError(data.error ?? (t("checkout.invalid_coupon") || "Invalid coupon"));
                 } else {
                   setCouponCode(code);
                   setDiscountAmount(data.coupon?.discount_amount ?? 0);
                 }
               } catch {
-                setCouponError("Failed to validate coupon");
+                setCouponError(t("checkout.validate_failed") || "Failed to validate coupon");
               }
               setCouponLoading(false);
             }}

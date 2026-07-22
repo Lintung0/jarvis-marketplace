@@ -4,6 +4,7 @@ import { useState } from "react";
 import PriceDisplay from "@/components/ui/PriceDisplay";
 import type { ClientCartItem } from "@/types";
 import { ShoppingBag, CreditCard, Lock, Package, Tag, X } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
 
 interface Props {
   items: ClientCartItem[];
@@ -25,6 +26,7 @@ export default function OrderSummary({
   couponCode, discountAmount, couponError, couponLoading,
   onCheckout, onContinue, onApplyCoupon, onRemoveCoupon,
 }: Props) {
+  const { t } = useTranslation();
   const [inputCode, setInputCode] = useState("");
 
   const subtotal = total;
@@ -50,7 +52,7 @@ export default function OrderSummary({
           <div className="w-10 h-10 bg-gradient-to-br from-[#00a99d] to-[#00b3a1] rounded-full flex items-center justify-center">
             <ShoppingBag className="w-5 h-5 text-white" />
           </div>
-          <h2 className="text-xl font-bold text-gray-900">Ringkasan Pesanan</h2>
+          <h2 className="text-xl font-bold text-gray-900">{t("checkout.order_summary")}</h2>
         </div>
 
         {/* Items */}
@@ -70,17 +72,17 @@ export default function OrderSummary({
         {/* Price Breakdown */}
         <div className="space-y-3 pt-4 border-t-2 border-gray-100">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-400">Subtotal</span>
+            <span className="text-gray-400">{t("checkout.subtotal")}</span>
             <span className="font-semibold text-gray-900"><PriceDisplay amount={subtotal} /></span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-400 flex items-center gap-1">
               <Package className="w-4 h-4" />
-              Biaya Pengiriman
+              {t("checkout.shipping_fee")}
             </span>
             <span className="font-semibold">
               {shipping === 0 ? (
-                <span className="text-green-600 font-bold">GRATIS!</span>
+                <span className="text-green-600 font-bold">{t("checkout.free_shipping")}</span>
               ) : (
                 <PriceDisplay amount={shipping} />
               )}
@@ -91,7 +93,7 @@ export default function OrderSummary({
             <div className="flex justify-between text-sm">
               <span className="text-green-600 flex items-center gap-1">
                 <Tag className="w-4 h-4" />
-                Diskon Kupon
+                {t("checkout.coupon_discount")}
               </span>
               <span className="font-semibold text-green-600">
                 -<PriceDisplay amount={discountAmount} />
@@ -102,7 +104,7 @@ export default function OrderSummary({
           {subtotal < 50000 && subtotal > 0 && (
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-3">
               <p className="text-xs text-amber-700">
-                💡 <span className="font-semibold">Belanja <PriceDisplay amount={50000 - subtotal} /> lagi</span> untuk gratis ongkir!
+                💡 <span className="font-semibold">{t("checkout.buy")} <PriceDisplay amount={50000 - subtotal} /> {t("checkout.more_for_free_shipping")}</span>
               </p>
             </div>
           )}
@@ -128,7 +130,7 @@ export default function OrderSummary({
               <input
                 value={inputCode}
                 onChange={(e) => setInputCode(e.target.value.toUpperCase())}
-                placeholder="Masukkan kode kupon"
+                placeholder={t("checkout.enter_coupon")}
                 className="flex-1 bg-white border border-gray-200 text-gray-900 rounded-xl px-4 py-2.5 text-sm focus:border-teal-400 outline-none uppercase"
                 onKeyDown={(e) => e.key === "Enter" && handleApply()}
               />
@@ -140,7 +142,7 @@ export default function OrderSummary({
                 {couponLoading ? (
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 ) : (
-                  "Apply"
+                  t("common.apply")
                 )}
               </button>
             </div>
@@ -152,7 +154,7 @@ export default function OrderSummary({
 
         {/* Total */}
         <div className={`flex justify-between items-center pt-4 border-t-2 ${discountAmount > 0 ? "border-green-200" : "border-gray-200"} bg-teal-50 -mx-6 px-6 py-4 rounded-b-2xl`}>
-          <span className="text-lg font-bold text-gray-900">Total Pembayaran</span>
+          <span className="text-lg font-bold text-gray-900">{t("checkout.total_payment")}</span>
           <span className="text-2xl font-bold text-teal-500">
             <PriceDisplay amount={finalTotal} />
           </span>
@@ -178,29 +180,29 @@ export default function OrderSummary({
           {loading ? (
             <>
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              Memproses...
+              {t("common.processing")}
             </>
           ) : onContinue ? (
             <>
-              Lanjut ke Pembayaran →
+              {t("checkout.continue_to_payment")} →
             </>
           ) : (
             <>
               <CreditCard className="w-5 h-5" />
-              Bayar Sekarang
+              {t("checkout.pay_now")}
             </>
           )}
         </button>
 
         <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
           <Lock className="w-3 h-3" />
-          <span>Pembayaran aman via Xendit</span>
+          <span>{t("checkout.secure_payment")}</span>
         </div>
       </div>
 
       {/* Payment Methods */}
       <div className="bg-white border border-gray-200 rounded-2xl p-4">
-        <p className="text-xs font-semibold text-gray-700 mb-3">Metode Pembayaran:</p>
+        <p className="text-xs font-semibold text-gray-700 mb-3">{t("checkout.payment_methods")}</p>
         <div className="flex flex-wrap gap-2">
           {["BCA", "Mandiri", "BNI", "GoPay", "OVO", "QRIS"].map((method) => (
             <span key={method} className="text-xs bg-gray-100 px-3 py-1.5 rounded-lg font-medium text-gray-500">

@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/client"
 import { MapPin, Plus, Home, Briefcase, Building, Star, Trash2, Pencil } from "lucide-react"
 import { LocationAutocomplete } from "@/components/forms/ShippingForm"
 import { toast } from "sonner"
+import { useTranslation } from "@/lib/i18n"
 
 interface Address {
   id: string
@@ -34,6 +35,7 @@ const LABEL_ICONS: Record<string, any> = {
 const LABEL_PRESETS = ["Rumah", "Kantor", "Kos", "Lainnya"]
 
 export default function SavedAddresses({ onSelect }: Props) {
+  const { t } = useTranslation()
   const [addresses, setAddresses] = useState<Address[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
@@ -101,9 +103,9 @@ export default function SavedAddresses({ onSelect }: Props) {
   }
 
   async function handleSubmit() {
-    const label = formData.label === "Lainnya" ? customLabel : formData.label
+    const label = formData.label === "Lainnya" || formData.label === "Other" ? customLabel : formData.label
     if (!label || !formData.full_name || !formData.phone || !formData.address || !formData.city) {
-      toast.error("Lengkapi semua field yang wajib")
+      toast.error(t("saved_addresses.fill_required"))
       return
     }
 
@@ -112,12 +114,12 @@ export default function SavedAddresses({ onSelect }: Props) {
     const { data: { user } } = await supabase.auth.getUser()
     
     if (!user) {
-      toast.error("Sesi tidak valid, silakan login ulang")
+      toast.error(t("saved_addresses.invalid_session"))
       setSubmitting(false)
       return
     }
 
-    const payload = { ...formData, user_id: user.id }
+    const payload = { ...formData, user_id: user.id, label }
     
     if (editingId) {
       const { error } = await supabase
@@ -125,15 +127,15 @@ export default function SavedAddresses({ onSelect }: Props) {
         .update({ ...payload, updated_at: new Date().toISOString() })
         .eq("id", editingId)
       
-      if (error) toast.error("Gagal update alamat")
-      else toast.success("Alamat diupdate")
+      if (error) toast.error(t("saved_addresses.update_failed"))
+      else toast.success(t("saved_addresses.update_success"))
     } else {
       const { error } = await supabase
         .from("user_addresses")
         .insert([{ ...payload }])
         
-      if (error) toast.error("Gagal menambah alamat")
-      else toast.success("Alamat ditambahkan")
+      if (error) toast.error(t("saved_addresses.add_failed"))
+      else toast.success(t("saved_addresses.add_success"))
     }
 
     setSubmitting(false)
@@ -144,7 +146,7 @@ export default function SavedAddresses({ onSelect }: Props) {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Hapus alamat ini?")) return
+    if (!confirm(t("saved_addresses.delete_confirm"))) return
     const supabase = createClient()
     await supabase.from("user_addresses").delete().eq("id", id)
     loadAddresses()
@@ -182,23 +184,23 @@ export default function SavedAddresses({ onSelect }: Props) {
     return icon || MapPin
   }
 
-  if (loading) return <div className="text-center py-4 text-gray-400 text-sm">Memuat alamat...</div>
+  if (loading) return <div className="text-center py-4 text-gray-400 text-sm">{t("common.loading")}</div>
 
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-gray-900">Alamat Tersimpan</h3>
+        <h3 className="text-sm font-semibold text-gray-900">{t("saved_addresses.title")}</h3>
         <button
           onClick={() => { setShowForm(true); setEditingId(null); resetForm() }}
           className="text-xs text-teal-500 hover:text-teal-600 font-medium flex items-center gap-1"
         >
           <Plus className="w-3 h-3" />
-          Tambah Baru
+          {t("saved_addresses.add_new")}
         </button>
       </div>
 
       {addresses.length === 0 && !showForm && (
-        <p className="text-xs text-gray-400 text-center py-4">Belum ada alamat tersimpan. Tambah alamat baru untuk checkout lebih cepat.</p>
+        <p className="text-xs text-gray-400 text-center py-4">{t("saved_addresses.empty")}</p>
       )}
 
       <div className="space-y-2">
@@ -208,7 +210,7 @@ export default function SavedAddresses({ onSelect }: Props) {
             <div
               key={addr.id}
               className="relative group bg-white border border-gray-200 rounded-xl p-3 hover:border-teal-300 transition cursor-pointer"
-              onClick={() => { onSelect(addr); toast.success(`Menggunakan alamat: ${addr.label}`) }}
+              onClick={() => { onSelect(addr) }}
             >
               <div className="flex items-start gap-2">
                 <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center shrink-0">
@@ -227,6 +229,7 @@ export default function SavedAddresses({ onSelect }: Props) {
                 <button
                   onClick={(e) => { e.stopPropagation(); editAddress(addr) }}
                   className="p-1 text-gray-400 hover:text-teal-600 hover:bg-teal-50 rounded"
+                  title={t("saved_addresses.edit")}
                 >
                   <Pencil className="w-3.5 h-3.5" />
                 </button>
@@ -234,7 +237,7 @@ export default function SavedAddresses({ onSelect }: Props) {
                   <button
                     onClick={(e) => { e.stopPropagation(); handleSetDefault(addr.id) }}
                     className="p-1 text-gray-400 hover:text-yellow-500 hover:bg-yellow-50 rounded"
-                    title="Jadikan utama"
+                    title={t("saved_addresses.set_default")}
                   >
                     <Star className="w-3.5 h-3.5" />
                   </button>
@@ -242,6 +245,7 @@ export default function SavedAddresses({ onSelect }: Props) {
                 <button
                   onClick={(e) => { e.stopPropagation(); handleDelete(addr.id) }}
                   className="p-1 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded"
+                  title={t("saved_addresses.delete")}
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
@@ -256,12 +260,12 @@ export default function SavedAddresses({ onSelect }: Props) {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6">
             <h2 className="text-lg font-bold text-gray-900 mb-4">
-              {editingId ? "Edit Alamat" : "Alamat Baru"}
+              {editingId ? t("saved_addresses.edit_address") : t("saved_addresses.new_address")}
             </h2>
             <div className="space-y-3">
               {/* Label */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Label</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("saved_addresses.label")}</label>
                 <div className="flex flex-wrap gap-2">
                   {LABEL_PRESETS.map((preset) => {
                     const Icon = getLabelIcon(preset)
@@ -282,50 +286,50 @@ export default function SavedAddresses({ onSelect }: Props) {
                     )
                   })}
                 </div>
-                {formData.label === "Lainnya" && (
+                {(formData.label === "Lainnya" || formData.label === "Other") && (
                   <input
                     type="text"
                     value={customLabel}
                     onChange={(e) => setCustomLabel(e.target.value)}
-                    placeholder="Nama label (contoh: Toko)"
+                    placeholder={t("saved_addresses.custom_label_placeholder")}
                     className="mt-2 w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none"
                   />
                 )}
               </div>
 
-              <input type="text" value={formData.full_name} onChange={(e) => setFormData({ ...formData, full_name: e.target.value })} placeholder="Nama Lengkap *" className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none" />
-              <input type="text" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder="No. HP *" className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none" />
+              <input type="text" value={formData.full_name} onChange={(e) => setFormData({ ...formData, full_name: e.target.value })} placeholder={t("saved_addresses.full_name")} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none" />
+              <input type="text" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder={t("saved_addresses.phone")} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none" />
               <div className="sm:col-span-2">
                 <LocationAutocomplete
-                  label="Alamat"
+                  label={t("saved_addresses.address")}
                   value={formData.address}
                   onChange={(val) => setFormData(prev => ({ ...prev, address: val }))}
                   onSelect={handleAddressSelect}
-                  placeholder="Cari alamat..."
+                  placeholder={t("saved_addresses.address_placeholder")}
                   queryType="street"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3 sm:col-span-2">
                 <LocationAutocomplete
-                  label="Kota"
+                  label={t("saved_addresses.city")}
                   value={formData.city}
                   onChange={(val) => setFormData(prev => ({ ...prev, city: val }))}
                   onSelect={handleCitySelect}
-                  placeholder="Cari kota..."
+                  placeholder={t("saved_addresses.city_placeholder")}
                   queryType="city"
                 />
                 <LocationAutocomplete
-                  label="Provinsi"
+                  label={t("saved_addresses.state")}
                   value={formData.state}
                   onChange={(val) => setFormData(prev => ({ ...prev, state: val }))}
                   onSelect={handleStateSelect}
-                  placeholder="Cari provinsi..."
+                  placeholder={t("saved_addresses.state_placeholder")}
                   queryType="state"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <input type="text" value={formData.postal_code} onChange={(e) => setFormData({ ...formData, postal_code: e.target.value })} placeholder="Kode Pos" className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none" />
-                <input type="text" value={formData.country} onChange={(e) => setFormData({ ...formData, country: e.target.value })} placeholder="Negara" className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none" />
+                <input type="text" value={formData.postal_code} onChange={(e) => setFormData({ ...formData, postal_code: e.target.value })} placeholder={t("saved_addresses.postal_code")} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none" />
+                <input type="text" value={formData.country} onChange={(e) => setFormData({ ...formData, country: e.target.value })} placeholder={t("saved_addresses.country")} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none" />
               </div>
 
               <div className="flex gap-3 pt-3">
@@ -333,14 +337,14 @@ export default function SavedAddresses({ onSelect }: Props) {
                   onClick={() => { setShowForm(false); setEditingId(null) }}
                   className="flex-1 py-2.5 border border-gray-200 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition"
                 >
-                  Batal
+                  {t("common.cancel")}
                 </button>
                 <button
                   onClick={handleSubmit}
                   disabled={submitting}
                   className="flex-1 py-2.5 bg-teal-500 hover:bg-teal-600 text-white rounded-xl text-sm font-medium transition disabled:opacity-50"
                 >
-                  {submitting ? "Menyimpan..." : editingId ? "Update" : "Simpan"}
+                  {submitting ? t("common.saving") : editingId ? t("common.update") : t("common.save")}
                 </button>
               </div>
             </div>

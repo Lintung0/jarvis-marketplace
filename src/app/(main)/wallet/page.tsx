@@ -37,19 +37,7 @@ export default async function WalletPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        {/* Header */}
-        <div className="bg-gradient-to-r from-teal-500 to-teal-600 p-8 text-white">
-          <p className="text-sm opacity-90 mb-2">Saldo Wallet Anda</p>
-          <h1 className="text-4xl font-bold mb-6">{formatCurrency(balance)}</h1>
-          <p className="text-sm opacity-75">Gunakan wallet untuk pembayaran cepat di Modesy</p>
-        </div>
-
-        {/* Main Content */}
-        <div className="p-6">
-          <WalletClient balance={balance} transactions={transactions ?? []} />
-        </div>
-      </div>
+        <WalletClient balance={balance} transactions={transactions ?? []} />
     </div>
   );
 }
