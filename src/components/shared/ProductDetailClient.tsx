@@ -204,7 +204,7 @@ export default function ProductDetailClient({ product, userReferralCode }: Props
               type="number"
               value={quantity}
               onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-              className="w-16 text-center border-x border-gray-300 py-2"
+              className="w-16 text-center border-x border-gray-300 py-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
             <button
               onClick={() => setQuantity(quantity + 1)}
